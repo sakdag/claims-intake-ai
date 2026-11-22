@@ -1,0 +1,7 @@
+claims-intake-ai
+Copyright 2026 Serhat Hakki Akdag
+
+This product includes the GNOTHEIA Synthetic Insurance Dataset
+(https://huggingface.co/datasets/gratex/GNOTHEIA-synthetic-insurance-dataset-v2),
+published by Gratex International a.s. under the Apache License 2.0 as part of
+the InnovAIte project. See the dataset card for citation details.

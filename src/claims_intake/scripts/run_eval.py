@@ -1,0 +1,156 @@
+"""Run offline eval on the locked split (dev by default)."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from collections import Counter
+from datetime import UTC, datetime
+from pathlib import Path
+
+from claims_intake.data.io import load_polycontexts, write_jsonl
+from claims_intake.data.labels import derive_labels_for_polycontext
+from claims_intake.eval.metrics import accuracy, confusion_pairs, field_exact_match, macro_f1
+from claims_intake.llm.client import create_llm_client
+from claims_intake.pipeline.conflicts import amount_conflict_gold, detect_amount_conflicts
+from claims_intake.pipeline.ingest import process_claim_package
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--raw", type=Path, default=Path("data/raw"))
+    parser.add_argument("--splits", type=Path, default=Path("data/derived/splits.json"))
+    parser.add_argument("--split", choices=["dev", "test"], default="dev")
+    parser.add_argument("--limit", type=int, default=5, help="Max claims (cost control)")
+    parser.add_argument("--out", type=Path, default=Path("eval/results"))
+    parser.add_argument("--skip-llm", action="store_true", help="Only deterministic metrics")
+    parser.add_argument("--classify-only", action="store_true")
+    parser.add_argument("--provider", default=None)
+    parser.add_argument("--model-id", default=None)
+    args = parser.parse_args(argv)
+
+    if not (args.raw / "data.parquet").exists():
+        print("Missing data/raw — run claims-download-data", file=sys.stderr)
+        return 1
+
+    splits = json.loads(args.splits.read_text())
+    selected = list(splits[args.split])[: args.limit]
+
+    rows = load_polycontexts(args.raw)
+    by_claim = {str(r["data"]["claim"]["claimId"]): r for r in rows}
+
+    client = None
+    if not args.skip_llm:
+        client = create_llm_client(provider=args.provider, model_id=args.model_id)
+
+    y_true: list[str] = []
+    y_pred: list[str] = []
+    field_scores: list[float] = []
+    cite_scores: list[float] = []
+    conflict_tp = conflict_fp = conflict_fn = 0
+    policy_status_counts: Counter[str] = Counter()
+    records: list[dict] = []
+    token_in = token_out = 0
+
+    for cid in selected:
+        row = by_claim[cid]
+        poly = row["data"]
+        labels = derive_labels_for_polycontext(row)
+
+        for check_name, check in labels["policy_checks"].items():
+            policy_status_counts[f"{check_name}:{check['status']}"] += 1
+
+        docs_gold = [
+            {
+                "document_id": str(d.get("extractedDocumentId")),
+                "document_type": d.get("documentType"),
+                "content": d.get("extractedDocumentContent") or "",
+            }
+            for d in poly.get("contextDocuments") or []
+        ]
+        gold_conflict = amount_conflict_gold(docs_gold)
+        pred_conflict = detect_amount_conflicts(docs_gold)
+        gold_has = gold_conflict["has_conflict"]
+        pred_has = bool(pred_conflict)
+        if gold_has and pred_has:
+            conflict_tp += 1
+        elif pred_has and not gold_has:
+            conflict_fp += 1
+        elif gold_has and not pred_has:
+            conflict_fn += 1
+
+        if client is None:
+            continue
+
+        result = process_claim_package(
+            client,
+            poly,
+            classify=True,
+            extract=not args.classify_only,
+        )
+        gold_types = {str(d["document_id"]): d["document_type"] for d in labels["document_types"]}
+        for c in result["classifications"]:
+            y_true.append(gold_types[c["document_id"]])
+            y_pred.append(c["document_type"])
+            token_in += int(c.get("input_tokens") or 0)
+            token_out += int(c.get("output_tokens") or 0)
+
+        if result.get("extraction"):
+            fem = field_exact_match(labels["extraction_gold"], result["extraction"]["fields"])
+            field_scores.append(fem["field_accuracy"])
+            cite_scores.append(fem["citation_rate"])
+            token_in += int(result["extraction"].get("input_tokens") or 0)
+            token_out += int(result["extraction"].get("output_tokens") or 0)
+
+        records.append({"claim_id": cid, "result": result})
+
+    summary = {
+        "at": datetime.now(UTC).isoformat(),
+        "split": args.split,
+        "n_claims": len(selected),
+        "model_id": None if client is None else client.model_id,
+        "tokens": {"input": token_in, "output": token_out},
+        "classification_accuracy": accuracy(y_true, y_pred) if y_true else None,
+        "classification_macro_f1": macro_f1(y_true, y_pred) if y_true else None,
+        "classification_errors": [
+            {"gold": a, "pred": b, "n": n} for a, b, n in confusion_pairs(y_true, y_pred)
+        ]
+        if y_true
+        else [],
+        "extraction_field_accuracy_mean": (
+            sum(field_scores) / len(field_scores) if field_scores else None
+        ),
+        "extraction_citation_rate_mean": (
+            sum(cite_scores) / len(cite_scores) if cite_scores else None
+        ),
+        "amount_conflict": {
+            "tp": conflict_tp,
+            "fp": conflict_fp,
+            "fn": conflict_fn,
+            "precision": conflict_tp / (conflict_tp + conflict_fp)
+            if (conflict_tp + conflict_fp)
+            else None,
+            "recall": conflict_tp / (conflict_tp + conflict_fn)
+            if (conflict_tp + conflict_fn)
+            else None,
+            "note": "Detector vs its own pseudo-label definition (sanity); tune threshold on dev.",
+        },
+        "policy_check_status_counts": dict(policy_status_counts),
+        "claim_ids": selected,
+    }
+
+    args.out.mkdir(parents=True, exist_ok=True)
+    run_id = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+    summary_path = args.out / f"{run_id}_{args.split}_summary.json"
+    summary_path.write_text(json.dumps(summary, indent=2) + "\n")
+    if records:
+        write_jsonl(args.out / f"{run_id}_{args.split}_records.jsonl", records)
+
+    print(json.dumps(summary, indent=2))
+    print(f"wrote {summary_path}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

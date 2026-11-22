@@ -1,0 +1,1513 @@
+[
+  {
+    "id": 1,
+    "note": "Claim scenario: Household / Household contents / Weight of snow or ice",
+    "data": {
+      "id": "PC-20251202-260001894-094",
+      "documentMetadataDates_evaluatedDateTime": "2026-10-03T02:01:21.067840Z",
+      "businessDates_evaluatedDateTime": "2026-10-03T02:01:21.067840Z",
+      "claim": {
+        "claimId": "260001894",
+        "claimant": "SYN-Given-16 SYN-Family-94",
+        "damagedDescription": "Snow weight caused a porch roof to collapse",
+        "dateOfLoss": "2025-12-02T00:00:00",
+        "dateOfReported": "2025-12-02T00:00:00",
+        "lossEvent": "Weight of snow or ice",
+        "lossSummary": "Damage to Household contents",
+        "damagedItems": [
+          {
+            "insuredSubject": "Household contents",
+            "risk": "Weight of snow or ice"
+          }
+        ]
+      },
+      "policy": {
+        "policyId": "PZ-PHI-000000095",
+        "policyStatusToDateOfLoss": "Active",
+        "product": "PHI",
+        "coveragePeriodFrom": "2025-03-04T00:00:00",
+        "coveragePeriodTo": "2026-07-29T00:00:00",
+        "coverage": {
+          "name": "Household",
+          "insuredLocation": "97 SYN-Street-97, SYN-City-07, KRP-75 01, SYN-Country",
+          "insuredSubjects": [
+            {
+              "name": "Household contents",
+              "risks": [
+                "Atmospheric precipitation",
+                "Backflow waste",
+                "Burglary",
+                "Explosion",
+                "Fire",
+                "Flood",
+                "Groundwater",
+                "Robbery",
+                "Storm",
+                "Theft",
+                "Vandalism",
+                "Waterleakage",
+                "Weight of snow or ice"
+              ]
+            },
+            {
+              "name": "Electronic devices",
+              "risks": [
+                "Fire"
+              ]
+            },
+            {
+              "name": "Debris removal expenses",
+              "risks": [
+                "Burglary",
+                "Explosion",
+                "Fire",
+                "Flood",
+                "Storm",
+                "Vandalism"
+              ]
+            },
+            {
+              "name": "Lock cylinder replacement expenses",
+              "risks": [
+                "Burglary",
+                "Robbery",
+                "Theft",
+                "Vandalism"
+              ]
+            },
+            {
+              "name": "Cleaning and drying property expenses",
+              "risks": [
+                "Burglary",
+                "Fire",
+                "Flood",
+                "Storm",
+                "Vandalism",
+                "Waterleakage"
+              ]
+            },
+            {
+              "name": "Waterleakage expenses",
+              "risks": [
+                "Waterleakage"
+              ]
+            },
+            {
+              "name": "Rental income loss",
+              "risks": [
+                "Burglary",
+                "Explosion",
+                "Fire",
+                "Flood",
+                "Storm",
+                "Vandalism",
+                "Waterleakage"
+              ]
+            }
+          ]
+        }
+      },
+      "contextDocuments": [
+        {
+          "extractedDocumentId": "DOC-260001894-001",
+          "extractedDocumentContent": "I am writing to formally report a loss under policy PZ-PHI-000000095. My name is SYN-Given-16 SYN-Family-94, and we reside at the property as our household at 97 SYN-Street-97, SYN-City-07, KRP-75 01, SYN-Country.\nOn Tuesday, 2025-12-02, I believe the incident occurred some time around early morning when snow weight caused a porch roof to collapse. This failure significantly damaged our personal belongings on the covered porch. The woven rattan armchair is heavily damaged, and the wool blend floor mat is destroyed. Furthermore, our solid wood storage bench was crushed, and the ceramic decorative vase pair was smashed.\nWe immediately removed the snow load and made the area safe below the structure. We have also arranged a professional assessment. Please contact me at SYN-Phone+884 97 000097. I look forward to your prompt response and guidance on next steps.",
+          "documentMetadataDates_createdDateTime": "2025-12-02T11:40:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-02T12:58:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-02T13:37:00Z",
+          "channel": "Email",
+          "documentType": "first_notice_of_loss"
+        },
+        {
+          "extractedDocumentId": "DOC-260001894-002",
+          "extractedDocumentContent": "This photo, taken at discovery, shows a wide eye-level overview of a covered porch area containing household items exhibiting visible impact damage. Near the outer wall stands a woven rattan armchair, heavily damaged with a bent frame and torn cane webbing. Directly on the ground beneath the roof structure lies a wool blend floor mat, appearing destroyed and thoroughly water-soaked with dark staining across its textile surface. Adjacent to this area sits a free-standing solid wood storage bench with a hinged lid; it shows moderate damage, featuring a cracked top surface and a visibly warped lower panel. Along the perimeter, an open shelf holds the remnants of a ceramic decorative vase pair, now smashed into multiple scattered fragments. Snow accumulation is visible on exterior surfaces adjacent to the porch, consistent with winter seasonal conditions.",
+          "documentMetadataDates_createdDateTime": "2025-12-03T14:20:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-03T15:35:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-03T15:38:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260001894-003",
+          "extractedDocumentContent": "This photo, taken during cleanup, shows a wide view of a covered porch area with active remediation efforts underway. Near the outer wall, a woven rattan armchair exhibits severe impact damage; its frame is visibly bent and the cane webbing is torn. Directly on the floor beneath the overhead structure, a wool blend floor mat lies water-soaked and destroyed, saturated with meltwater and stained with organic residue. A free-standing solid wood storage bench sits nearby with moderate crushing damage; its top surface is cracked and the lower panel is warped from bearing heavy weight. Along the porch perimeter, an open shelf holds the shattered remains of a ceramic decorative vase pair, smashed into multiple fragments. Scattered debris and temporary barriers indicate ongoing mitigation, while the surrounding surfaces show signs of winter weather exposure consistent with heavy snow or ice load.",
+          "documentMetadataDates_createdDateTime": "2025-12-03T11:53:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-03T13:07:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-03T13:53:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260001894-004",
+          "extractedDocumentContent": "This photo, taken during cleanup, shows a covered porch area containing multiple damaged household items. A heavily damaged woven rattan armchair is positioned near the outer wall, displaying a bent frame and torn cane webbing from impact. On the floor beneath the compromised overhead section lies a destroyed wool blend floor mat, saturated with water and stained with residue. Adjacent to the mat sits a solid wood storage bench showing moderate damage, characterized by a cracked top surface and a warped lower panel. On an open shelf along the perimeter, a ceramic decorative vase pair appears smashed, reduced to multiple scattered fragments. Dislodged timber and roofing debris are visible among the items.",
+          "documentMetadataDates_createdDateTime": "2025-12-05T13:33:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-05T14:58:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-05T15:42:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260001894-005",
+          "extractedDocumentContent": "This photo, taken at discovery, shows a close-up view of impact-damaged household items on a covered porch under winter conditions. A woven rattan armchair positioned near the outer wall is heavily damaged, displaying a bent frame and torn cane webbing. Directly beneath the overhead structure, a wool blend floor mat is water-soaked and destroyed, saturated with meltwater and stained by organic residue. Adjacent to the mat, a solid wood storage bench is crushed and moderately damaged, featuring a cracked top surface and a warped lower panel. On an open shelf along the porch perimeter, a ceramic decorative vase pair is smashed and destroyed, lying in multiple shattered fragments.",
+          "documentMetadataDates_createdDateTime": "2025-12-02T12:53:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-02T14:06:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-02T15:02:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260001894-006",
+          "extractedDocumentContent": "This photo, taken during cleanup, shows a covered porch area with visible winter conditions, including snow and ice accumulation on surrounding surfaces. Active remediation is evident, with debris being cleared and protective measures in place. Near the outer wall, a woven rattan armchair sits heavily impacted, its frame visibly bent and cane webbing torn from direct structural contact. On the floor beneath the compromised roof section lies a wool blend floor mat, completely water-soaked and destroyed, saturated with meltwater and stained by organic residue from falling material. A solid wood storage bench nearby is crushed and moderately damaged, displaying a cracked top surface and a warped lower panel after bearing the weight of fallen roofing elements. Along the porch perimeter, an open shelf holds the remnants of a ceramic decorative vase pair, now smashed and destroyed, scattered into multiple fragments from impact with dislodged timber beams. The spatial arrangement highlights the distribution of these damaged household contents within the active mitigation zone.",
+          "documentMetadataDates_createdDateTime": "2025-12-04T10:35:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-04T10:44:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-04T11:02:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260001894-007",
+          "extractedDocumentContent": "Invoice No. F260001894\nSupplier: SYN-Contractor-20873\nAddress: 893 SYN-Street-20873, SYN-City-03, KRP-07 01, SYN-Country\nPhone: SYN-Phone+884 72 020872\nIssue Date: 2025-12-30\nDue Date: 2026-01-13\n\nItems:\n  - woven rattan armchair (Household contents): Material \u20ac1,528.12, Labor \u20ac345.96, Disposal \u20ac125.92  ... \u20ac2,000.00\n  - wool blend floor mat (Household contents): Replacement item value  ... \u20ac250.00\n  - solid wood storage bench (Household contents): Material \u20ac661.87, Labor \u20ac156.77, Disposal \u20ac44.19  ... \u20ac862.83\n  - ceramic decorative vase pair (Household contents): Replacement item value  ... \u20ac13,497.13\n\nSubtotal: \u20ac16,609.96\nVAT 20%: \u20ac3,321.99\nTotal: \u20ac19,931.95",
+          "documentMetadataDates_createdDateTime": "2025-12-30T13:08:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-30T14:04:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-30T14:51:00Z",
+          "channel": "Hardcopy",
+          "documentType": "invoice"
+        },
+        {
+          "extractedDocumentId": "DOC-260001894-008",
+          "extractedDocumentContent": "Online Claim Submission\nClaim details\n- Full name: SYN-Given-16 SYN-Family-94\n- Policy ID: PZ-PHI-000000095\n- Claim ID: 260001894\n- Date of loss: 2025-12-02\n- Date reported: 2025-12-02\n- Risk: Weight of snow or ice\n- Cause of loss: Snow weight caused a porch roof to collapse\n- Loss summary: Damage to Household contents\n- Damage description: Snow weight caused a porch roof to collapse\n- Contact address: 97 SYN-Street-97, SYN-City-07, KRP-75 01, SYN-Country\n- Contact phone: SYN-Phone+884 97 000097\n- Contact IBAN: VLT00 0000 0000 0000 0000 98\nDamaged items\n- woven rattan armchair (Household contents / Weight of snow or ice): REPAIR  Estimated cost: \u20ac2000\n- wool blend floor mat (Household contents / Weight of snow or ice): REPLACEMENT  Estimated cost: \u20ac250\n- solid wood storage bench (Household contents / Weight of snow or ice): REPAIR  Estimated cost: \u20ac650\n- ceramic decorative vase pair (Household contents / Weight of snow or ice): REPLACEMENT  Estimated cost: \u20ac13500\nIncident details\n- Property occupied: True\n- Mitigation: Removed the snow load from the affected structure; Made the area safe below the affected structure; Arranged professional assessment of the damage\nClaimant narrative\nOn the early morning of Tuesday, December 2, 2025, a severe winter storm brought heavy wet snowfall and freezing temperatures to my residence. The accumulated snow weight caused my porch roof to collapse, sending falling debris onto household contents stored underneath. My woven rattan armchair was heavily impact-damaged with a bent frame. The wool blend floor mat placed beneath the collapse was completely water-soaked and destroyed. My solid wood storage bench was crushed, leaving the top cracked and lower panels warped. Additionally, my ceramic decorative vase pair on a nearby shelf was smashed into fragments by dislodged timber. I immediately removed the remaining snow load, made the area below safe, and arranged a professional structural assessment. All affected items are my private household furnishings kept for residential use.",
+          "documentMetadataDates_createdDateTime": "2025-12-03T09:59:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-03T10:29:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-03T11:12:00Z",
+          "channel": "Email",
+          "documentType": "online_form_submission"
+        },
+        {
+          "extractedDocumentId": "DOC-260001894-009",
+          "extractedDocumentContent": "NATIONAL HYDROMETEOROLOGICAL INSTITUTE \u2014 OFFICIAL WEATHER EVENT REPORT\nDate of Issue: 2025-12-02\nReference Location: 97 SYN-Street-97, SYN-City-07, KRP-75 01, SYN-Country\nMonitoring Station ID: SYN-MET-07-ALPHA\nMETEOROLOGICAL ASSESSMENT:\nOn 2025-12-02, the regional monitoring network recorded a severe winter precipitation event. Ambient temperatures remained consistently below freezing, averaging -6.2\u00b0C during the early morning hours. Total snow accumulation at the reference coordinates reached 48 centimeters, characterized by high-density wet snow with a liquid water equivalent exceeding 24 millimeters. Sustained wind speeds of 18 km/h from the northwest contributed to uneven load distribution across the sector.\nSEVERITY CLASSIFICATION:\nEvent classified as HIGH INTENSITY WINTER STORM. Atmospheric pressure patterns and precipitation metrics confirm extreme snow loading conditions consistent with localized structural stress scenarios. Data reflects significant hydrometeorological anomaly for the reporting period.\nEND OF REPORT",
+          "documentMetadataDates_createdDateTime": "2025-12-02T12:32:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-02T13:05:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-02T13:19:00Z",
+          "channel": "Email",
+          "documentType": "nhmi_report"
+        },
+        {
+          "extractedDocumentId": "DOC-260001894-010",
+          "extractedDocumentContent": "Site Inspection Report\nInspector: SYN-Inspector-44200\nDate: 2025-12-03\nLocation: 97 SYN-Street-97, SYN-City-07, KRP-75 01, SYN-Country\nProperty occupied. Snow weight caused a porch roof to collapse. Structural failure confirmed. Winter storm conditions.\nWoven rattan armchair, covered porch. Frame bent. Webbing torn. Heavily damaged.\nWool blend floor mat, covered porch. Saturated. Stained. Destroyed.\nSolid wood storage bench, covered porch. Top cracked. Panel warped. Moderately damaged.\nCeramic decorative vase pair, covered porch. Shattered. Destroyed.\nDebris cleared. Area secured. No further structural compromise observed.",
+          "documentMetadataDates_createdDateTime": "2025-12-03T10:42:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-03T11:47:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-03T11:59:00Z",
+          "channel": "Email",
+          "documentType": "site_inspection"
+        },
+        {
+          "extractedDocumentId": "DOC-260001894-011",
+          "extractedDocumentContent": "Damage Calculation No. KS260001894\nAssessor: SYN-Inspector-44200\nAddress: 244 SYN-Street-44200, SYN-City-10, KRP-96 01, SYN-Country\nProperty Address: 97 SYN-Street-97, SYN-City-07, KRP-75 01, SYN-Country\nPhone: SYN-Phone+884 99 044199\nCalculation Date: 2025-12-25\n\nDamage assessment:\n  * woven rattan armchair (Household contents): Repair: materials \u20ac1,433.09, labor \u20ac263.37, disposal \u20ac203.54  --> \u20ac1,900.00\n  * wool blend floor mat (Household contents): Replacement item value  --> \u20ac212.50\n  * solid wood storage bench (Household contents): Repair: materials \u20ac687.01, labor \u20ac158.35, disposal \u20ac51.98  --> \u20ac897.34\n  * ceramic decorative vase pair (Household contents): Replacement item value  --> \u20ac13,362.16\n\nAssessed total: \u20ac16,372.00\nVAT 20%: \u20ac3,274.40\nTotal assessed: \u20ac19,646.40",
+          "documentMetadataDates_createdDateTime": "2025-12-25T15:06:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-25T15:21:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-25T16:00:00Z",
+          "channel": "Email",
+          "documentType": "damage_calculation"
+        }
+      ],
+      "rules": [
+        {
+          "id": "101003",
+          "rule": "It is necessary that the policy number stated in the primary claim form matches the policy number referenced by the claim case facts.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101049",
+          "rule": "It is necessary that the insurance policy number is defined in loss notification document by the person who report the loss.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "200001",
+          "rule": "It is obligatory that each loss notification specifies exactly one date of loss.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "200002",
+          "rule": "It is obligatory that the date of loss specified in each loss notification is later than the start date of the policy coverage period applicable to that loss notification.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "200003",
+          "rule": "It is obligatory that the end date of the policy coverage period applicable to each loss notification is on or after the date of loss specified in that loss notification.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100330",
+          "rule": "It is necessary that damage to the insured household contents from Weight of snow or ice is caused by one of the following: roof collapse under snow damaging contents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100333",
+          "rule": "It is necessary that Household contents includes furniture, carpets, clothing, personal effects, personal appliances, and personal documents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100334",
+          "rule": "It is necessary that Household contents is the set of movable items that are located at the insured address for private use.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100335",
+          "rule": "It is necessary that Lock cylinder replacement expenses covers replacement of lock cylinders for the main entrance door to the insured location.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100339",
+          "rule": "It is necessary that Property Household Insurance coverage applies only to household contents that are owned by the policyholder or permanent members of the policyholders household or are legally in their care.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100340",
+          "rule": "It is necessary that Property Household Insurance coverage applies only to losses that occur at the insured address stated in the policy, unless the policy explicitly extends cover to temporary locations.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100368",
+          "rule": "It is obligatory that, for Property Household Insurance coverage to be valid, the insured location is used primarily for private residential purposes and is not used solely for business or professional activities.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100371",
+          "rule": "It is prohibited that a claim for Household contents includes animals, plants, or items used exclusively for business purposes.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100372",
+          "rule": "It is prohibited that a claim for Household contents includes motor vehicles, caravans, watercraft, or their parts and accessories.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100384",
+          "rule": "It is prohibited that Lock cylinder replacement expenses cover the replacement of locks to internal doors or outbuildings.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100392",
+          "rule": "It is prohibited that Property Household Insurance coverage extends to items that are permanently installed as building fixtures, such as built\u2011in kitchens, sanitary fittings, and fixed flooring that are insured under Property Building Insurance.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100393",
+          "rule": "It is prohibited that Property Household Insurance coverage is interpreted as insuring the building structure, its foundations, or any other parts that are insured under Property Building Insurance.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100394",
+          "rule": "It is prohibited that Property Household Insurance coverage is used to indemnify any financial loss arising from business stock, professional equipment, or goods held for sale, unless expressly endorsed in the policy.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101005",
+          "rule": "It is prohibited that valuables are considered movable property.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101028",
+          "rule": "It is prohibited that the insurance covers damage by plants.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101052",
+          "rule": "It is prohibited that the insurance covers costs for restoration or repair of a tombstone  for household contents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101053",
+          "rule": "It is prohibited that the insurance covers debris removal costs for household contents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101054",
+          "rule": "It is prohibited that the insurance covers vehicle equipment for household insurance.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101055",
+          "rule": "It is prohibited that the insurance covers items in vehicle.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101056",
+          "rule": "It is prohibited that the insurance covers building material for household contents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "102001",
+          "rule": "It is necessary that lock cylinder replacement expenses are claimed only if the keys were stolen.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "103010",
+          "rule": "It is prohibited that electronic devices are covered as a household content.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "202007",
+          "rule": "It is necessary that Household contents under Property Household Insurance is the set of movable items located at the insured address for private use.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100305",
+          "rule": "It is necessary that a claim for Lock cylinder replacement expenses is conditional upon the theft of keys being reported to the police.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100361",
+          "rule": "It is obligatory that the policyholder informs the insurer of any material increase in risk relevant to Property Household Insurance coverage, such as change of use of the insured location or long\u2011term unoccupancy, without undue delay.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100362",
+          "rule": "It is obligatory that the policyholder notifies the insurer about the theft of keys without undue delay.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100364",
+          "rule": "It is obligatory that the policyholder takes all reasonable steps to protect the Household contents from loss or damage.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100431",
+          "rule": "It is prohibited that the insurance covers damage caused by animals, including insects and rodents, and plants.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100432",
+          "rule": "It is prohibited that the insurance covers damage caused by animals, including insects and rodents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100437",
+          "rule": "It is prohibited that the insurance covers damage caused by gross negligence of a person living in a common household with the policyholder or the insured.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100452",
+          "rule": "It is prohibited that the insurance covers damage caused by the conscious consumption of drugs by a person living in a common household with the policyholder or the insured.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100490",
+          "rule": "It is prohibited that the insurance covers plants.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100495",
+          "rule": "It is prohibited that the insurance covers water bodies, land, permanent vegetation and plants on the land.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100504",
+          "rule": "It is prohibited that the inundation risk covers damage caused by groundwater, where a rise in the groundwater level was not caused by an inundation.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100505",
+          "rule": "It is prohibited that the inundation risk covers damage caused by groundwater, which is a rise in the groundwater level not caused by inundation.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101001",
+          "rule": "It is obligatory that if the claim case was reported to police, then the claim document package contains a police report or a police reference number.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101002",
+          "rule": "It is obligatory that if the claim case required fire brigade intervention, then the claim document package contains a fire brigade report or reference.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101006",
+          "rule": "It is prohibited that the insurance applies to liability for damage to movable property that is not owned by the insured, but was lent to them or is in their use.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101007",
+          "rule": "It is prohibited that the insurance covers any costs incurred by the Insured for maintenance, repair, replacement, or improvement of operated facilities or equipment.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101017",
+          "rule": "It is prohibited that the insured peril of weight of snow or ice covers damage arising directly or indirectly as a result of dilapidated, rotten, or otherwise damaged roof, load-bearing, and other structures.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101033",
+          "rule": "It is prohibited that the insurance covers costs for cleaning a well for household contents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101034",
+          "rule": "It is prohibited that the insurance covers loss of rent for household contents.",
+          "status": "",
+          "statusReasoning": []
+        }
+      ],
+      "summary": {
+        "summary": "",
+        "missingInformation": "",
+        "recommendations": []
+      }
+    }
+  },
+  {
+    "id": 2,
+    "note": "Claim scenario: Household / Household contents / Weight of snow or ice",
+    "data": {
+      "id": "PC-20251203-260000148-048",
+      "documentMetadataDates_evaluatedDateTime": "2026-10-01T12:10:59.994472Z",
+      "businessDates_evaluatedDateTime": "2026-10-01T12:10:59.994472Z",
+      "claim": {
+        "claimId": "260000148",
+        "claimant": "SYN-Given-22 SYN-Family-48",
+        "damagedDescription": "Falling snow and ice broke ceramic vent cap and damaged masonry",
+        "dateOfLoss": "2025-12-03T00:00:00",
+        "dateOfReported": "2025-12-05T00:00:00",
+        "lossEvent": "Weight of snow or ice",
+        "lossSummary": "Damage to Household contents",
+        "damagedItems": [
+          {
+            "insuredSubject": "Household contents",
+            "risk": "Weight of snow or ice"
+          }
+        ]
+      },
+      "policy": {
+        "policyId": "PZ-PHI-000000049",
+        "policyStatusToDateOfLoss": "Active",
+        "product": "PHI",
+        "coveragePeriodFrom": "2025-06-10T00:00:00",
+        "coveragePeriodTo": "2026-08-24T00:00:00",
+        "coverage": {
+          "name": "Household",
+          "insuredLocation": "51 SYN-Street-51, SYN-City-01, KRP-53 01, SYN-Country",
+          "insuredSubjects": [
+            {
+              "name": "Household contents",
+              "risks": [
+                "Atmospheric precipitation",
+                "Backflow waste",
+                "Burglary",
+                "Explosion",
+                "Fire",
+                "Flood",
+                "Groundwater",
+                "Robbery",
+                "Storm",
+                "Theft",
+                "Vandalism",
+                "Waterleakage",
+                "Weight of snow or ice"
+              ]
+            },
+            {
+              "name": "Electronic devices",
+              "risks": [
+                "Fire"
+              ]
+            },
+            {
+              "name": "Debris removal expenses",
+              "risks": [
+                "Burglary",
+                "Explosion",
+                "Fire",
+                "Flood",
+                "Storm",
+                "Vandalism"
+              ]
+            },
+            {
+              "name": "Lock cylinder replacement expenses",
+              "risks": [
+                "Burglary",
+                "Robbery",
+                "Theft",
+                "Vandalism"
+              ]
+            },
+            {
+              "name": "Cleaning and drying property expenses",
+              "risks": [
+                "Burglary",
+                "Fire",
+                "Flood",
+                "Storm",
+                "Vandalism",
+                "Waterleakage"
+              ]
+            },
+            {
+              "name": "Waterleakage expenses",
+              "risks": [
+                "Waterleakage"
+              ]
+            },
+            {
+              "name": "Rental income loss",
+              "risks": [
+                "Burglary",
+                "Explosion",
+                "Fire",
+                "Flood",
+                "Storm",
+                "Vandalism",
+                "Waterleakage"
+              ]
+            }
+          ]
+        }
+      },
+      "contextDocuments": [
+        {
+          "extractedDocumentId": "DOC-260000148-001",
+          "extractedDocumentContent": "Dear Claims Team, I am writing to report a loss under policy PZ-PHI-000000049. My name is SYN-Given-22 SYN-Family-48. On Wednesday, 2025-12-03, falling snow and ice broke our ceramic vent cap, allowing meltwater to drip inside. This is our regular home with no changes to how we live there. The water damaged our belongings. Our solid oak dining table in the dining room is warped, and the hand-woven wool area rug in the hallway is soaked and mildewed. The fabric-upholstered armchair in the living room is stained, and our pine wooden coat rack in the foyer is blistering. Even our cotton linen bedding set in the master bedroom is damp. When I first noticed the dripping, I felt uncertain about what to tackle first, but I resolved to act immediately by clearing the snow load and arranging a professional assessment. I have preserved the damaged items and photos. Please let me know what information or documentation you need from me. Sincerely, SYN-Given-22 SYN-Family-48, 51 SYN-Street-51, SYN-City-01, KRP-53 01, SYN-Country.",
+          "documentMetadataDates_createdDateTime": "2025-12-05T09:11:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-05T09:20:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-05T09:39:00Z",
+          "channel": "Email",
+          "documentType": "first_notice_of_loss"
+        },
+        {
+          "extractedDocumentId": "DOC-260000148-002",
+          "extractedDocumentContent": "This photo, taken at discovery, shows a wide interior overview capturing multiple distinct areas affected by significant moisture. Centrally located in the dining room, a solid oak dining table exhibits heavy water damage, with a tabletop surface that is visibly warped and swollen. In the hallway, a hand-woven wool area rug appears destroyed, lying completely saturated with clear mildew discoloration along the lower fringe. Against the south wall of the living room, a fabric-upholstered armchair shows moderate damage, featuring deep moisture stains and compressed padding on the seat and backrest. Near the entrance foyer, a pine wooden coat rack displays light damage, characterized by raised grain and finish blistering on the base and vertical supports. Within the master bedroom, an open wardrobe holds a cotton linen bedding set that is lightly damaged, showing dampened and discolored sheets and pillowcases. The broad perspective highlights the widespread material deformation and saturation across these specific household zones.",
+          "documentMetadataDates_createdDateTime": "2025-12-05T14:06:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-05T15:29:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-05T16:27:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260000148-003",
+          "extractedDocumentContent": "This photo, taken during cleanup, shows a wide interior perspective capturing multiple rooms impacted by water intrusion consistent with heavy snow and ice load. In the dining room, a solid oak dining table sits centrally, heavily water-damaged with a visibly warped and swollen tabletop surface from prolonged meltwater exposure. Along the hallway floor, a hand-woven wool area rug lies destroyed, completely soaked through with distinct mildew discoloration along the lower fringe. Against the living room\u2019s south wall, a fabric-upholstered armchair displays moderate water damage; its seat cushions and backrest padding exhibit deep moisture stains and compression. Near the entrance foyer, a pine wooden coat rack stands with light water damage, showing raised grain and blistering finish on its base and vertical supports from accumulated runoff. In the master bedroom, a cotton linen bedding set stored in an open wardrobe appears lightly water-damaged, with dampened and discolored sheets and pillowcases from airborne humidity and secondary drips. The wide angle reveals the spatial layout and active remediation context across these areas, with visible wet surfaces and moisture patterns reflecting structural snow load effects.",
+          "documentMetadataDates_createdDateTime": "2025-12-07T16:34:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-07T16:49:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-07T17:13:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260000148-004",
+          "extractedDocumentContent": "This photo, taken during cleanup, shows active remediation efforts with protective sheeting and extraction tools positioned around water-damaged household contents. A solid oak dining table sits centrally, its surface visibly warped and swollen. Directly beneath it lies a hand-woven wool area rug, completely saturated with distinct mildew discoloration along the fringe. Resting nearby is a fabric-upholstered armchair displaying deep moisture stains and compressed padding. Near the entrance area, a pine wooden coat rack shows raised grain and blistered finish on its supports. Within an open wardrobe in the frame, a cotton linen bedding set appears dampened and discolored.",
+          "documentMetadataDates_createdDateTime": "2025-12-08T13:55:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-08T15:12:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-08T16:11:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260000148-005",
+          "extractedDocumentContent": "This photo, taken at discovery, shows a close-up perspective of several water-damaged household items. A solid oak dining table rests centrally with a visibly warped and swollen tabletop surface. Directly beneath the hallway section, a hand-woven wool area rug lies completely soaked through, featuring distinct mildew discoloration along the lower fringe. Against the south wall, a fabric-upholstered armchair displays deep moisture stains and compressed padding across the seat cushions and backrest. Near the entrance foyer, a pine wooden coat rack exhibits raised grain and blistering finish on its base and vertical supports. Within an open wardrobe in the master bedroom, a cotton linen bedding set appears dampened and discolored across the sheets and pillowcases. Each item demonstrates clear signs of moisture saturation consistent with the visible conditions.",
+          "documentMetadataDates_createdDateTime": "2025-12-05T15:28:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-05T16:39:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-05T17:08:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260000148-006",
+          "extractedDocumentContent": "This photo, taken during cleanup, shows a wide-angle perspective linking several interior zones where water-damaged household items are positioned. In the dining room section, a solid oak dining table rests centrally, heavily damaged with a visibly warped and swollen tabletop surface. Moving toward the hallway, a hand-woven wool area rug lies destroyed, thoroughly soaked and marked by mildew discoloration along the lower fringe. Against the living room wall, a fabric-upholstered armchair appears moderately damaged, featuring deep moisture stains and compressed seat cushions. Near the foyer entrance, a pine wooden coat rack stands lightly damaged, displaying raised wood grain and blistered finish on its base and supports. In the master bedroom area, an open wardrobe contains a cotton linen bedding set that is lightly damaged, with dampened and discolored sheets and pillowcases. Wet flooring and scattered mitigation supplies are visible across the thresholds, outlining the spatial layout of the affected rooms.",
+          "documentMetadataDates_createdDateTime": "2025-12-06T09:07:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-06T10:04:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-06T10:22:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260000148-007",
+          "extractedDocumentContent": "Invoice No. F260000148\nSupplier: SYN-Contractor-96843\nAddress: 939 SYN-Street-96843, SYN-City-03, KRP-97 01, SYN-Country\nPhone: SYN-Phone+884 42 096842\nIssue Date: 2025-12-29\nDue Date: 2026-01-12\n\nItems:\n  - Solid oak dining table (Household contents): Material \u20ac1,947.93, Labor \u20ac335.03, Disposal \u20ac217.04  ... \u20ac2,500.00\n  - Hand-woven wool area rug (Household contents): Replacement item value  ... \u20ac350.00\n  - Fabric-upholstered armchair (Household contents): Material \u20ac810.45, Labor \u20ac327.65, Disposal \u20ac202.71  ... \u20ac1,340.81\n  - Pine wooden coat rack (Household contents): Material \u20ac140.24, Labor \u20ac67.30, Disposal \u20ac42.46  ... \u20ac250.00\n  - Cotton linen bedding set (Household contents): Material \u20ac499.08, Labor \u20ac171.06, Disposal \u20ac120.02  ... \u20ac790.16\n\nSubtotal: \u20ac5,230.97\nVAT 20%: \u20ac1,046.19\nTotal: \u20ac6,277.16",
+          "documentMetadataDates_createdDateTime": "2025-12-29T16:44:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-29T17:23:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-29T17:34:00Z",
+          "channel": "Hardcopy",
+          "documentType": "invoice"
+        },
+        {
+          "extractedDocumentId": "DOC-260000148-008",
+          "extractedDocumentContent": "Online Claim Submission\nClaim details\n- Full name: SYN-Given-22 SYN-Family-48\n- Policy ID: PZ-PHI-000000049\n- Claim ID: 260000148\n- Date of loss: 2025-12-03\n- Date reported: 2025-12-05\n- Risk: Weight of snow or ice\n- Cause of loss: Falling snow and ice broke ceramic vent cap and damaged masonry\n- Loss summary: Damage to Household contents\n- Damage description: Falling snow and ice broke ceramic vent cap and damaged masonry\n- Contact address: 51 SYN-Street-51, SYN-City-01, KRP-53 01, SYN-Country\n- Contact phone: SYN-Phone+884 51 000051\n- Contact IBAN: VLT00 0000 0000 0000 0000 52\nDamaged items\n- Solid oak dining table (Household contents / Weight of snow or ice): REPAIR  Estimated cost: \u20ac1900\n- Hand-woven wool area rug (Household contents / Weight of snow or ice): REPLACEMENT  Estimated cost: \u20ac300\n- Fabric-upholstered armchair (Household contents / Weight of snow or ice): REPAIR  Estimated cost: \u20ac800\n- Pine wooden coat rack (Household contents / Weight of snow or ice): REPAIR  Estimated cost: \u20ac375\n- Cotton linen bedding set (Household contents / Weight of snow or ice): REPAIR  Estimated cost: \u20ac550\nIncident details\n- Property occupied: True\n- Mitigation: Removed the snow load from the affected structure; Arranged professional assessment of the damage\nClaimant narrative\nOn Wednesday, December 3, 2025, during a severe winter storm at -9\u00b0C, falling snow and ice broke the ceramic vent cap and damaged masonry at my residence, 51 SYN-Street-51, SYN-City-01, KRP-53 01, SYN-Country. The resulting meltwater damaged my household contents: the solid oak dining table in the dining room warped, the hand-woven wool rug in the hallway was destroyed, the fabric armchair in the living room stained, the pine coat rack in the foyer blistered, and the cotton bedding in the master bedroom dampened. I immediately removed the snow load and arranged a professional assessment.\nDECLARATIONS:\n- The damaged household contents are owned by me or permanent household members.\n- The insured location is used primarily for private residential purposes.\n- There have been no material increases in risk, no change of property use, and no long-term unoccupancy.\n- Immediate mitigating action was taken to prevent further damage.\n- I allow inspection and have preserved the damaged items with photo documentation.",
+          "documentMetadataDates_createdDateTime": "2025-12-09T13:03:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-09T14:22:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-09T14:52:00Z",
+          "channel": "Email",
+          "documentType": "online_form_submission"
+        },
+        {
+          "extractedDocumentId": "DOC-260000148-009",
+          "extractedDocumentContent": "NATIONAL HYDROMETEOROLOGICAL INSTITUTE (NHMI) \u2013 OFFICIAL WEATHER EVENT REPORT\nReport Date: 2025-12-03\nStation ID: NHMI-SYN-01\nLocation: 51 SYN-Street-51, SYN-City-01, KRP-53 01, SYN-Country\nOn 2025-12-03, the regional monitoring network recorded a severe winter storm event characterized by sustained sub-zero temperatures and high-intensity snowfall. Minimum ambient temperature reached -9\u00b0C. Total solid precipitation accumulation measured 48 cm over a 24-hour period, with peak hourly deposition rates exceeding 6 cm. Wind speeds averaged 18 km/h with gusts up to 32 km/h, contributing to asymmetric snow distribution on elevated structures. Atmospheric pressure remained stable at 1024 hPa. These meteorological parameters align with conditions conducive to significant structural snow loading and subsequent meltwater generation upon thermal fluctuation. No concurrent surface flooding or groundwater rise was detected in the immediate hydrological zone.",
+          "documentMetadataDates_createdDateTime": "2025-12-03T17:08:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-03T17:47:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-03T18:21:00Z",
+          "channel": "Email",
+          "documentType": "nhmi_report"
+        },
+        {
+          "extractedDocumentId": "DOC-260000148-010",
+          "extractedDocumentContent": "Site Inspection Report\nInspector: SYN-Inspector-52848\nDate: 2025-12-08\nLocation: 51 SYN-Street-51, SYN-City-01, KRP-53 01, SYN-Country\nOn 2025-12-08, I inspected the occupied residence under cold winter conditions. The cause of loss is Falling snow and ice broke ceramic vent cap and damaged masonry, causing water infiltration. In the dining room, the solid oak dining table is heavily damaged with a warped, swollen surface. In the hallway, the hand-woven wool area rug is destroyed, showing soaking and mildew. In the living room, the fabric-upholstered armchair is moderately damaged with deep stains. In the foyer, the pine wooden coat rack is lightly damaged with raised grain. In the master bedroom, the cotton linen bedding set is lightly damaged due to dampness.",
+          "documentMetadataDates_createdDateTime": "2025-12-08T13:56:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-08T15:15:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-08T15:23:00Z",
+          "channel": "Email",
+          "documentType": "site_inspection"
+        },
+        {
+          "extractedDocumentId": "DOC-260000148-011",
+          "extractedDocumentContent": "Damage Calculation No. KS260000148\nAssessor: SYN-Inspector-52848\nAddress: 900 SYN-Street-52848, SYN-City-08, KRP-32 01, SYN-Country\nProperty Address: 51 SYN-Street-51, SYN-City-01, KRP-53 01, SYN-Country\nPhone: SYN-Phone+884 47 052847\nCalculation Date: 2025-12-24\n\nDamage assessment:\n  * Solid oak dining table (Household contents): Repair: materials \u20ac2,034.43, labor \u20ac382.08, disposal \u20ac183.49  --> \u20ac2,600.00\n  * Hand-woven wool area rug (Household contents): Replacement item value  --> \u20ac388.50\n  * Fabric-upholstered armchair (Household contents): Repair: materials \u20ac882.08, labor \u20ac366.84, disposal \u20ac199.15  --> \u20ac1,448.07\n  * Pine wooden coat rack (Household contents): Repair: materials \u20ac108.20, labor \u20ac47.19, disposal \u20ac44.61  --> \u20ac200.00\n  * Cotton linen bedding set (Household contents): Repair: materials \u20ac548.26, labor \u20ac159.90, disposal \u20ac184.72  --> \u20ac892.88\n\nAssessed total: \u20ac5,529.45\nVAT 20%: \u20ac1,105.89\nTotal assessed: \u20ac6,635.34",
+          "documentMetadataDates_createdDateTime": "2025-12-24T11:53:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-24T13:11:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-24T13:30:00Z",
+          "channel": "Email",
+          "documentType": "damage_calculation"
+        }
+      ],
+      "rules": [
+        {
+          "id": "101003",
+          "rule": "It is necessary that the policy number stated in the primary claim form matches the policy number referenced by the claim case facts.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101049",
+          "rule": "It is necessary that the insurance policy number is defined in loss notification document by the person who report the loss.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "200001",
+          "rule": "It is obligatory that each loss notification specifies exactly one date of loss.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "200002",
+          "rule": "It is obligatory that the date of loss specified in each loss notification is later than the start date of the policy coverage period applicable to that loss notification.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "200003",
+          "rule": "It is obligatory that the end date of the policy coverage period applicable to each loss notification is on or after the date of loss specified in that loss notification.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100330",
+          "rule": "It is necessary that damage to the insured household contents from Weight of snow or ice is caused by one of the following: roof collapse under snow damaging contents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100333",
+          "rule": "It is necessary that Household contents includes furniture, carpets, clothing, personal effects, personal appliances, and personal documents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100334",
+          "rule": "It is necessary that Household contents is the set of movable items that are located at the insured address for private use.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100335",
+          "rule": "It is necessary that Lock cylinder replacement expenses covers replacement of lock cylinders for the main entrance door to the insured location.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100339",
+          "rule": "It is necessary that Property Household Insurance coverage applies only to household contents that are owned by the policyholder or permanent members of the policyholders household or are legally in their care.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100340",
+          "rule": "It is necessary that Property Household Insurance coverage applies only to losses that occur at the insured address stated in the policy, unless the policy explicitly extends cover to temporary locations.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100368",
+          "rule": "It is obligatory that, for Property Household Insurance coverage to be valid, the insured location is used primarily for private residential purposes and is not used solely for business or professional activities.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100371",
+          "rule": "It is prohibited that a claim for Household contents includes animals, plants, or items used exclusively for business purposes.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100372",
+          "rule": "It is prohibited that a claim for Household contents includes motor vehicles, caravans, watercraft, or their parts and accessories.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100384",
+          "rule": "It is prohibited that Lock cylinder replacement expenses cover the replacement of locks to internal doors or outbuildings.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100392",
+          "rule": "It is prohibited that Property Household Insurance coverage extends to items that are permanently installed as building fixtures, such as built\u2011in kitchens, sanitary fittings, and fixed flooring that are insured under Property Building Insurance.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100393",
+          "rule": "It is prohibited that Property Household Insurance coverage is interpreted as insuring the building structure, its foundations, or any other parts that are insured under Property Building Insurance.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100394",
+          "rule": "It is prohibited that Property Household Insurance coverage is used to indemnify any financial loss arising from business stock, professional equipment, or goods held for sale, unless expressly endorsed in the policy.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101005",
+          "rule": "It is prohibited that valuables are considered movable property.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101028",
+          "rule": "It is prohibited that the insurance covers damage by plants.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101052",
+          "rule": "It is prohibited that the insurance covers costs for restoration or repair of a tombstone  for household contents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101053",
+          "rule": "It is prohibited that the insurance covers debris removal costs for household contents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101054",
+          "rule": "It is prohibited that the insurance covers vehicle equipment for household insurance.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101055",
+          "rule": "It is prohibited that the insurance covers items in vehicle.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101056",
+          "rule": "It is prohibited that the insurance covers building material for household contents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "102001",
+          "rule": "It is necessary that lock cylinder replacement expenses are claimed only if the keys were stolen.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "103010",
+          "rule": "It is prohibited that electronic devices are covered as a household content.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "202007",
+          "rule": "It is necessary that Household contents under Property Household Insurance is the set of movable items located at the insured address for private use.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100305",
+          "rule": "It is necessary that a claim for Lock cylinder replacement expenses is conditional upon the theft of keys being reported to the police.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100361",
+          "rule": "It is obligatory that the policyholder informs the insurer of any material increase in risk relevant to Property Household Insurance coverage, such as change of use of the insured location or long\u2011term unoccupancy, without undue delay.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100362",
+          "rule": "It is obligatory that the policyholder notifies the insurer about the theft of keys without undue delay.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100364",
+          "rule": "It is obligatory that the policyholder takes all reasonable steps to protect the Household contents from loss or damage.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100431",
+          "rule": "It is prohibited that the insurance covers damage caused by animals, including insects and rodents, and plants.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100432",
+          "rule": "It is prohibited that the insurance covers damage caused by animals, including insects and rodents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100437",
+          "rule": "It is prohibited that the insurance covers damage caused by gross negligence of a person living in a common household with the policyholder or the insured.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100452",
+          "rule": "It is prohibited that the insurance covers damage caused by the conscious consumption of drugs by a person living in a common household with the policyholder or the insured.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100490",
+          "rule": "It is prohibited that the insurance covers plants.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100495",
+          "rule": "It is prohibited that the insurance covers water bodies, land, permanent vegetation and plants on the land.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100504",
+          "rule": "It is prohibited that the inundation risk covers damage caused by groundwater, where a rise in the groundwater level was not caused by an inundation.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100505",
+          "rule": "It is prohibited that the inundation risk covers damage caused by groundwater, which is a rise in the groundwater level not caused by inundation.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101001",
+          "rule": "It is obligatory that if the claim case was reported to police, then the claim document package contains a police report or a police reference number.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101002",
+          "rule": "It is obligatory that if the claim case required fire brigade intervention, then the claim document package contains a fire brigade report or reference.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101006",
+          "rule": "It is prohibited that the insurance applies to liability for damage to movable property that is not owned by the insured, but was lent to them or is in their use.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101007",
+          "rule": "It is prohibited that the insurance covers any costs incurred by the Insured for maintenance, repair, replacement, or improvement of operated facilities or equipment.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101017",
+          "rule": "It is prohibited that the insured peril of weight of snow or ice covers damage arising directly or indirectly as a result of dilapidated, rotten, or otherwise damaged roof, load-bearing, and other structures.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101033",
+          "rule": "It is prohibited that the insurance covers costs for cleaning a well for household contents.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101034",
+          "rule": "It is prohibited that the insurance covers loss of rent for household contents.",
+          "status": "",
+          "statusReasoning": []
+        }
+      ],
+      "summary": {
+        "summary": "",
+        "missingInformation": "",
+        "recommendations": []
+      }
+    }
+  },
+  {
+    "id": 4,
+    "note": "Claim scenario: Building / Outbuilding / Weight of snow or ice",
+    "data": {
+      "id": "PC-20251203-260001642-042",
+      "documentMetadataDates_evaluatedDateTime": "2026-10-02T21:57:47.920140Z",
+      "businessDates_evaluatedDateTime": "2026-10-02T21:57:47.920140Z",
+      "claim": {
+        "claimId": "260001642",
+        "claimant": "SYN-Given-16 SYN-Family-42",
+        "damagedDescription": "Snow weight caused the outbuilding roof to collapse",
+        "dateOfLoss": "2025-12-03T00:00:00",
+        "dateOfReported": "2025-12-04T00:00:00",
+        "lossEvent": "Weight of snow or ice",
+        "lossSummary": "Damage to Outbuilding",
+        "damagedItems": [
+          {
+            "insuredSubject": "Outbuilding",
+            "risk": "Weight of snow or ice"
+          }
+        ]
+      },
+      "policy": {
+        "policyId": "PZ-PBI-000000043",
+        "policyStatusToDateOfLoss": "Active",
+        "product": "PBI",
+        "coveragePeriodFrom": "2025-07-08T00:00:00",
+        "coveragePeriodTo": "2026-06-26T00:00:00",
+        "coverage": {
+          "name": "Building",
+          "insuredLocation": "45 SYN-Street-45, SYN-City-05, KRP-11 01, SYN-Country",
+          "insuredSubjects": [
+            {
+              "name": "Flat",
+              "risks": [
+                "Atmospheric precipitation",
+                "Backflow waste",
+                "Explosion",
+                "Fire",
+                "Flood",
+                "Groundwater",
+                "Storm",
+                "Waterleakage"
+              ]
+            },
+            {
+              "name": "Outbuilding",
+              "risks": [
+                "Explosion",
+                "Fire",
+                "Flood",
+                "Storm",
+                "Weight of snow or ice"
+              ]
+            },
+            {
+              "name": "Debris removal expenses",
+              "risks": [
+                "Burglary",
+                "Explosion",
+                "Fire",
+                "Flood",
+                "Storm",
+                "Vandalism"
+              ]
+            },
+            {
+              "name": "Cleaning and drying property expenses",
+              "risks": [
+                "Burglary",
+                "Fire",
+                "Flood",
+                "Storm",
+                "Vandalism",
+                "Waterleakage"
+              ]
+            },
+            {
+              "name": "Waterleakage expenses",
+              "risks": [
+                "Waterleakage"
+              ]
+            },
+            {
+              "name": "Rental income loss",
+              "risks": [
+                "Burglary",
+                "Explosion",
+                "Fire",
+                "Flood",
+                "Storm",
+                "Vandalism",
+                "Waterleakage"
+              ]
+            }
+          ]
+        }
+      },
+      "contextDocuments": [
+        {
+          "extractedDocumentId": "DOC-260001642-001",
+          "extractedDocumentContent": "To the Claims Department,\nMy name is SYN-Given-16 SYN-Family-42, and I am writing to formally report a loss under policy number PZ-PBI-000000043. I reside at 45 SYN-Street-45, SYN-City-05, KRP-11 01, SYN-Country.\nOn the morning of Wednesday, December 3, 2025, we woke up to discover that the outbuilding on our property had suffered a major structural failure. We had been in the middle of a severe winter storm with persistent heavy snowfall and freezing temperatures. By the time I stepped outside, the sheer weight of the accumulated snow had caused the roof to collapse completely.\nI want to confirm that our regular residence \u2014 same living arrangement as always. We live here day-to-day, and there have been no changes to how we occupy the property.\nThe damage to the structure is extensive. The main wooden roof beams in the roof space completely buckled and fractured under the pressure. The collapse transferred a lot of force to the rest of the building. The brick wall on the south side bowed outward and developed large cracks. The steel roll-up door on the north entrance was struck by falling debris, leaving the frame and tracks bent and unusable. Inside the hallway, the drywall partition wall collapsed and became water-damaged from the meltwater. I also noticed that the concrete foundation around the base has developed cracks and settled slightly where the weight shifted.\nWhen I first saw the extent of the destruction, I wasn't sure exactly where to begin. I stood there for a moment, feeling uncertain about the safest way to proceed. Eventually, I resolved to act immediately to prevent further issues. I went to work making the area safe below the affected structure, clearing the zone so no one would be in danger. After securing the site, I arranged for a professional assessment of the damage to understand the full scope.\nI have preserved the damaged items in their current state and have taken photographs. I am fully prepared to allow your adjusters to inspect the property at their convenience.\nPlease advise on the claims process and any documentation you require.\nSYN-Given-16 SYN-Family-42",
+          "documentMetadataDates_createdDateTime": "2025-12-05T10:47:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-05T11:27:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-05T12:10:00Z",
+          "channel": "Email",
+          "documentType": "first_notice_of_loss"
+        },
+        {
+          "extractedDocumentId": "DOC-260001642-002",
+          "extractedDocumentContent": "This photo, taken at discovery, shows a wide street-level view of an outbuilding exhibiting severe structural failure consistent with heavy snow and ice accumulation. The primary timber-truss roof framing system is completely destroyed, with central load-bearing beams buckled and fractured inward across the upper span. Along the southern perimeter, the reinforced masonry exterior wall is heavily damaged, displaying panels visibly bowed outward and marred by extensive longitudinal stress fractures. On the north elevation, the steel-framed roll-up access door assembly is heavily damaged; the header beam is warped downward and the side tracks are bent laterally from impact with debris. Through the compromised envelope, the interior gypsum board partition wall system appears moderately damaged, with saturated drywall panels collapsed onto the floor. At the base, the perimeter concrete foundation footing shows light damage, featuring hairline cracks and minor settlement where the structure meets the ground. Snow and ice cover the surrounding area, marking the winter conditions present during capture.",
+          "documentMetadataDates_createdDateTime": "2025-12-04T12:32:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-04T13:06:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-04T13:27:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260001642-003",
+          "extractedDocumentContent": "This photo, taken during cleanup, shows a wide view of an outbuilding situated on snow-covered ground with visible signs of structural collapse. The primary timber-truss roof framing system is destroyed across the upper span, where central load-bearing beams have buckled and fractured inward. Along the southern perimeter, the reinforced masonry exterior wall is heavily damaged, displaying bowed panels and extensive longitudinal stress fractures. On the north elevation, the steel-framed roll-up access door assembly is deformed, with a warped downward header beam and laterally bent side tracks. Visible within the compromised structure, the interior gypsum board partition wall system lies collapsed and saturated on the floor. At the base, the perimeter concrete foundation footing exhibits light damage, characterized by hairline cracks and minor settlement in several sections. Scattered debris and displaced members indicate active remediation efforts are underway.",
+          "documentMetadataDates_createdDateTime": "2025-12-07T08:47:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-07T09:32:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-07T10:05:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260001642-004",
+          "extractedDocumentContent": "This photo, taken during cleanup, shows the primary timber-truss roof framing system across the upper span, structurally collapsed with central load-bearing beams buckled and fractured inward. Along the southern perimeter, the reinforced masonry exterior wall is heavily damaged, buckled and cracked with panels bowed outward and extensive longitudinal stress fractures visible. On the north elevation, the steel-framed roll-up access door assembly is deformed and impact-damaged, displaying a warped header beam and laterally bent side tracks. Inside the central corridor, the interior gypsum board partition wall system is water-damaged and collapsed, with saturated panels lying on the floor. At the base, the perimeter concrete foundation footing is cracked and settled, showing hairline fractures. Scattered structural debris covers the ground as active remediation clears the compromised materials, with snow and ice remnants visible on surrounding surfaces.",
+          "documentMetadataDates_createdDateTime": "2025-12-06T17:29:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-06T18:23:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-06T18:31:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260001642-005",
+          "extractedDocumentContent": "This photo, taken at discovery, shows a wide-angle view of an outbuilding exhibiting severe structural failure consistent with heavy snow and ice accumulation during winter conditions. The primary timber-truss roof framing system is completely destroyed, with central load-bearing beams buckled and fractured inward, leaving the upper span open and devoid of overhead support. Along the southern perimeter, the reinforced masonry exterior wall is heavily damaged, displaying bowed panels and extensive longitudinal stress fractures where lateral pressure was applied. On the north elevation, the steel-framed roll-up access door assembly is heavily deformed; the header beam is warped downward and the side tracks are bent laterally, crushed under the weight of displaced structural members. Through the open structure, the interior gypsum board partition wall system in the central corridor is moderately damaged, with saturated panels collapsed onto the floor from meltwater runoff. At the base, the perimeter concrete foundation footing shows light damage, with several sections exhibiting hairline cracks and minor settlement where concentrated structural weight pressed against the ground.",
+          "documentMetadataDates_createdDateTime": "2025-12-04T12:48:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-04T14:00:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-04T14:05:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260001642-006",
+          "extractedDocumentContent": "This photo, taken during cleanup, shows a wide, eye-level exterior view of an outbuilding surrounded by snow-covered ground and scattered debris piles. The primary timber-truss roof framing system is structurally collapsed and destroyed across the upper span, with central load-bearing beams buckled and fractured inward. Along the southern perimeter, the south-facing reinforced masonry exterior wall is heavily damaged, displaying panels bowed outward with extensive longitudinal stress fractures. On the north elevation, the northern steel-framed roll-up access door assembly is heavily damaged, featuring a top beam warped downward and side tracks bent laterally. Visible through the compromised structure, the interior gypsum board partition wall system is moderately damaged, with water-damaged panels collapsed onto the floor. At the base, the perimeter concrete foundation footing is lightly damaged, showing hairline cracks and minor settlement across several sections.",
+          "documentMetadataDates_createdDateTime": "2025-12-06T08:32:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-06T09:33:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-06T09:54:00Z",
+          "channel": "Email",
+          "documentType": "photo_evidence"
+        },
+        {
+          "extractedDocumentId": "DOC-260001642-007",
+          "extractedDocumentContent": "Invoice No. F260001642\nSupplier: SYN-Contractor-45033\nAddress: 78 SYN-Street-45033, SYN-City-03, KRP-27 01, SYN-Country\nPhone: SYN-Phone+884 32 045032\nIssue Date: 2025-12-19\nDue Date: 2026-01-02\n\nItems:\n  - Primary timber-truss roof framing system (Outbuilding): Replacement item value  ... \u20ac8,000.00\n  - South-facing reinforced masonry exterior wall (Outbuilding): Material \u20ac1,049.49, Labor \u20ac2,642.80, Disposal \u20ac307.71  ... \u20ac4,000.00\n  - Northern steel-framed roll-up access door assembly (Outbuilding): Material \u20ac209.27, Labor \u20ac267.48, Disposal \u20ac123.25  ... \u20ac600.00\n  - Interior gypsum board partition wall system (Outbuilding): Material \u20ac589.41, Labor \u20ac1,383.79, Disposal \u20ac262.88  ... \u20ac2,236.08\n  - Perimeter concrete foundation footing (Outbuilding): Material \u20ac679.40, Labor \u20ac1,120.72, Disposal \u20ac90.61  ... \u20ac1,890.73\n\nSubtotal: \u20ac16,726.81\nVAT 20%: \u20ac3,345.36\nTotal: \u20ac20,072.17",
+          "documentMetadataDates_createdDateTime": "2025-12-19T17:18:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-19T17:53:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-19T17:58:00Z",
+          "channel": "Hardcopy",
+          "documentType": "invoice"
+        },
+        {
+          "extractedDocumentId": "DOC-260001642-008",
+          "extractedDocumentContent": "Online Claim Submission\nClaim details\n- Full name: SYN-Given-16 SYN-Family-42\n- Policy ID: PZ-PBI-000000043\n- Claim ID: 260001642\n- Date of loss: 2025-12-03\n- Date reported: 2025-12-04\n- Risk: Weight of snow or ice\n- Cause of loss: Snow weight caused the outbuilding roof to collapse\n- Loss summary: Damage to Outbuilding\n- Damage description: Snow weight caused the outbuilding roof to collapse\n- Contact address: 45 SYN-Street-45, SYN-City-05, KRP-11 01, SYN-Country\n- Contact phone: SYN-Phone+884 45 000045\n- Contact IBAN: VLT00 0000 0000 0000 0000 46\nDamaged items\n- Primary timber-truss roof framing system (Outbuilding / Weight of snow or ice): REPLACEMENT  Estimated cost: \u20ac4400\n- South-facing reinforced masonry exterior wall (Outbuilding / Weight of snow or ice): REPAIR  Estimated cost: \u20ac2600\n- Northern steel-framed roll-up access door assembly (Outbuilding / Weight of snow or ice): REPAIR  Estimated cost: \u20ac400\n- Interior gypsum board partition wall system (Outbuilding / Weight of snow or ice): REPAIR  Estimated cost: \u20ac3100\n- Perimeter concrete foundation footing (Outbuilding / Weight of snow or ice): REPAIR  Estimated cost: \u20ac1039\nIncident details\n- Property occupied: True\n- Mitigation: Made the area safe below the affected structure; Arranged professional assessment of the damage\nClaimant narrative\nClaimant Information:\nI am SYN-Given-16 SYN-Family-42, the policyholder associated with Policy ID PZ-PBI-000000043. My contact address is 45 SYN-Street-45, SYN-City-05, KRP-11 01, SYN-Country. For communication regarding this claim, you may reach me at SYN-Phone+884 45 000045, and my banking details for any applicable settlements are held under IBAN VLT00 0000 0000 0000 0000 46 with SYN-Bank-1.\nIncident Overview:\nOn Wednesday, December 3, 2025, during a severe winter storm characterized by persistent heavy snowfall and sub-zero temperatures, a significant loss event occurred at my insured property. The excessive accumulation of snow created a critical load that the structure could not sustain. Specifically, snow weight caused the outbuilding roof to collapse. The collapse happened in the early morning hours while the property was occupied. I reported this loss on December 4, 2025, under Claim ID 260001642.\nStructural Damage Narrative:\nThe collapse resulted in extensive damage to the outbuilding\u2019s core structural components. The primary timber-truss roof framing system across the upper span structurally collapsed and was destroyed, with central load-bearing beams buckling inward. Consequently, the south-facing reinforced masonry exterior wall along the southern perimeter buckled and cracked heavily as shifting roof loads transferred lateral pressure against the facade. On the north elevation, the steel-framed roll-up access door assembly was deformed and impact-damaged by falling debris. Internally, the gypsum board partition walls in the central corridor collapsed and became water-damaged from meltwater runoff. Additionally, the perimeter concrete foundation footing surrounding the base developed cracks and minor settlement where displaced earth and concentrated weight pressed against it during the event.\nMitigation Actions:\nImmediately following the incident, I took action to make the area safe below the affected structure to prevent further injury or damage. I also arranged for a licensed structural engineer to conduct a professional assessment, who verified that the collapse mechanism was directly induced by the snow load rather than prior dilapidation or rot.\nPolicy Declarations:\nI confirm the following statements regarding this claim:\n- The building and business premises are owned by me as the policyholder.\n- The insured location is used primarily for its intended residential purpose as specified in the policy.\n- There have been no material increases in risk, no change of property use, and no long-term unoccupancy prior to this event.\n- Immediate mitigating action was taken to prevent further damage.\n- I allow inspection of the site and have preserved the damaged items and provided documentation before permanent repairs begin.",
+          "documentMetadataDates_createdDateTime": "2025-12-09T13:20:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-09T14:44:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-09T15:12:00Z",
+          "channel": "Email",
+          "documentType": "online_form_submission"
+        },
+        {
+          "extractedDocumentId": "DOC-260001642-009",
+          "extractedDocumentContent": "NATIONAL HYDROMETEOROLOGICAL INSTITUTE\nOFFICIAL METEOROLOGICAL AND HYDROLOGICAL EVENT ASSESSMENT\nReport Reference: NHMI-SYN-2025-1203-05A\nDate of Issue: 2025-12-03\nObservation Sector: SYN-City-05 Metropolitan Zone\nGeospatial Coordinates: 45 SYN-Street-45, SYN-City-05, KRP-11 01, SYN-Country\nPrimary Monitoring Station: SYN-MET-05-A\nEXECUTIVE SUMMARY\nThis official document certifies the atmospheric and hydrometeorological conditions recorded on December 3, 2025. The assessment is derived from continuous telemetry data, automated weather station logs, and localized field sampling conducted by the National Hydrometeorological Institute. The data confirms the occurrence of a severe winter storm event characterized by intense precipitation, critical snow accumulation, and extreme static loading conditions.\nSYNOPTIC OVERVIEW\nA deep continental anticyclone interacted with a moisture-laden frontal system, generating a prolonged period of intense orographic and convective snowfall across the observation sector. Surface temperatures remained consistently sub-freezing throughout the event window, preventing melt cycles and facilitating rapid snowpack stratification. The atmospheric pressure gradient supported sustained wind patterns that contributed to asymmetric snow drift and localized load concentration on exposed structures.\nPRIMARY METEOROLOGICAL MEASUREMENTS\nThe following parameters were recorded by Station SYN-MET-05-A and validated through ground-level verification during the critical event window:\n- Air Temperature: Mean daily value of -7.4\u00b0C; minimum recorded -13.8\u00b0C at 04:15 local time.\n- Precipitation Accumulation: 54.2 mm water equivalent recorded over a 20-hour window (01:00 to 21:00).\n- Snowfall Depth: Peak accumulation of 52 cm measured at 07:30 local time.\n- Snow Density Profile: In-situ sampling indicates a mean bulk density of 315 kg/m\u00b3, consistent with heavy, wet snow conditions.\n- Wind Dynamics: Sustained winds averaging 9.5 m/s with peak gusts reaching 24.1 m/s from the northwest quadrant.\nSTRUCTURAL LOAD ANALYSIS\nBased on the recorded depth and density parameters, the calculated static snow load at the time of peak accumulation was approximately 163.8 kg/m\u00b2. This value significantly exceeds the standard design load thresholds typically applicable to auxiliary residential structures and outbuildings in this climatic zone. The temporal distribution of precipitation indicates a rapid loading rate exceeding 8.5 kg/m\u00b2 per hour during the critical early-morning window, creating immediate physical stress on roofing systems.\nSEVERITY CLASSIFICATION AND IMPACT ASSESSMENT\nThe event has been classified under Winter Storm Severity Level 3 (Critical Accumulation). The combination of high-density snowfall, sustained sub-zero temperatures, and rapid load accumulation created conditions physically sufficient to induce structural failure in non-reinforced roofing systems through gravitational snow weight alone. The recorded parameters establish a direct causal link between the meteorological event and the extreme mechanical stress applied to structures within the specified geospatial coordinates.\nCERTIFICATION\nThe National Hydrometeorological Institute confirms that the recorded atmospheric and hydrometeorological data for December 3, 2025, directly support the physical mechanism of snow-weight-induced structural loading at the specified location. This report serves as the official technical record of the meteorological event.\nSigned,\nDr. V. Koval, Senior Meteorological Analyst\nNational Hydrometeorological Institute, SYN-Country",
+          "documentMetadataDates_createdDateTime": "2025-12-03T21:22:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-03T21:58:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-03T22:04:00Z",
+          "channel": "Email",
+          "documentType": "nhmi_report"
+        },
+        {
+          "extractedDocumentId": "DOC-260001642-010",
+          "extractedDocumentContent": "Site Inspection Report\nInspector Name: SYN-Inspector-30703\nInspection Date: 2025-12-11\nLocation: 45 SYN-Street-45, SYN-City-05, KRP-11 01, SYN-Country\nOn the date of inspection, I arrived at the residential property located at 45 SYN-Street-45, SYN-City-05, KRP-11 01, SYN-Country. The weather conditions were cold and clear, consistent with the current winter season. The property is an occupied residential dwelling, and the claimant was present to guide the inspection. The primary objective was to assess the physical condition of the outbuilding following the loss event reported on 2025-12-03.\nUpon initial approach, the severity of the structural failure was evident. The investigation confirms that the cause of loss is that snow weight caused the outbuilding roof to collapse. Visual inspection revealed no signs of pre-existing dilapidation, rot, or negligent maintenance; the structure appeared to be maintained in a reasonable state of repair prior to the severe winter storm. The collapse mechanism aligns with excessive vertical loading from accumulated snow and ice during the early morning of the incident.\nInside the Roof space, the Primary timber-truss roof framing system was found to be destroyed. The central load-bearing beams buckled and fractured inward under the vertical force of the accumulated snow and ice, resulting in a catastrophic loss of overhead structural support. The timber members are splintered and displaced, with no remaining capacity to bear load. As a direct consequence, the South-facing reinforced masonry exterior wall, located at the Exterior south wall, is heavily damaged. The wall panels bowed outward and developed extensive longitudinal stress fractures as the shifting roof loads transferred lateral pressure against the facade during the collapse.\nAt the North entrance, the Northern steel-framed roll-up access door assembly is heavily damaged. The header beam warped downward and the side tracks bent laterally due to direct impact with falling roof debris and displaced structural members, rendering the entryway inoperable. Within the Interior hallway, the Interior gypsum board partition wall system is moderately damaged. The drywall panels collapsed onto the floor and sustained saturation from meltwater runoff following the roof breach, resulting in compromised integrity. Finally, at the Exterior foundation, the Perimeter concrete foundation footing is lightly damaged. Several sections developed hairline cracks and minor settlement where displaced earth and concentrated structural weight pressed against the footing during the event.\nSafety measures were implemented to secure the area below the affected structure. The damage is strictly limited to the building structure and is consistent with the reported mechanism of snow weight causing the outbuilding roof to collapse.",
+          "documentMetadataDates_createdDateTime": "2025-12-11T14:09:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-11T14:32:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-11T14:45:00Z",
+          "channel": "Email",
+          "documentType": "site_inspection"
+        },
+        {
+          "extractedDocumentId": "DOC-260001642-011",
+          "extractedDocumentContent": "Damage Calculation No. KS260001642\nAssessor: SYN-Inspector-30703\nAddress: 733 SYN-Street-30703, SYN-City-03, KRP-17 01, SYN-Country\nProperty Address: 45 SYN-Street-45, SYN-City-05, KRP-11 01, SYN-Country\nPhone: SYN-Phone+884 02 030702\nCalculation Date: 2025-12-16\n\nDamage assessment:\n  * Primary timber-truss roof framing system (Outbuilding): Replacement item value  --> \u20ac7,200.00\n  * South-facing reinforced masonry exterior wall (Outbuilding): Repair: materials \u20ac980.00, labor \u20ac2,546.04, disposal \u20ac353.96  --> \u20ac3,880.00\n  * Northern steel-framed roll-up access door assembly (Outbuilding): Repair: materials \u20ac197.35, labor \u20ac253.76, disposal \u20ac124.89  --> \u20ac576.00\n  * Interior gypsum board partition wall system (Outbuilding): Repair: materials \u20ac586.60, labor \u20ac1,371.55, disposal \u20ac255.57  --> \u20ac2,213.72\n  * Perimeter concrete foundation footing (Outbuilding): Repair: materials \u20ac707.72, labor \u20ac1,180.05, disposal \u20ac116.40  --> \u20ac2,004.17\n\nAssessed total: \u20ac15,873.89\nVAT 20%: \u20ac3,174.78\nTotal assessed: \u20ac19,048.67",
+          "documentMetadataDates_createdDateTime": "2025-12-16T13:39:00Z",
+          "businessDates_filingOfficeDateTime": "2025-12-16T13:50:00Z",
+          "itSystemDates_enteredDateTime": "2025-12-16T14:14:00Z",
+          "channel": "Email",
+          "documentType": "damage_calculation"
+        },
+        {
+          "extractedDocumentId": "DOC-260001642-012",
+          "extractedDocumentContent": "OFFICIAL LAND REGISTRY EXTRACT\nCADASTRE CERTIFICATE OF OWNERSHIP\nISSUING AUTHORITY: SYN-Cadastre Registry Office, Sector KRP-11\nJURISDICTION: SYN-City-05, SYN-Country\nDOCUMENT TYPE: Extract from the Official Land Register / Title Verification\nEXTRACT NUMBER: EXT-KRP-2025-11-089432\nCADASTRAL REFERENCE: PARCEL-ID-45-KRP-11-OUT\nISSUE DATE: 2025-11-03\nTHIS DOCUMENT CONSTITUTES AN OFFICIAL EXTRACT FROM THE CENTRAL CADASTRAL REGISTER. IT CERTIFIES THE CURRENT LEGAL STATUS OF OWNERSHIP, PROPERTY CLASSIFICATION, AND TITLE RECORDS AS MAINTAINED BY THE LAND REGISTRY AUTHORITY.\nREGISTERED OWNER DETAILS:\nNAME: SYN-Given-16 SYN-Family-42\nREGISTRATION STATUS: Registered Proprietor\nOWNERSHIP TYPE: Sole Ownership\nLEGAL CAPACITY: Full Right of Disposition and Possession\nTITLE STATUS: Unencumbered Freehold Record\nPROPERTY IDENTIFICATION:\nADDRESS:\n45 SYN-Street-45, SYN-City-05, KRP-11 01, SYN-Country\nPROPERTY CLASSIFICATION: Outbuilding\nCADASTRAL AND BOUNDARY RECORDS:\nThe subject property is officially registered within the cadastre of Sector KRP-11. The land parcel and associated structure are recorded under the unique cadastral reference listed above. The registry confirms that the designated Outbuilding is legally recognized as a registered property asset. The boundaries of the parcel are defined according to the official survey records held by the SYN-Cadastre Office. The ownership record reflects exclusive rights of possession, use, and disposition vested solely in the named proprietor.\nREGISTRATION AND TITLE HISTORY:\nThe current ownership record was formally entered into the official land register prior to the date of this extract. The title deed confirms the proprietor\u2019s legal standing as the sole owner of the registered Outbuilding. This extract verifies that the property classification and ownership status are accurately reflected in the central cadastre database. The registration is active and valid under the jurisdiction of the SYN-Country Land Registry.\nADMINISTRATIVE REFERENCES:\nINTERNAL REFERENCE: PZ-PBI-000000043\nVERIFICATION CODE: VRF-KRP-2025-11-03-001\nOFFICIAL SEAL: [SYN-CADASTRE-SEAL-KRP-11]\nTHIS CERTIFICATE CONFIRMS THE OFFICIAL OWNERSHIP RECORD AS REQUIRED FOR PROPERTY VERIFICATION PURPOSES. IT DOES NOT CONSTITUTE INSURANCE COVERAGE, CLAIM VALIDATION, OR FINANCIAL ASSESSMENT. ANY DISCREPANCIES REGARDING TITLE STATUS MUST BE ADDRESSED DIRECTLY WITH THE ISSUING CADASTRE AUTHORITY.\nAUTHORIZED BY:\nSYN-Registrar-05\nChief Cadastre Officer, Sector KRP-11\nDATE OF ISSUANCE: 2025-11-03",
+          "documentMetadataDates_createdDateTime": "2025-11-03T15:21:00Z",
+          "businessDates_filingOfficeDateTime": "2025-11-03T16:36:00Z",
+          "itSystemDates_enteredDateTime": "2025-11-03T17:16:00Z",
+          "channel": "Hardcopy",
+          "documentType": "certificate_of_ownership"
+        }
+      ],
+      "rules": [
+        {
+          "id": "101003",
+          "rule": "It is necessary that the policy number stated in the primary claim form matches the policy number referenced by the claim case facts.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101049",
+          "rule": "It is necessary that the insurance policy number is defined in loss notification document by the person who report the loss.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "200001",
+          "rule": "It is obligatory that each loss notification specifies exactly one date of loss.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "200002",
+          "rule": "It is obligatory that the date of loss specified in each loss notification is later than the start date of the policy coverage period applicable to that loss notification.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "200003",
+          "rule": "It is obligatory that the end date of the policy coverage period applicable to each loss notification is on or after the date of loss specified in that loss notification.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100003",
+          "rule": "It is necessary that cover for Outbuilding applies only where a House is insured on the same policy.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100004",
+          "rule": "It is necessary that cover for Outbuilding applies only where outbuilding is located on the same plot of land as  house.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100035",
+          "rule": "It is necessary that damage to the insured building from Weight of snow or ice is caused by one of the following: roof collapse, guttering damage.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100048",
+          "rule": "It is necessary that the insured  Outbuilding is a fully enclosed and roofed structure of standard construction, such as a garage or shed, located at the insured address.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100078",
+          "rule": "It is obligatory that the Flat is used solely for residential purposes unless a different use is declared and accepted by the insurer.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100089",
+          "rule": "It is prohibited that a claim is made for an Outbuilding constructed of flammable materials like tarpaulin or canvas.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100095",
+          "rule": "It is prohibited that an Outbuilding is used for any trade, business, or professional purpose.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100106",
+          "rule": "It is prohibited that Property Building Insurance coverage extends to land, gardens, trees, plants, or outdoor paving, except where such elements are specifically listed as insured in the policy.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100107",
+          "rule": "It is prohibited that Property Building Insurance coverage indemnifies damage to any part of the building that constitutes an unauthorised or illegal structure under applicable building regulations, unless and to the extent the insurer agrees in writing.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100108",
+          "rule": "It is prohibited that Property Building Insurance coverage is interpreted as insuring movable household contents, personal belongings, or business stock, which are insured, if at all, under Property Household Insurance or another policy.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101029",
+          "rule": "It is prohibited that the insurance covers damage by plants.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "103004",
+          "rule": "It is necessary that Property Building Insurance coverage applies only to buildings or building parts that are owned by the policyholder and are specified in the policy or insured subjects  or the insurance subjects listed on the policy instance.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100060",
+          "rule": "It is obligatory that any claim under Flat is supported by a certificate of unit ownership or land registry extract showing the policyholder as owner or co-owner of the flat.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100062",
+          "rule": "It is obligatory that any Outbuilding containing insured property is kept securely locked.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100082",
+          "rule": "It is obligatory that the policyholder maintains the insured building in a reasonable state of repair and takes timely action to remedy known defects that could lead to damage.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100086",
+          "rule": "It is obligatory that, for Property Building Insurance coverage to apply, the policyholder is the legal owner or co\u2011owner of the insured House or Flat and can demonstrate ownership by a land registry extract or equivalent official document at the time of the claim.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100141",
+          "rule": "It is prohibited that the insurance covers damage arising as a result of a dilapidated roof structure under the weight of snow or ice risk.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100142",
+          "rule": "It is prohibited that the insurance covers damage arising as a result of a dilapidated supporting structure under the weight of snow or ice risk.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100143",
+          "rule": "It is prohibited that the insurance covers damage arising as a result of a rotten roof structure under the weight of snow or ice risk.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100144",
+          "rule": "It is prohibited that the insurance covers damage arising as a result of a rotten supporting structure under the weight of snow or ice risk.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100145",
+          "rule": "It is prohibited that the insurance covers damage arising as a result of an otherwise damaged roof structure under the weight of snow or ice risk.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100146",
+          "rule": "It is prohibited that the insurance covers damage arising as a result of an otherwise damaged supporting structure under the weight of snow or ice risk.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100148",
+          "rule": "It is prohibited that the insurance covers damage arising as a result of neglected maintenance of the structure's roof under the weight of snow or ice risk.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100150",
+          "rule": "It is prohibited that the insurance covers damage arising directly or indirectly as a result of dilapidated, rotten, or otherwise damaged roof, supporting, and other structures under the weight of snow or ice insured peril.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100151",
+          "rule": "It is prohibited that the insurance covers damage arising directly or indirectly as a result of dilapidated, rotten, or otherwise damaged roofing, load-bearing, and other structures under the weight of snow or ice risk.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100194",
+          "rule": "It is prohibited that the insurance covers damage caused by intentional action of a person living in a common household with the policyholder or the insured.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100199",
+          "rule": "It is prohibited that the insurance covers damage caused by intentional omission of action of a person living in a common household with the policyholder or the insured.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100211",
+          "rule": "It is prohibited that the insurance covers damage caused by the conscious consumption of alcohol by a person living in a common household with the policyholder or the insured.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100222",
+          "rule": "It is prohibited that the insurance covers damage caused by the permanent effect of humidity.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100231",
+          "rule": "It is prohibited that the insurance covers damage of electronic data for any reason.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100233",
+          "rule": "It is prohibited that the insurance covers damage to external downspouts under the weight of snow or ice, unless they were damaged in causal connection with damage to the roof covering, supporting, or other structure of the building risk.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100245",
+          "rule": "It is prohibited that the insurance covers damage to rain gutters and external downspouts, unless they were damaged in a causal connection with damage to the roof covering, supporting, or other structure of the building under the weight of snow or ice insured peril.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100246",
+          "rule": "It is prohibited that the insurance covers damage to rain gutters under the weight of snow or ice, unless they were damaged in causal connection with damage to the roof covering, supporting, or other structure of the building risk.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100253",
+          "rule": "It is prohibited that the insurance covers failure of measuring, control, regulating, or safety devices.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100277",
+          "rule": "It is prohibited that the insurance covers that part of the damage to items located in buildings during their repair or technical improvement whose cause of origin or increase in extent are the said works.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100288",
+          "rule": "It is prohibited that the inundation risk covers damage caused by groundwater, where a rise in the groundwater level was not caused by an inundation.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100297",
+          "rule": "It is prohibited that the weight of snow or ice covers damage arising as a result of neglected maintenance of the building's roof.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100298",
+          "rule": "It is prohibited that the weight of snow or ice covers damage arising as a result of neglected maintenance of the structure risk's roof.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "100300",
+          "rule": "It is prohibited that the weight of snow or ice covers damage arising directly or indirectly as a result of a dilapidated risk, rotten, or otherwise damaged roof, load-bearing, and other structures.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101001",
+          "rule": "It is obligatory that if the claim case was reported to police, then the claim document package contains a police report or a police reference number.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101002",
+          "rule": "It is obligatory that if the claim case required fire brigade intervention, then the claim document package contains a fire brigade report or reference.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101008",
+          "rule": "It is prohibited that the insurance covers any costs incurred by the Insured for maintenance, repair, replacement, or improvement of operated facilities or equipment.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101018",
+          "rule": "It is prohibited that the insured peril of weight of snow or ice covers damage arising directly or indirectly as a result of dilapidated, rotten, or otherwise damaged roof, load-bearing, and other structures.",
+          "status": "",
+          "statusReasoning": []
+        },
+        {
+          "id": "101045",
+          "rule": "It is prohibited that the insurance covers costs for lock cylinder replacement for flat, home or any outbuilding.",
+          "status": "",
+          "statusReasoning": []
+        }
+      ],
+      "summary": {
+        "summary": "",
+        "missingInformation": "",
+        "recommendations": []
+      }
+    }
+  }
+]

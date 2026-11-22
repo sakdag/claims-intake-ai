@@ -1,0 +1,72 @@
+[
+  {
+    "id": 100001,
+    "rule": "It is necessary that a claim for Cleaning and drying property expenses is a direct consequence of a valid claim for building damage.",
+    "product_code": "PBI",
+    "coverage_type": "Building",
+    "insured_subject": "Cleaning and drying property expenses",
+    "risk": null,
+    "gate_name": "CLAIM_REGISTRATION",
+    "gate_type": "ENTRY",
+    "order": 3,
+    "valid_from": null,
+    "valid_to": null,
+    "recommended_statuses": "PASSED,FAILED,UNRESOLVABLE"
+  },
+  {
+    "id": 100002,
+    "rule": "It is necessary that Cleaning and drying property expenses covers the costs for professionally cleaning and drying the insured building structure.",
+    "product_code": "PBI",
+    "coverage_type": "Building",
+    "insured_subject": "Cleaning and drying property expenses",
+    "risk": null,
+    "gate_name": "CLAIM_REGISTRATION",
+    "gate_type": "ENTRY",
+    "order": 3,
+    "valid_from": null,
+    "valid_to": null,
+    "recommended_statuses": "PASSED,FAILED,UNRESOLVABLE"
+  },
+  {
+    "id": 100003,
+    "rule": "It is necessary that cover for Outbuilding applies only where a House is insured on the same policy.",
+    "product_code": "PBI",
+    "coverage_type": "Building",
+    "insured_subject": "Outbuilding",
+    "risk": null,
+    "gate_name": "CLAIM_REGISTRATION",
+    "gate_type": "ENTRY",
+    "order": 3,
+    "valid_from": null,
+    "valid_to": null,
+    "recommended_statuses": "PASSED,FAILED,UNRESOLVABLE"
+  },
+  {
+    "id": 100004,
+    "rule": "It is necessary that cover for Outbuilding applies only where outbuilding is located on the same plot of land as  house.",
+    "product_code": "PBI",
+    "coverage_type": "Building",
+    "insured_subject": "Outbuilding",
+    "risk": null,
+    "gate_name": "CLAIM_REGISTRATION",
+    "gate_type": "ENTRY",
+    "order": 3,
+    "valid_from": null,
+    "valid_to": null,
+    "recommended_statuses": "PASSED,FAILED,UNRESOLVABLE"
+  },
+  {
+    "id": 100005,
+    "rule": "It is necessary that damage to the insured building from Atmospheric precipitation is caused by one of the following: water damage to ceilings and walls from rain penetrating the building envelope.",
+    "product_code": "PBI",
+    "coverage_type": "Building",
+    "insured_subject": "Flat",
+    "risk": "Atmospheric precipitation",
+    "gate_name": "CLAIM_REGISTRATION",
+    "gate_type": "ENTRY",
+    "order": 3,
+    "valid_from": null,
+    "valid_to": null,
+    "recommended_statuses": "PASSED,FAILED,UNRESOLVABLE"
+  }
+]
