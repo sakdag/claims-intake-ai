@@ -1,12 +1,12 @@
 variable "aws_region" {
   type        = string
-  description = "EU region for customer-account deploy"
+  description = "AWS region for the deploy"
   default     = "eu-north-1"
 }
 
 variable "aws_profile" {
   type        = string
-  description = "Local AWS CLI profile — must be personal, never employer"
+  description = "Local AWS CLI profile name used by Terraform providers"
   default     = "personal"
 }
 
@@ -22,8 +22,7 @@ variable "project_name" {
 
 variable "allowed_account_id" {
   type        = string
-  description = "Hard guard — refuse apply outside the deployment account"
-  default     = "000000000000"
+  description = "Hard guard — refuse apply unless the caller account matches (set in tfvars)"
 }
 
 variable "model_id" {
@@ -34,9 +33,8 @@ variable "model_id" {
 
 variable "approval_hmac_secret" {
   type        = string
-  description = "HMAC secret for signed outbound approvals (set via tfvars, never commit)"
+  description = "HMAC secret for signed outbound approvals (set via tfvars, never commit real values)"
   sensitive   = true
-  default     = "demo-change-me"
 }
 
 variable "ses_from_email" {
@@ -77,13 +75,42 @@ variable "adjuster_username" {
 
 variable "adjuster_password" {
   type        = string
-  description = "Initial Cognito password (tfvars only; change after first login if desired)"
+  description = "Initial Cognito password (set in tfvars; change after first login)"
   sensitive   = true
-  default     = "replace-with-strong-password"
 }
 
 variable "adjuster_email" {
   type        = string
   description = "Email attribute on the Cognito adjuster user"
   default     = "you@example.com"
+}
+
+variable "enable_hosted_ui" {
+  type        = bool
+  description = "Deploy S3 + CloudFront for the React adjuster SPA"
+  default     = false
+}
+
+variable "enable_inbound_email" {
+  type        = bool
+  description = "Wire SES receiving + EmailIngest Lambda into the claim inbox"
+  default     = false
+}
+
+variable "ses_inbound_region" {
+  type        = string
+  description = "Region for SES receipt rules (must support email receiving)"
+  default     = "eu-west-1"
+}
+
+variable "inbound_email_domain" {
+  type        = string
+  description = "Domain that receives claim emails (MX must point at SES inbound)"
+  default     = "claims.example.com"
+}
+
+variable "inbound_email_address" {
+  type        = string
+  description = "Recipient address for FNOL / claim mail (must be under inbound_email_domain)"
+  default     = "intake@claims.example.com"
 }

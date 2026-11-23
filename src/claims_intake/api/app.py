@@ -43,7 +43,10 @@ def _store() -> CaseStore:
 
 
 def _hmac_secret() -> str:
-    return os.getenv("CLAIMS_APPROVAL_HMAC_SECRET", "demo-change-me")
+    secret = os.getenv("CLAIMS_APPROVAL_HMAC_SECRET", "").strip()
+    if not secret:
+        raise RuntimeError("CLAIMS_APPROVAL_HMAC_SECRET is not set")
+    return secret
 
 
 def _sfn():

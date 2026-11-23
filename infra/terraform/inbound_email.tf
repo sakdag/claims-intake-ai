@@ -2,30 +2,6 @@
 # Off by default. SES *receiving* is not available in every region (not in eu-north-1);
 # set ses_inbound_region to a receiving-capable region (e.g. eu-west-1) and point MX there.
 
-variable "enable_inbound_email" {
-  type        = bool
-  description = "Wire SES receiving + EmailIngest Lambda into the claim inbox"
-  default     = false
-}
-
-variable "ses_inbound_region" {
-  type        = string
-  description = "Region for SES receipt rules (must support email receiving)"
-  default     = "eu-west-1"
-}
-
-variable "inbound_email_domain" {
-  type        = string
-  description = "Domain that receives claim emails (MX must point at SES inbound)"
-  default     = "claims.example.com"
-}
-
-variable "inbound_email_address" {
-  type        = string
-  description = "Recipient address for FNOL / claim mail (must be under inbound_email_domain)"
-  default     = "intake@claims.example.com"
-}
-
 provider "aws" {
   alias   = "ses_inbound"
   region  = var.ses_inbound_region

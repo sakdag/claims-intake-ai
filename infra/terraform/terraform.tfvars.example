@@ -1,6 +1,6 @@
 aws_profile           = "personal"
 aws_region            = "eu-north-1"
-allowed_account_id    = "000000000000"
+allowed_account_id    = "000000000000" # your AWS account id
 model_id              = "eu.amazon.nova-micro-v1:0"
 approval_hmac_secret  = "replace-with-long-random-string"
 environment           = "demo"

@@ -45,6 +45,11 @@ build/
 # Local working notes (not for the public repo)
 PROGRESS.md
 
+# Local Cursor rules / IDE (keep isolation notes off the public tree)
+.cursor/
+docs/images/_chrome_shot/
+docs/images/_arch_render.html
+
 # IDE / OS
 .DS_Store
 .idea/

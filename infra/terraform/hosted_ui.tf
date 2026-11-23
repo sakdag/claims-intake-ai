@@ -2,12 +2,6 @@
 # is available on the account, then: terraform apply -var='enable_hosted_ui=true'
 # and run frontend/scripts/deploy-ui.sh
 
-variable "enable_hosted_ui" {
-  type        = bool
-  description = "Deploy S3 + CloudFront for the React adjuster SPA"
-  default     = false
-}
-
 resource "aws_s3_bucket" "ui" {
   count         = var.enable_hosted_ui ? 1 : 0
   bucket_prefix = "${local.name_prefix}-ui-"

@@ -10,7 +10,7 @@ resource "null_resource" "account_guard" {
   lifecycle {
     precondition {
       condition     = local.account_ok
-      error_message = "Refusing to deploy: account ${data.aws_caller_identity.current.account_id} != allowed ${var.allowed_account_id} (deployment only)."
+      error_message = "Refusing to deploy: account ${data.aws_caller_identity.current.account_id} != allowed ${var.allowed_account_id}."
     }
   }
 }
