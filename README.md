@@ -19,7 +19,7 @@ The model never approves or denies a claim. It prepares work for the adjuster.
 
 ![System architecture](docs/images/architecture.png)
 
-*End-to-end flow: claim package lands in S3, Step Functions runs AI intake and pauses for human review, then SES outbound + finalize. Adjusters sign in with Cognito and call the review API through API Gateway.*
+*Target architecture: inbound email (and optional structured uploads) land in S3, Step Functions runs AI intake and pauses for human review, then SES outbound + finalize. Adjusters use a CloudFront-hosted React app with Cognito → API Gateway → review API.*
 
 | Layer | Choice |
 | --- | --- |
