@@ -17,10 +17,43 @@ The model never approves or denies a claim. It prepares work for the adjuster.
 
 ## Architecture
 
-```
-S3 inbox → Step Functions
-  Ingest → ProcessClaim (Bedrock) → WaitForHumanReview (task token)
-  → SendOutboundEmail (SES, if approved) → Finalize
+```mermaid
+flowchart LR
+  subgraph Ingest
+    PKG[Claim package JSON] --> S3[(S3 inbox)]
+    S3 -->|ObjectCreated| ST[Starter Lambda]
+    ST --> SFN[Step Functions]
+  end
+
+  subgraph Pipeline["Step Functions — claim intake"]
+    direction TB
+    SFN --> IN[Ingest]
+    IN --> PC[ProcessClaim]
+    PC --> BR[Amazon Bedrock<br/>classify · extract]
+    PC --> CHK[Conflicts + policy checks<br/>+ missing-doc draft]
+    CHK --> WAIT[WaitForHumanReview<br/>waitForTaskToken]
+    WAIT -->|SendTaskSuccess| MAIL[SendOutboundEmail]
+    MAIL --> SES[Amazon SES]
+    MAIL --> FIN[Finalize]
+  end
+
+  subgraph State
+    DDB[(DynamoDB<br/>cases + audit)]
+  end
+
+  IN -.-> DDB
+  PC -.-> DDB
+  WAIT -.-> DDB
+  MAIL -.-> DDB
+  FIN -.-> DDB
+
+  subgraph Review["Adjuster path"]
+    UI[React review console] -->|Cognito JWT| APIGW[API Gateway]
+    APIGW --> API[Review API Lambda<br/>FastAPI / Mangum]
+    API --> DDB
+    API -->|approve / reject| WAIT
+    COG[[Amazon Cognito]] -.-> UI
+  end
 ```
 
 | Layer | Choice |
@@ -35,7 +68,7 @@ S3 inbox → Step Functions
 
 ![Step Functions claim intake execution](docs/images/step-functions-hitl.png)
 
-*Step Functions graph for a claim package: ingest → AI process → human review wait → outbound email → finalize.*
+*Live Step Functions graph for one claim: ingest → AI process → human review wait → outbound email → finalize.*
 
 Security notes: [`docs/SECURITY.md`](docs/SECURITY.md).  
 Eval numbers: [`docs/EVAL.md`](docs/EVAL.md).
