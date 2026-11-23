@@ -38,8 +38,7 @@ S3 inbox → Step Functions
 *Step Functions graph for a claim package: ingest → AI process → human review wait → outbound email → finalize.*
 
 Security notes: [`docs/SECURITY.md`](docs/SECURITY.md).  
-Eval numbers: [`docs/EVAL.md`](docs/EVAL.md).  
-Internal build checklist: [`PROGRESS.md`](PROGRESS.md).
+Eval numbers: [`docs/EVAL.md`](docs/EVAL.md).
 
 ## Human review
 

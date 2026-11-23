@@ -42,6 +42,9 @@ crash.log
 # Lambda build artifacts
 build/
 
+# Local working notes (not for the public repo)
+PROGRESS.md
+
 # IDE / OS
 .DS_Store
 .idea/
