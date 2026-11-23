@@ -26,12 +26,16 @@ S3 inbox → Step Functions
 | Layer | Choice |
 | --- | --- |
 | Core / Lambdas | Python 3.12 (shared package) |
-| Operator API | FastAPI |
+| Operator API | FastAPI on Lambda behind API Gateway (Cognito JWT) |
 | Adjuster UI | React + TypeScript (Vite) |
 | Orchestration | AWS Step Functions + Lambda |
 | Models | Amazon Bedrock (`eu.amazon.nova-micro-v1:0` default) |
 | State / audit | DynamoDB |
 | Infra | Terraform in `eu-north-1`, KMS, least-privilege IAM |
+
+![Step Functions claim intake execution](docs/images/step-functions-hitl.png)
+
+*Step Functions graph for a claim package: ingest → AI process → human review wait → outbound email → finalize.*
 
 Security notes: [`docs/SECURITY.md`](docs/SECURITY.md).  
 Eval numbers: [`docs/EVAL.md`](docs/EVAL.md).  
@@ -39,8 +43,13 @@ Internal build checklist: [`PROGRESS.md`](PROGRESS.md).
 
 ## Human review
 
-The adjuster console shows a field workspace (AI value vs citation vs working
-value), policy checks, conflicts, classified documents, and the outbound draft.
+The adjuster console is an inbox-style workstation: queue on the left, field
+workspace in the center (AI value vs citation vs working value), and signals /
+documents / draft on the right.
+
+![Adjuster review console](docs/images/adjuster-review-console.png)
+
+*Claim `260001894` paused for adjuster review — corrections, policy checks, and amount conflicts before outbound release.*
 
 - **Save corrections** — overrides structured fields; audit keeps the AI originals
 - **Approve & send** — issues a single-use HMAC approval bound to the draft, then

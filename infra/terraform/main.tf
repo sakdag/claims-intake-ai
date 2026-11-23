@@ -739,19 +739,39 @@ resource "aws_apigatewayv2_route" "health" {
   target    = "integrations/${aws_apigatewayv2_integration.api[0].id}"
 }
 
-resource "aws_apigatewayv2_route" "proxy" {
+# Use GET/POST only — ANY would also match OPTIONS and break browser CORS
+# preflight (JWT authorizer returns 401 before the CORS auto-response).
+resource "aws_apigatewayv2_route" "proxy_get" {
   count              = var.enable_hosted_api ? 1 : 0
   api_id             = aws_apigatewayv2_api.review[0].id
-  route_key          = "ANY /{proxy+}"
+  route_key          = "GET /{proxy+}"
   target             = "integrations/${aws_apigatewayv2_integration.api[0].id}"
   authorization_type = "JWT"
   authorizer_id      = aws_apigatewayv2_authorizer.cognito[0].id
 }
 
-resource "aws_apigatewayv2_route" "root" {
+resource "aws_apigatewayv2_route" "proxy_post" {
   count              = var.enable_hosted_api ? 1 : 0
   api_id             = aws_apigatewayv2_api.review[0].id
-  route_key          = "ANY /"
+  route_key          = "POST /{proxy+}"
+  target             = "integrations/${aws_apigatewayv2_integration.api[0].id}"
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.cognito[0].id
+}
+
+resource "aws_apigatewayv2_route" "root_get" {
+  count              = var.enable_hosted_api ? 1 : 0
+  api_id             = aws_apigatewayv2_api.review[0].id
+  route_key          = "GET /"
+  target             = "integrations/${aws_apigatewayv2_integration.api[0].id}"
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.cognito[0].id
+}
+
+resource "aws_apigatewayv2_route" "root_post" {
+  count              = var.enable_hosted_api ? 1 : 0
+  api_id             = aws_apigatewayv2_api.review[0].id
+  route_key          = "POST /"
   target             = "integrations/${aws_apigatewayv2_integration.api[0].id}"
   authorization_type = "JWT"
   authorizer_id      = aws_apigatewayv2_authorizer.cognito[0].id
