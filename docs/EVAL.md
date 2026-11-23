@@ -11,7 +11,7 @@ header fields, policy gate statuses). Metrics:
 | Extraction field accuracy | Exact match on claim header fields; `damagedItems` scored by **normalized risk-set equality** (subjects are free-form inventory names) |
 | Per-field accuracy | Same match, reported per field. Gold includes `claimant` |
 | Citation rate | Share of extracted fields that include at least one source quote |
-| Policy-check status accuracy | Deterministic gates on **AI-extracted** claim fields (+ policy record as the policy DB) vs gold; reported **per check** and as a mean |
+| Policy-check status accuracy | Deterministic gates on **AI-extracted** claim fields (+ policy record as the policy DB) vs gold; reported **per check** and as a mean. **Peril check simplification:** a risk passes if it appears on *any* insured subject’s covered-risk list (not per-subject). Gold uses the same function, so 0.727 is vs that looser rule. A stricter approach would map extracted item names → coarse policy subjects before checking. |
 
 Amount-conflict detection is a heuristic over document text. It is **not** graded
 against independent labels and is omitted from the headline table.
@@ -31,13 +31,24 @@ Default model: `eu.amazon.nova-micro-v1:0`.
 5. **Gold `claimant`** — `extraction_gold()` now includes `claimant` (was missing → fake 0.0).
 6. **`damagedItems` parsing** — accept JSON-encoded list strings from the model;
    score by risk set (not free-form subject strings).
-7. **Peril gate** — match extracted risks against the union of policy covered risks
-   (extracted subjects rarely equal coarse policy subject names).
+7. **Peril gate (simplified)** — match extracted risks against the **union** of
+   covered risks on the policy. Real policies are per-subject (Fire on electronics
+   ≠ Fire on contents); we kept the looser rule because extract emits fine-grained
+   item names (“rattan armchair”) while gold/policy use coarse subjects
+   (“Household contents”). Mapping extract → policy subjects is the cleaner
+   follow-up (and a small AI feature).
 
 ## Locked test numbers (published)
 
-Run: `2026-11-23T23:32:05Z` · full **150** claims of the locked test split ·
-**0** claim-level errors · artifact `eval/results/published_test_summary.json`.
+**Fresh Bedrock run** (not a re-score of saved outputs): `2026-11-23T23:32:05Z`,
+artifact `eval/results/20261123T233205Z_test_records.jsonl` · full **150** locked
+test claims · **0** claim-level errors · summary
+`eval/results/published_test_summary.json`.
+
+Classify/extract outputs differ from earlier 150-claim runs on the same split;
+
+
+
 
 | Split | n claims | Model | Classify acc | Classify macro-F1 | Extract field acc | Citation rate | Policy-check mean |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: |
@@ -55,8 +66,9 @@ Policy-check status accuracy (per check):
 | ---: | ---: | ---: |
 | 1.000 | 1.000 | 0.727 |
 
-Tokens: **1,542,244** in / **190,001** out — on the order of **~$0.08** at Nova Micro list rates
-(excl. infra).
+Tokens (this run): **1,542,244** in / **190,001** out
+(classify `838,150` / `87,242` + extract `704,094` / `102,759`).
+Cost ≈ **~$0.08** at Nova Micro list rates (excl. infra).
 
 ```bash
 claims-eval --split test --limit 20   # smoke

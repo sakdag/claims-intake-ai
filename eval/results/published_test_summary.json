@@ -230,5 +230,21 @@
     "260002997"
   ],
   "n_errors": 0,
-  "n_scored": 150
+  "n_scored": 150,
+  "run_provenance": {
+    "kind": "fresh_bedrock_run",
+    "records": "eval/results/20261123T233205Z_test_records.jsonl",
+    "note": "Full Bedrock classify+extract over the locked 150-claim test split. Not a re-score of prior outputs. "
+  },
+  "tokens_breakdown": {
+    "classify": {
+      "input": 838150,
+      "output": 87242
+    },
+    "extract": {
+      "input": 704094,
+      "output": 102759
+    }
+  },
+  "policy_check_note": "peril_covered uses union-of-covered-risks (not per insured subject). Gold labels use the same function."
 }
