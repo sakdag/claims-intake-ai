@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 from typing import Any
 
@@ -150,17 +151,7 @@ def _clean_value(name: str, value: Any) -> Any:
     if value is None:
         return None
     if name == "damagedItems":
-        if isinstance(value, list):
-            cleaned: list[dict[str, str]] = []
-            for item in value:
-                if not isinstance(item, dict):
-                    continue
-                subject = str(item.get("insuredSubject") or item.get("subject") or "").strip()
-                risk = str(item.get("risk") or "").strip()
-                if subject and risk:
-                    cleaned.append({"insuredSubject": subject, "risk": risk})
-            return cleaned
-        return []
+        return _clean_damaged_items(value)
     s = str(value).strip()
     if name in {"dateOfLoss", "dateOfReported"}:
         m = re.search(r"(\d{4}-\d{2}-\d{2})", s)
@@ -173,3 +164,27 @@ def _clean_value(name: str, value: Any) -> Any:
         if "PBI" in up:
             return "PBI"
     return s
+
+
+def _clean_damaged_items(value: Any) -> list[dict[str, str]]:
+    """Accept a list or a JSON-encoded list string (common model quirk)."""
+    raw: Any = value
+    if isinstance(raw, str):
+        text = raw.strip()
+        if not text:
+            return []
+        try:
+            raw = json.loads(text)
+        except json.JSONDecodeError:
+            return []
+    if not isinstance(raw, list):
+        return []
+    cleaned: list[dict[str, str]] = []
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        subject = str(item.get("insuredSubject") or item.get("subject") or "").strip()
+        risk = str(item.get("risk") or "").strip()
+        if subject and risk:
+            cleaned.append({"insuredSubject": subject, "risk": risk})
+    return cleaned

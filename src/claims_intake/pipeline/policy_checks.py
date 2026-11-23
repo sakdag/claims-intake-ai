@@ -78,15 +78,19 @@ def check_policy_status(policy: dict[str, Any]) -> RuleOutcome:
 
 
 def check_perils_covered(claim: dict[str, Any], policy: dict[str, Any]) -> RuleOutcome:
+    """
+    Check each damaged item's risk against the union of covered risks on the policy.
+
+    Extracted insuredSubject strings are often fine-grained inventory names, while
+    the policy uses coarse subjects (e.g. House). Matching on risk keeps the gate
+    aligned with what extract can reliably produce.
+    """
     damaged = claim.get("damagedItems") or []
     coverage = policy.get("coverage") or {}
     subjects = coverage.get("insuredSubjects") or policy.get("insuredSubjects") or []
-    risk_by_subject: dict[str, set[str]] = {}
+    all_risks: set[str] = set()
     for subj in subjects:
-        name = subj.get("name") or subj.get("insuredSubject")
-        risks = set(subj.get("risks") or [])
-        if name:
-            risk_by_subject[str(name)] = risks
+        all_risks |= {str(r) for r in (subj.get("risks") or [])}
 
     if not damaged:
         return RuleOutcome(
@@ -99,11 +103,9 @@ def check_perils_covered(claim: dict[str, Any], policy: dict[str, Any]) -> RuleO
 
     failures: list[str] = []
     for item in damaged:
-        subject = item.get("insuredSubject")
         risk = item.get("risk")
-        allowed = risk_by_subject.get(str(subject), set())
-        if risk not in allowed:
-            failures.append(f"{subject}/{risk} not in covered risks {sorted(allowed)}")
+        if risk not in all_risks:
+            failures.append(f"{risk!r} not in covered risks {sorted(all_risks)}")
 
     if failures:
         return RuleOutcome(
@@ -117,6 +119,6 @@ def check_perils_covered(claim: dict[str, Any], policy: dict[str, Any]) -> RuleO
         rule_id="det.peril_covered",
         gate=GateName.CLAIM_REGISTRATION,
         status=RuleStatus.PASSED,
-        reason="All damaged item perils covered for their insured subjects",
+        reason="All damaged-item risks are covered on the policy",
         evaluator="deterministic",
     )

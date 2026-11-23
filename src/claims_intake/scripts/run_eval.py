@@ -57,6 +57,8 @@ def main(argv: list[str] | None = None) -> int:
     per_field_hits: Counter[str] = Counter()
     per_field_n: Counter[str] = Counter()
     policy_acc_scores: list[float] = []
+    policy_per_check_hits: Counter[str] = Counter()
+    policy_per_check_n: Counter[str] = Counter()
     policy_status_counts: Counter[str] = Counter()
     records: list[dict[str, Any]] = []
     token_in = token_out = 0
@@ -107,6 +109,8 @@ def main(argv: list[str] | None = None) -> int:
         )
         policy_acc_scores.append(pca["accuracy"])
         for name, ok in (pca.get("per_check") or {}).items():
+            policy_per_check_n[name] += 1
+            policy_per_check_hits[name] += int(ok)
             policy_status_counts[f"pred_match:{name}:{'hit' if ok else 'miss'}"] += 1
 
         records.append({"claim_id": cid, "result": result})
@@ -139,6 +143,12 @@ def main(argv: list[str] | None = None) -> int:
         "policy_check_status_accuracy_mean": (
             sum(policy_acc_scores) / len(policy_acc_scores) if policy_acc_scores else None
         ),
+        "policy_check_per_check_accuracy": {
+            name: (policy_per_check_hits[name] / policy_per_check_n[name])
+            if policy_per_check_n[name]
+            else None
+            for name in sorted(policy_per_check_n)
+        },
         "policy_check_status_counts": dict(policy_status_counts),
         "amount_conflict_note": (
             "Amount-conflict detector is not scored against independent labels; "

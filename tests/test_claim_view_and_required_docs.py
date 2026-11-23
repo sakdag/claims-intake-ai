@@ -1,6 +1,7 @@
-from claims_intake.data.labels import required_doc_presence
+from claims_intake.data.labels import extraction_gold, required_doc_presence
 from claims_intake.eval.metrics import field_exact_match, policy_check_status_accuracy
 from claims_intake.pipeline.claim_view import claim_view_from_extraction
+from claims_intake.pipeline.extract import _clean_damaged_items
 
 
 def test_claim_view_from_extraction() -> None:
@@ -41,7 +42,7 @@ def test_required_doc_uses_predicted_types() -> None:
     assert out[0]["status"] == "PASSED"
 
 
-def test_field_exact_match_includes_damaged_items() -> None:
+def test_field_exact_match_damaged_items_by_risk_set() -> None:
     gold = {
         "claimId": "1",
         "policyId": "PZ-PHI-1",
@@ -50,7 +51,7 @@ def test_field_exact_match_includes_damaged_items() -> None:
         "lossEvent": "Flood",
         "claimant": "Ada",
         "product": "PHI",
-        "damagedItems": [{"insuredSubject": "Contents", "risk": "Flood"}],
+        "damagedItems": [{"insuredSubject": "House", "risk": "Flood"}],
     }
     pred = [
         {"name": "claimId", "value": "1", "citations": [{"quote": "x"}]},
@@ -62,7 +63,8 @@ def test_field_exact_match_includes_damaged_items() -> None:
         {"name": "product", "value": "PHI", "citations": [{"quote": "x"}]},
         {
             "name": "damagedItems",
-            "value": [{"insuredSubject": "Contents", "risk": "Flood"}],
+            # Different subject wording; same risk set → match
+            "value": [{"insuredSubject": "Absorbent cotton towels", "risk": "Flood"}],
             "citations": [{"quote": "x"}],
         },
     ]
@@ -83,3 +85,22 @@ def test_policy_check_status_accuracy() -> None:
         {"rule_id": "det.peril_covered", "status": "FAILED"},
     ]
     assert policy_check_status_accuracy(gold, pred)["accuracy"] == 1.0
+
+
+def test_extraction_gold_includes_claimant() -> None:
+    gold = extraction_gold(
+        {
+            "claim": {"claimId": "1", "claimant": "Ada Lovelace"},
+            "policy": {"policyId": "PZ-PHI-1", "product": "PHI"},
+        }
+    )
+    assert gold["claimant"] == "Ada Lovelace"
+
+
+def test_clean_damaged_items_parses_json_string() -> None:
+    raw = '[{"insuredSubject":"Roof","risk":"Flood"}]'
+    assert _clean_damaged_items(raw) == [{"insuredSubject": "Roof", "risk": "Flood"}]
+    assert _clean_damaged_items([{"insuredSubject": "Roof", "risk": "Flood"}]) == [
+        {"insuredSubject": "Roof", "risk": "Flood"}
+    ]
+    assert _clean_damaged_items("not-json") == []

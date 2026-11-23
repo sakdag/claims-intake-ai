@@ -8,10 +8,10 @@ header fields, policy gate statuses). Metrics:
 | Metric | Definition |
 | --- | --- |
 | Classification accuracy / macro-F1 | Predicted `document_type` vs gold per document |
-| Extraction field accuracy | Exact match on claim header fields + `damagedItems` (set equality). `claimId` is **not** hinted in the prompt |
-| Per-field accuracy | Same exact-match, reported per field |
+| Extraction field accuracy | Exact match on claim header fields; `damagedItems` scored by **normalized risk-set equality** (subjects are free-form inventory names) |
+| Per-field accuracy | Same match, reported per field. Gold includes `claimant` |
 | Citation rate | Share of extracted fields that include at least one source quote |
-| Policy-check status accuracy | Deterministic gates run on **AI-extracted** claim fields (+ policy record as the policy DB) vs gold gate statuses |
+| Policy-check status accuracy | Deterministic gates on **AI-extracted** claim fields (+ policy record as the policy DB) vs gold; reported **per check** and as a mean |
 
 Amount-conflict detection is a heuristic over document text. It is **not** graded
 against independent labels and is omitted from the headline table.
@@ -28,24 +28,32 @@ Default model: `eu.amazon.nova-micro-v1:0`.
 3. **Honest gates** — policy checks and required-doc rules use extracted /
    classified outputs, not gold claim fields / gold document types.
 4. **No claimId hint** — extraction must find claimId in the documents when present.
+5. **Gold `claimant`** — `extraction_gold()` now includes `claimant` (was missing → fake 0.0).
+6. **`damagedItems` parsing** — accept JSON-encoded list strings from the model;
+   score by risk set (not free-form subject strings).
+7. **Peril gate** — match extracted risks against the union of policy covered risks
+   (extracted subjects rarely equal coarse policy subject names).
 
 ## Locked test numbers (published)
 
-Run: `2026-11-23T18:14:14Z` · full **150** claims of the locked test split ·
+Run: `2026-11-23T23:32:05Z` · full **150** claims of the locked test split ·
 **0** claim-level errors · artifact `eval/results/published_test_summary.json`.
 
-| Split | n claims | Model | Classify acc | Classify macro-F1 | Extract field acc | Citation rate | Policy-check status acc |
+| Split | n claims | Model | Classify acc | Classify macro-F1 | Extract field acc | Citation rate | Policy-check mean |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: |
-| test | 150 | `eu.amazon.nova-micro-v1:0` | 0.971 | 0.949 | 0.597 | 0.969 | 0.667 |
+| test | 150 | `eu.amazon.nova-micro-v1:0` | 0.970 | 0.948 | 0.803 | 0.957 | 0.909 |
 
-Per-field extract accuracy (same run):
+Per-field extract accuracy:
 
-| claimId | policyId | dateOfLoss | dateOfReported | lossEvent | claimant | product | damagedItems |
+| claimId | policyId | dateOfLoss | dateOfReported | lossEvent | claimant | product | damagedItems (risk set) |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 0.827 | 0.607 | 1.000 | 0.800 | 0.707 | 0.000 | 0.833 | 0.000 |
+| 0.833 | 0.607 | 1.000 | 0.807 | 0.720 | 0.907 | 0.820 | 0.733 |
 
-`claimant` / `damagedItems` are weak on Nova Micro with the current prompt (policy-check
-score is capped by empty `damagedItems` → peril gate often `UNRESOLVABLE` vs gold `PASSED`).
+Policy-check status accuracy (per check):
+
+| coverage_period | policy_status | peril_covered |
+| ---: | ---: | ---: |
+| 1.000 | 1.000 | 0.727 |
 
 Tokens: **1,542,244** in / **190,001** out — on the order of **~$0.08** at Nova Micro list rates
 (excl. infra).

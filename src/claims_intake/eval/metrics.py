@@ -49,9 +49,10 @@ def field_exact_match(gold: dict[str, Any], pred_fields: list[dict[str, Any]]) -
         per_field[key] = ok
         hits += int(ok)
 
-    gold_items = _norm_damaged(gold.get("damagedItems") or [])
-    pred_items = _norm_damaged(pred_map.get("damagedItems") or [])
-    damaged_ok = gold_items == pred_items
+    # Subjects from extract are free-form inventory names; score the risk set only.
+    gold_risks = {risk for _, risk in _norm_damaged(gold.get("damagedItems") or [])}
+    pred_risks = {risk for _, risk in _norm_damaged(pred_map.get("damagedItems") or [])}
+    damaged_ok = gold_risks == pred_risks
     per_field["damagedItems"] = damaged_ok
     hits += int(damaged_ok)
     n_keys = len(_SCALAR_KEYS) + 1

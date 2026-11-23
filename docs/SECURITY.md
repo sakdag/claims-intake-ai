@@ -16,6 +16,7 @@ AWS account.
 
 - The system classifies, extracts, checks, summarises, and drafts. It does **not** approve or deny claims.
 - Outbound claimant messages require a **signed, single-use** HMAC token bound to the exact draft payload. The review API issues the token; **SendEmail verifies and atomically consumes** it before SES. Reuse fails a DynamoDB condition.
+- Fail-closed on SES errors after consume: if the token is consumed and SES then fails, a retry will not resend (token already used). Prefer fixing SES / re-issuing a new approval over weakening single-use semantics.
 - Audit events record which Cognito adjuster approved.
 - Adjuster field corrections are stored on the case and appended to the audit table; AI originals remain available for comparison.
 

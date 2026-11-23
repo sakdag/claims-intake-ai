@@ -50,7 +50,12 @@ def _sfn() -> Any:
 
 
 def _adjuster_from_request(request: Request) -> str:
-    """Read Cognito username from the already-authorized Bearer JWT (API GW verified)."""
+    """
+    Read Cognito username from the Bearer JWT payload.
+
+    Signature is not re-checked here: API Gateway's JWT authorizer already
+    verified the token before the request reached this Lambda.
+    """
     auth = request.headers.get("authorization") or ""
     if not auth.lower().startswith("bearer "):
         return os.getenv("LOCAL_ADJUSTER", "local-operator")

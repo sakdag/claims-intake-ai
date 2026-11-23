@@ -40,6 +40,7 @@ def extraction_gold(poly: dict[str, Any]) -> dict[str, Any]:
         "dateOfLoss": claim.get("dateOfLoss"),
         "dateOfReported": claim.get("dateOfReported"),
         "lossEvent": claim.get("lossEvent"),
+        "claimant": claim.get("claimant"),
         "policyStatusToDateOfLoss": policy.get("policyStatusToDateOfLoss"),
         "product": policy.get("product"),
         "coveragePeriodFrom": policy.get("coveragePeriodFrom"),

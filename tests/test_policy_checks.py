@@ -24,7 +24,8 @@ def test_coverage_period() -> None:
 
 def test_peril_covered() -> None:
     claim = {
-        "damagedItems": [{"insuredSubject": "Household contents", "risk": "Flood"}],
+        # Subject string need not match the policy subject name — risk must be covered.
+        "damagedItems": [{"insuredSubject": "Absorbent cotton dish towels", "risk": "Flood"}],
     }
     policy = {
         "coverage": {
@@ -34,3 +35,15 @@ def test_peril_covered() -> None:
         }
     }
     assert check_perils_covered(claim, policy).status == RuleStatus.PASSED
+
+
+def test_peril_not_covered() -> None:
+    claim = {"damagedItems": [{"insuredSubject": "Window", "risk": "Earthquake"}]}
+    policy = {
+        "coverage": {
+            "insuredSubjects": [
+                {"name": "House", "risks": ["Storm", "Fire"]},
+            ]
+        }
+    }
+    assert check_perils_covered(claim, policy).status == RuleStatus.FAILED

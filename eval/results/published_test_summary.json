@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T18:14:14.855833+00:00",
+  "at": "2026-11-23T23:32:05.209870+00:00",
   "split": "test",
   "n_claims": 150,
   "model_id": "eu.amazon.nova-micro-v1:0",
@@ -7,8 +7,8 @@
     "input": 1542244,
     "output": 190001
   },
-  "classification_accuracy": 0.9709267110841914,
-  "classification_macro_f1": 0.9488729762304255,
+  "classification_accuracy": 0.9697153240460327,
+  "classification_macro_f1": 0.9482143235573645,
   "classification_errors": [
     {
       "gold": "photo_evidence",
@@ -18,7 +18,7 @@
     {
       "gold": "photo_evidence",
       "pred": "site_inspection",
-      "n": 18
+      "n": 20
     },
     {
       "gold": "first_notice_of_loss",
@@ -46,19 +46,24 @@
       "n": 1
     }
   ],
-  "extraction_field_accuracy_mean": 0.5966666666666667,
+  "extraction_field_accuracy_mean": 0.8033333333333333,
   "extraction_per_field_accuracy": {
-    "claimId": 0.8266666666666667,
-    "claimant": 0.0,
-    "damagedItems": 0.0,
+    "claimId": 0.8333333333333334,
+    "claimant": 0.9066666666666666,
+    "damagedItems": 0.7333333333333333,
     "dateOfLoss": 1.0,
-    "dateOfReported": 0.8,
-    "lossEvent": 0.7066666666666667,
+    "dateOfReported": 0.8066666666666666,
+    "lossEvent": 0.72,
     "policyId": 0.6066666666666667,
-    "product": 0.8333333333333334
+    "product": 0.82
   },
-  "extraction_citation_rate_mean": 0.9691984126984127,
-  "policy_check_status_accuracy_mean": 0.6666666666666666,
+  "extraction_citation_rate_mean": 0.9574285714285715,
+  "policy_check_status_accuracy_mean": 0.908888888888889,
+  "policy_check_per_check_accuracy": {
+    "coverage_period": 1.0,
+    "peril_covered": 0.7266666666666667,
+    "policy_status": 1.0
+  },
   "policy_check_status_counts": {
     "gold:coverage_period:PASSED": 129,
     "gold:policy_status:PASSED": 129,
@@ -66,9 +71,10 @@
     "gold:report_vs_loss:PASSED": 150,
     "pred_match:coverage_period:hit": 150,
     "pred_match:policy_status:hit": 150,
-    "pred_match:peril_covered:miss": 150,
+    "pred_match:peril_covered:hit": 109,
     "gold:coverage_period:FAILED": 21,
-    "gold:policy_status:FAILED": 21
+    "gold:policy_status:FAILED": 21,
+    "pred_match:peril_covered:miss": 41
   },
   "amount_conflict_note": "Amount-conflict detector is not scored against independent labels; omitted from headline metrics.",
   "claim_ids": [
