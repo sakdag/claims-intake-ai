@@ -7,3 +7,9 @@ environment           = "demo"
 ses_from_email        = "you@example.com"
 ses_to_email          = "you@example.com"
 operator_iam_user     = "claims-intake-admin"
+
+enable_hosted_api     = true
+cors_origins          = ["http://localhost:5173", "http://127.0.0.1:5173"]
+adjuster_username     = "adjuster"
+adjuster_password     = "replace-with-strong-password"
+adjuster_email        = "you@example.com"

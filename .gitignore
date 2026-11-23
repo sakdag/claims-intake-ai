@@ -20,6 +20,7 @@ frontend/build/
 .env
 .env.*
 !.env.example
+!frontend/.env.example
 *.pem
 
 # Data (large / downloaded)

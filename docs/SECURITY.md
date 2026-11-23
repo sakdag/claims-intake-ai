@@ -17,7 +17,8 @@ One-pager for IT / security review. Not a formal audit attestation.
 ## Access control
 
 - Terraform creates least-privilege IAM roles for Lambdas and Step Functions (no long-lived keys in compute).
-- Day-to-day operators use a dedicated IAM user via a named AWS CLI profile — not account root.
+- Hosted adjuster API: Cognito user pool + API Gateway HTTP API JWT authorizer; SPA sends the Cognito **ID token** as `Authorization: Bearer`.
+- Local FastAPI remains available for operators with an IAM user profile (SendTaskSuccess / DynamoDB) when Cognito env vars are unset.
 - Terraform apply refuses to proceed unless the caller account id matches the configured target account.
 
 ## Encryption & logging

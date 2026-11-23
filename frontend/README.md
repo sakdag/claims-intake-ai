@@ -1,20 +1,18 @@
 # Adjuster review UI
 
-React + TypeScript (Vite). Calls the FastAPI operator API directly
-(`VITE_API_BASE`, default `http://127.0.0.1:8000`).
+React + TypeScript (Vite).
+
+## Hosted API (Cognito)
 
 ```bash
-# terminal 1 — API
-cd ..
-source .venv/bin/activate
-export AWS_PROFILE=personal CLAIMS_AWS_REGION=eu-north-1
-export CASES_TABLE=… AUDIT_TABLE=…   # from terraform output
-export CLAIMS_APPROVAL_HMAC_SECRET=…
-export SES_FROM_EMAIL=… SES_TO_EMAIL=…
-uvicorn claims_intake.api.app:app --reload --port 8000
-
-# terminal 2 — UI
-cd frontend
+cd ../infra/terraform
+AWS_PROFILE=personal terraform output -raw frontend_env_hint > ../../frontend/.env.local
+cd ../../frontend
 npm install
-npm run dev   # http://localhost:5173
+npm run dev   # sign in with Cognito adjuster user
 ```
+
+## Local API fallback
+
+Omit Cognito `VITE_*` vars (or use `.env.example` with only `VITE_API_BASE=http://127.0.0.1:8000`)
+and run FastAPI locally with AWS credentials.

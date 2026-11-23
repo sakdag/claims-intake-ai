@@ -53,6 +53,37 @@ variable "ses_to_email" {
 
 variable "operator_iam_user" {
   type        = string
-  description = "IAM user that runs the local FastAPI review UI (SendTaskSuccess)"
+  description = "IAM user that can still run the local FastAPI review UI (SendTaskSuccess)"
   default     = "claims-intake-admin"
+}
+
+variable "enable_hosted_api" {
+  type        = bool
+  description = "Deploy Cognito + API Gateway HTTP API + review API Lambda"
+  default     = true
+}
+
+variable "cors_origins" {
+  type        = list(string)
+  description = "Browser origins allowed to call the hosted API"
+  default     = ["http://localhost:5173", "http://127.0.0.1:5173"]
+}
+
+variable "adjuster_username" {
+  type        = string
+  description = "Cognito username for the demo adjuster"
+  default     = "adjuster"
+}
+
+variable "adjuster_password" {
+  type        = string
+  description = "Initial Cognito password (tfvars only; change after first login if desired)"
+  sensitive   = true
+  default     = "replace-with-strong-password"
+}
+
+variable "adjuster_email" {
+  type        = string
+  description = "Email attribute on the Cognito adjuster user"
+  default     = "you@example.com"
 }

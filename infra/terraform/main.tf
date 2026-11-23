@@ -109,6 +109,8 @@ resource "null_resource" "lambda_package" {
       filesha256("${path.module}/../../src/claims_intake/aws_handlers/wait_for_review.py"),
       filesha256("${path.module}/../../src/claims_intake/aws_handlers/send_email.py"),
       filesha256("${path.module}/../../src/claims_intake/aws_handlers/finalize.py"),
+      filesha256("${path.module}/../../src/claims_intake/api/app.py"),
+      filesha256("${path.module}/../../src/claims_intake/api/lambda_handler.py"),
       filesha256("${path.module}/../../src/claims_intake/pipeline/ingest.py"),
       filesha256("${path.module}/../../src/claims_intake/llm/client.py"),
       filesha256("${path.module}/../stepfunctions/claim_intake.asl.json"),
@@ -203,6 +205,17 @@ data "aws_iam_policy_document" "lambda_policy" {
     actions = [
       "ses:SendEmail",
       "ses:SendRawEmail",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid = "SfnTaskCallbacks"
+    actions = [
+      "states:SendTaskSuccess",
+      "states:SendTaskFailure",
+      "states:DescribeExecution",
+      "states:GetExecutionHistory",
     ]
     resources = ["*"]
   }
@@ -584,4 +597,207 @@ output "ses_to_email" {
 
 output "ses_verify_note" {
   value = "Check ${var.ses_from_email} (and to, if different) for AWS SES verification emails before real sends work in sandbox."
+}
+
+# --- Hosted adjuster API (Cognito JWT → API Gateway → Lambda) ---
+# SPA stays on local Vite until CloudFront is available; point VITE_API_BASE at api_base_url.
+
+resource "aws_cognito_user_pool" "adjusters" {
+  count = var.enable_hosted_api ? 1 : 0
+  name  = "${local.name_prefix}-adjusters"
+
+  auto_verified_attributes = ["email"]
+
+  password_policy {
+    minimum_length    = 12
+    require_lowercase = true
+    require_numbers   = true
+    require_symbols   = true
+    require_uppercase = true
+  }
+
+  admin_create_user_config {
+    allow_admin_create_user_only = true
+  }
+}
+
+resource "aws_cognito_user_pool_client" "spa" {
+  count        = var.enable_hosted_api ? 1 : 0
+  name         = "${local.name_prefix}-spa"
+  user_pool_id = aws_cognito_user_pool.adjusters[0].id
+
+  generate_secret                      = false
+  prevent_user_existence_errors        = "ENABLED"
+  enable_token_revocation              = true
+  allowed_oauth_flows_user_pool_client = false
+
+  explicit_auth_flows = [
+    "ALLOW_USER_PASSWORD_AUTH",
+    "ALLOW_REFRESH_TOKEN_AUTH",
+    "ALLOW_USER_SRP_AUTH",
+  ]
+
+  access_token_validity  = 1
+  id_token_validity      = 1
+  refresh_token_validity = 30
+
+  token_validity_units {
+    access_token  = "hours"
+    id_token      = "hours"
+    refresh_token = "days"
+  }
+}
+
+resource "aws_cognito_user" "adjuster" {
+  count      = var.enable_hosted_api ? 1 : 0
+  user_pool_id = aws_cognito_user_pool.adjusters[0].id
+  username     = var.adjuster_username
+  password     = var.adjuster_password
+
+  attributes = {
+    email          = var.adjuster_email
+    email_verified = "true"
+  }
+
+  message_action = "SUPPRESS"
+
+  lifecycle {
+    ignore_changes = [password, attributes]
+  }
+}
+
+resource "aws_cloudwatch_log_group" "api" {
+  count             = var.enable_hosted_api ? 1 : 0
+  name              = "/aws/lambda/${local.name_prefix}-api"
+  retention_in_days = 14
+}
+
+resource "aws_lambda_function" "api" {
+  count            = var.enable_hosted_api ? 1 : 0
+  function_name    = "${local.name_prefix}-api"
+  role             = aws_iam_role.lambda.arn
+  handler          = "claims_intake.api.lambda_handler.handler"
+  runtime          = "python3.12"
+  timeout          = 30
+  memory_size      = 512
+  filename         = local.lambda_zip
+  source_code_hash = base64encode(null_resource.lambda_package.triggers.code_hash)
+
+  environment {
+    variables = merge(local.lambda_env, {
+      CORS_ORIGINS = join(",", var.cors_origins)
+    })
+  }
+
+  depends_on = [
+    null_resource.lambda_package,
+    aws_iam_role_policy.lambda,
+    aws_cloudwatch_log_group.api,
+    null_resource.account_guard,
+  ]
+}
+
+resource "aws_apigatewayv2_api" "review" {
+  count         = var.enable_hosted_api ? 1 : 0
+  name          = "${local.name_prefix}-review-api"
+  protocol_type = "HTTP"
+
+  cors_configuration {
+    allow_headers = ["authorization", "content-type"]
+    allow_methods = ["GET", "POST", "OPTIONS"]
+    allow_origins = var.cors_origins
+    max_age       = 300
+  }
+}
+
+resource "aws_apigatewayv2_authorizer" "cognito" {
+  count            = var.enable_hosted_api ? 1 : 0
+  api_id           = aws_apigatewayv2_api.review[0].id
+  authorizer_type  = "JWT"
+  identity_sources = ["$request.header.Authorization"]
+  name             = "cognito"
+
+  jwt_configuration {
+    audience = [aws_cognito_user_pool_client.spa[0].id]
+    issuer   = "https://cognito-idp.${var.aws_region}.amazonaws.com/${aws_cognito_user_pool.adjusters[0].id}"
+  }
+}
+
+resource "aws_apigatewayv2_integration" "api" {
+  count                  = var.enable_hosted_api ? 1 : 0
+  api_id                 = aws_apigatewayv2_api.review[0].id
+  integration_type       = "AWS_PROXY"
+  integration_uri        = aws_lambda_function.api[0].invoke_arn
+  integration_method     = "POST"
+  payload_format_version = "2.0"
+}
+
+resource "aws_apigatewayv2_route" "health" {
+  count     = var.enable_hosted_api ? 1 : 0
+  api_id    = aws_apigatewayv2_api.review[0].id
+  route_key = "GET /health"
+  target    = "integrations/${aws_apigatewayv2_integration.api[0].id}"
+}
+
+resource "aws_apigatewayv2_route" "proxy" {
+  count              = var.enable_hosted_api ? 1 : 0
+  api_id             = aws_apigatewayv2_api.review[0].id
+  route_key          = "ANY /{proxy+}"
+  target             = "integrations/${aws_apigatewayv2_integration.api[0].id}"
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.cognito[0].id
+}
+
+resource "aws_apigatewayv2_route" "root" {
+  count              = var.enable_hosted_api ? 1 : 0
+  api_id             = aws_apigatewayv2_api.review[0].id
+  route_key          = "ANY /"
+  target             = "integrations/${aws_apigatewayv2_integration.api[0].id}"
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.cognito[0].id
+}
+
+resource "aws_apigatewayv2_stage" "default" {
+  count       = var.enable_hosted_api ? 1 : 0
+  api_id      = aws_apigatewayv2_api.review[0].id
+  name        = "$default"
+  auto_deploy = true
+}
+
+resource "aws_lambda_permission" "apigw_api" {
+  count         = var.enable_hosted_api ? 1 : 0
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.api[0].function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.review[0].execution_arn}/*/*"
+}
+
+output "api_base_url" {
+  value = var.enable_hosted_api ? aws_apigatewayv2_api.review[0].api_endpoint : null
+}
+
+output "cognito_user_pool_id" {
+  value = var.enable_hosted_api ? aws_cognito_user_pool.adjusters[0].id : null
+}
+
+output "cognito_client_id" {
+  value = var.enable_hosted_api ? aws_cognito_user_pool_client.spa[0].id : null
+}
+
+output "cognito_region" {
+  value = var.enable_hosted_api ? var.aws_region : null
+}
+
+output "adjuster_username" {
+  value = var.enable_hosted_api ? var.adjuster_username : null
+}
+
+output "frontend_env_hint" {
+  value = var.enable_hosted_api ? join("\n", [
+    "VITE_API_BASE=${aws_apigatewayv2_api.review[0].api_endpoint}",
+    "VITE_COGNITO_REGION=${var.aws_region}",
+    "VITE_COGNITO_USER_POOL_ID=${aws_cognito_user_pool.adjusters[0].id}",
+    "VITE_COGNITO_CLIENT_ID=${aws_cognito_user_pool_client.spa[0].id}",
+  ]) : null
 }

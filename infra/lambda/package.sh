@@ -16,6 +16,10 @@ python3.12 -m pip install \
   "structlog>=24.1" \
   "python-dateutil>=2.9,<3" \
   "httpx>=0.27" \
+  "fastapi>=0.115,<1" \
+  "mangum>=0.19,<1" \
+  "starlette>=0.38,<1" \
+  "python-multipart>=0.0.9" \
   -t "$OUT" --quiet \
   --platform manylinux2014_x86_64 \
   --implementation cp \

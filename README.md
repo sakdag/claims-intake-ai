@@ -82,16 +82,24 @@ pytest -q
 
 ### Adjuster console
 
+**Hosted path (preferred):** Cognito → API Gateway → review Lambda. SPA still runs locally
+until CloudFront is available; it talks to the HTTPS API with a Cognito login.
+
 ```bash
-# API (uses AWS profile + DynamoDB tables from terraform output)
+cd infra/terraform && AWS_PROFILE=personal terraform output -raw frontend_env_hint
+# write those lines into frontend/.env.local, then:
+cd frontend && npm install && npm run dev   # http://localhost:5173 → sign in as adjuster
+```
+
+**Local API fallback** (no Cognito env vars):
+
+```bash
 export AWS_PROFILE=personal CLAIMS_AWS_REGION=eu-north-1
 export CASES_TABLE=… AUDIT_TABLE=…
 export CLAIMS_APPROVAL_HMAC_SECRET=…   # must match deployed secret
 export SES_FROM_EMAIL=… SES_TO_EMAIL=…
 uvicorn claims_intake.api.app:app --reload --port 8000
-
-# UI
-cd frontend && npm install && npm run dev   # http://localhost:5173
+cd frontend && npm run dev
 ```
 
 ### Offline eval

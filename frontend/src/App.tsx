@@ -1,7 +1,14 @@
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  authConfigured,
+  clearSession,
+  loadSession,
+  login,
+  type Session,
+} from "./auth";
 import "./styles.css";
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
+const API_BASE = (import.meta.env.VITE_API_BASE as string | undefined) ?? "http://127.0.0.1:8000";
 
 const FIELD_META: Record<string, { label: string; help: string }> = {
   claimId: {
@@ -99,7 +106,20 @@ function checkBadge(c: Record<string, unknown>): { cls: string; label: string } 
   return { cls: "fail", label: status === "FAILED" ? "Fail" : "Review" };
 }
 
+async function apiFetch(path: string, session: Session | null, init?: RequestInit): Promise<Response> {
+  const headers = new Headers(init?.headers);
+  headers.set("Content-Type", "application/json");
+  if (session?.idToken && authConfigured()) {
+    headers.set("Authorization", `Bearer ${session.idToken}`);
+  }
+  return fetch(`${API_BASE}${path}`, { ...init, headers });
+}
+
 export default function App() {
+  const needsAuth = authConfigured();
+  const [session, setSession] = useState<Session | null>(() => loadSession());
+  const [username, setUsername] = useState("adjuster");
+  const [password, setPassword] = useState("");
   const [queue, setQueue] = useState<QueueCase[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<Enriched | null>(null);
@@ -108,36 +128,47 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [flash, setFlash] = useState<Flash>(null);
 
+  const authed = !needsAuth || Boolean(session);
+
   const loadQueue = useCallback(async () => {
-    const res = await fetch(`${API_BASE}/queue`);
+    const res = await apiFetch("/queue", session);
+    if (res.status === 401 || res.status === 403) {
+      clearSession();
+      setSession(null);
+      throw new Error("Session expired — sign in again");
+    }
     if (!res.ok) throw new Error(`Queue failed (${res.status})`);
     const data = (await res.json()) as { cases: QueueCase[] };
     const cases = data.cases ?? [];
     setQueue(cases);
     setSelectedId((prev) => prev ?? (cases[0]?.claim_id ?? null));
-  }, []);
+  }, [session]);
 
-  const loadCase = useCallback(async (claimId: string) => {
-    setLoading(true);
-    setFlash(null);
-    try {
-      const res = await fetch(`${API_BASE}/cases/${claimId}`);
-      if (!res.ok) throw new Error(`Case load failed (${res.status})`);
-      const data = (await res.json()) as Enriched;
-      setDetail(data);
-      const next: Record<string, string> = {};
-      for (const f of data.review.fields) {
-        next[f.name] = String(f.effective_value ?? "");
+  const loadCase = useCallback(
+    async (claimId: string) => {
+      setLoading(true);
+      setFlash(null);
+      try {
+        const res = await apiFetch(`/cases/${claimId}`, session);
+        if (!res.ok) throw new Error(`Case load failed (${res.status})`);
+        const data = (await res.json()) as Enriched;
+        setDetail(data);
+        const next: Record<string, string> = {};
+        for (const f of data.review.fields) {
+          next[f.name] = String(f.effective_value ?? "");
+        }
+        setEdits(next);
+      } catch (err) {
+        setFlash({ kind: "err", text: err instanceof Error ? err.message : String(err) });
+      } finally {
+        setLoading(false);
       }
-      setEdits(next);
-    } catch (err) {
-      setFlash({ kind: "err", text: err instanceof Error ? err.message : String(err) });
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    },
+    [session],
+  );
 
   useEffect(() => {
+    if (!authed) return;
     void loadQueue().catch((err) =>
       setFlash({ kind: "err", text: err instanceof Error ? err.message : String(err) }),
     );
@@ -145,11 +176,11 @@ export default function App() {
       void loadQueue().catch(() => undefined);
     }, 6000);
     return () => window.clearInterval(t);
-  }, [loadQueue]);
+  }, [authed, loadQueue]);
 
   useEffect(() => {
-    if (selectedId) void loadCase(selectedId);
-  }, [selectedId, loadCase]);
+    if (authed && selectedId) void loadCase(selectedId);
+  }, [authed, selectedId, loadCase]);
 
   const steps = useMemo(() => {
     const phase = detail?.review.phase ?? "processing";
@@ -172,6 +203,21 @@ export default function App() {
     ];
   }, [detail]);
 
+  async function onLogin(e: FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setFlash(null);
+    try {
+      const s = await login(username, password);
+      setSession(s);
+      setFlash({ kind: "ok", text: `Signed in as ${s.username}` });
+    } catch (err) {
+      setFlash({ kind: "err", text: err instanceof Error ? err.message : String(err) });
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function saveCorrections(e: FormEvent) {
     e.preventDefault();
     if (!detail) return;
@@ -189,9 +235,8 @@ export default function App() {
     setLoading(true);
     setFlash(null);
     try {
-      const res = await fetch(`${API_BASE}/cases/${claimId}/corrections`, {
+      const res = await apiFetch(`/cases/${claimId}/corrections`, session, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           fields: changed,
           note: "Adjuster corrected AI extraction against source citation",
@@ -202,7 +247,7 @@ export default function App() {
       setDetail(data);
       setFlash({
         kind: "ok",
-        text: `Saved ${Object.keys(changed).length} correction(s). AI originals stay in audit; your values are now the working fields. This does not send email or resume the workflow.`,
+        text: `Saved ${Object.keys(changed).length} correction(s). AI originals stay in audit; your values are now the working fields.`,
       });
       await loadQueue();
     } catch (err) {
@@ -218,21 +263,17 @@ export default function App() {
     setLoading(true);
     setFlash(null);
     try {
-      const res = await fetch(`${API_BASE}/cases/${claimId}/approve-and-send`, {
+      const res = await apiFetch(`/cases/${claimId}/approve-and-send`, session, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ skip_email: skipEmail }),
       });
       if (!res.ok) throw new Error(await res.text());
-      const data = (await res.json()) as Enriched & {
-        workflow_continued?: boolean;
-        email_will_send?: boolean;
-      };
+      const data = (await res.json()) as Enriched;
       setDetail(data);
       setFlash({
         kind: "ok",
         text: skipEmail
-          ? "Review approved. Workflow resumed without sending email (skip_email)."
+          ? "Review approved. Workflow resumed without sending email."
           : "Review approved. Workflow resumed — SES will send the missing-docs draft.",
       });
       await loadQueue();
@@ -249,9 +290,8 @@ export default function App() {
     setLoading(true);
     setFlash(null);
     try {
-      const res = await fetch(`${API_BASE}/cases/${claimId}/review/reject`, {
+      const res = await apiFetch(`/cases/${claimId}/review/reject`, session, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ reason: rejectReason }),
       });
       if (!res.ok) throw new Error(await res.text());
@@ -268,6 +308,50 @@ export default function App() {
 
   const review = detail?.review;
 
+  if (needsAuth && !session) {
+    return (
+      <div className="app-shell">
+        <header className="topbar">
+          <div>
+            <strong>Elm &amp; Stone</strong>
+            <span> · Adjuster sign-in</span>
+          </div>
+          <span>Hosted API · Cognito</span>
+        </header>
+        <main className="main" style={{ maxWidth: 420, margin: "3rem auto" }}>
+          <section className="card">
+            <h3>Sign in</h3>
+            <p className="hint">Use your Cognito adjuster credentials to open the review queue.</p>
+            <form onSubmit={(e) => void onLogin(e)}>
+              <div className="actions" style={{ flexDirection: "column", alignItems: "stretch" }}>
+                <label>
+                  Username
+                  <input value={username} onChange={(ev) => setUsername(ev.target.value)} autoComplete="username" />
+                </label>
+                <label>
+                  Password
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(ev) => setPassword(ev.target.value)}
+                    autoComplete="current-password"
+                  />
+                </label>
+                <button type="submit" disabled={loading}>
+                  Sign in
+                </button>
+              </div>
+            </form>
+            {flash && <div className={`flash ${flash.kind}`}>{flash.text}</div>}
+            <p className="cite" style={{ marginTop: "0.75rem" }}>
+              API: {API_BASE}
+            </p>
+          </section>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="app-shell">
       <header className="topbar">
@@ -275,7 +359,28 @@ export default function App() {
           <strong>Elm &amp; Stone</strong>
           <span> · Adjuster review console</span>
         </div>
-        <span>AI proposes structured fields · you correct &amp; release outbound</span>
+        <span>
+          {session ? (
+            <>
+              {session.username} ·{" "}
+              <button
+                type="button"
+                className="secondary"
+                style={{ padding: "0.2rem 0.55rem", fontSize: "0.85rem" }}
+                onClick={() => {
+                  clearSession();
+                  setSession(null);
+                  setDetail(null);
+                  setQueue([]);
+                }}
+              >
+                Sign out
+              </button>
+            </>
+          ) : (
+            "Local API (no Cognito env)"
+          )}
+        </span>
       </header>
 
       <div className="workspace">
@@ -468,7 +573,6 @@ export default function App() {
                 <p className="hint">
                   After you are satisfied with the field workspace, either approve the draft
                   missing-documents email (resumes Step Functions → SES) or reject the case.
-                  AI never sends mail on its own.
                 </p>
                 <div className="draft">{review.draft || "No missing-docs draft on this case."}</div>
                 <div className="actions">
