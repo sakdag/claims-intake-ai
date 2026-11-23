@@ -243,8 +243,8 @@ export default function App() {
       <div className="flex min-h-full items-center justify-center p-6">
         <div className="animate-fade-up w-full max-w-md rounded-3xl border border-line bg-panel/95 p-8 shadow-[0_24px_60px_rgba(18,26,22,0.08)]">
           <div className="mb-6">
-            <p className="font-display text-3xl font-medium tracking-tight text-brand">Elm &amp; Stone</p>
-            <p className="mt-1 text-sm text-muted">Adjuster workspace · sign in to continue</p>
+            <p className="font-display text-3xl font-medium tracking-tight text-brand">Claims intake</p>
+            <p className="mt-1 text-sm text-muted">Demo insurer · Elm &amp; Stone · sign in to continue</p>
           </div>
           <form className="grid gap-4" onSubmit={(e) => void onLogin(e)}>
             <Field label="Username">
@@ -284,8 +284,8 @@ export default function App() {
             <ShieldCheck className="h-4 w-4" />
           </div>
           <div>
-            <p className="font-display text-lg leading-none tracking-tight">Elm &amp; Stone</p>
-            <p className="mt-1 text-xs text-[#b7c8bf]">Claims intake · human review</p>
+            <p className="font-display text-lg leading-none tracking-tight">Claims intake</p>
+            <p className="mt-1 text-xs text-[#b7c8bf]">Elm &amp; Stone demo · human review</p>
           </div>
         </div>
         <div className="flex items-center gap-2 text-sm">

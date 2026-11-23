@@ -1,10 +1,18 @@
-# Elm & Stone — AI claims intake
+# AI claims intake (AWS Bedrock + human review)
 
-Home insurance claim packages arrive as multi-document bundles. Adjusters spend
-early time sorting documents, re-keying fields, checking basics against the
-policy, and chasing missing paperwork.
+End-to-end **first-notice-of-loss intake** for home insurance: multi-document
+claim packages are classified and extracted with citations, checked against
+deterministic policy gates, drafted into a missing-docs email, then **paused for
+an adjuster** before anything goes outbound.
 
-This system turns an inbound claim package into a **ready-to-review case**:
+Built on Amazon Bedrock, Step Functions, Lambda, DynamoDB, SES, and a Cognito-backed
+React review console. The model never approves or denies a claim — it prepares
+work for a human.
+
+Demo UI branding uses a fictional insurer (**Elm & Stone**). All claim data in
+fixtures and screenshots is synthetic ([GNOTHEIA](https://huggingface.co/datasets/gratex/GNOTHEIA-synthetic-insurance-dataset-v2)).
+
+**Pipeline steps**
 
 1. **Classify** each document
 2. **Extract** structured fields with **citations** back to source text
@@ -12,8 +20,6 @@ This system turns an inbound claim package into a **ready-to-review case**:
 4. **Apply** deterministic policy / required-document gate checks
 5. **Summarise** and **draft** a missing-documents email
 6. **Pause** for human review — then send only after signed adjuster approval
-
-The model never approves or denies a claim. It prepares work for the adjuster.
 
 ## Architecture
 

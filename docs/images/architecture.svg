@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1520" viewBox="0 0 800 1520" role="img" aria-label="Elm and Stone claims intake architecture">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1520" viewBox="0 0 800 1520" role="img" aria-label="AI claims intake architecture">
   <defs>
     <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
       <path d="M0 0 L8 4 L0 8 z" fill="#3d5248"/>
@@ -21,7 +21,7 @@
   </defs>
 
   <rect width="800" height="1520" fill="#f3f6f4"/>
-  <text x="32" y="42" class="title">Elm &amp; Stone — claims intake</text>
+  <text x="32" y="42" class="title">AI claims intake</text>
 
   <rect x="32" y="68" width="736" height="300" rx="14" fill="#e8f0eb" stroke="#c5d5cb"/>
   <text x="52" y="94" class="lane">1 · INGEST</text>

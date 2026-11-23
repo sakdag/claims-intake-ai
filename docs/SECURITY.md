@@ -1,6 +1,8 @@
-# Security overview — Elm & Stone claims intake
+# Security overview — AI claims intake
 
-One-pager for IT / security review. Not a formal audit attestation.
+One-pager for IT / security review. Not a formal audit attestation. Demo branding
+(“Elm & Stone”) is fictional; treat the stack as a reference deploy in a customer
+AWS account.
 
 ## Data residency
 
