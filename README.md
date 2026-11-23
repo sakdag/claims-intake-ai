@@ -19,17 +19,16 @@ The model never approves or denies a claim. It prepares work for the adjuster.
 
 ![System architecture](docs/images/architecture.png)
 
-*Target architecture: inbound email (and optional structured uploads) land in S3, Step Functions runs AI intake and pauses for human review, then SES outbound + finalize. Adjusters use a CloudFront-hosted React app with Cognito → API Gateway → review API.*
-
 | Layer | Choice |
 | --- | --- |
 | Core / Lambdas | Python 3.12 (shared package) |
+| Ingest | SES inbound → S3 `email-raw/` → EmailIngest Lambda → `inbox/*.json` (optional JSON upload) |
 | Operator API | FastAPI on Lambda behind API Gateway (Cognito JWT) |
-| Adjuster UI | React + TypeScript (Vite) |
+| Adjuster UI | React + TypeScript (Vite) on CloudFront + S3 |
 | Orchestration | AWS Step Functions + Lambda |
 | Models | Amazon Bedrock (`eu.amazon.nova-micro-v1:0` default) |
 | State / audit | DynamoDB |
-| Infra | Terraform in `eu-north-1`, KMS, least-privilege IAM |
+| Infra | Terraform in `eu-north-1` (SES receiving in a receiving-capable region), KMS, least-privilege IAM |
 
 ![Step Functions claim intake execution](docs/images/step-functions-hitl.png)
 
@@ -53,7 +52,7 @@ documents / draft on the right.
   `SendTaskSuccess` so the workflow continues to SES
 - **Reject** — `SendTaskFailure`; case closed
 
-Inbound email replies are out of scope for this release (one-shot outbound only).
+Outbound is one-shot after approval; inbound reply threads are out of scope.
 
 ## Data
 
@@ -88,8 +87,8 @@ pytest -q
 
 ### Adjuster console
 
-**Hosted path (preferred):** Cognito → API Gateway → review Lambda. SPA still runs locally
-until CloudFront is available; it talks to the HTTPS API with a Cognito login.
+**Hosted path:** Cognito → API Gateway → review Lambda. Local Vite talks to the HTTPS API;
+production SPA is CloudFront + S3 (`enable_hosted_ui=true`, then `bash frontend/scripts/deploy-ui.sh`).
 
 ```bash
 cd infra/terraform && AWS_PROFILE=personal terraform output -raw frontend_env_hint
@@ -107,6 +106,17 @@ export SES_FROM_EMAIL=… SES_TO_EMAIL=…
 uvicorn claims_intake.api.app:app --reload --port 8000
 cd frontend && npm run dev
 ```
+
+### Optional: inbound email & hosted UI
+
+Both are Terraform modules, **off by default** so a normal apply stays cheap and domain-free:
+
+| Flag | What it adds |
+| --- | --- |
+| `enable_inbound_email` | SES receipt rule (default region `eu-west-1`) → S3 `email-raw/` → EmailIngest → existing Starter |
+| `enable_hosted_ui` | Private S3 + CloudFront OAC for the React SPA |
+
+Set a real `inbound_email_domain` / MX before enabling inbound. SES *receiving* is not available in `eu-north-1`.
 
 ### Offline eval
 

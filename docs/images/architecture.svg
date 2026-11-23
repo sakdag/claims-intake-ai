@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1620" viewBox="0 0 800 1620" role="img" aria-label="Elm and Stone claims intake target architecture">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1520" viewBox="0 0 800 1520" role="img" aria-label="Elm and Stone claims intake architecture">
   <defs>
     <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
       <path d="M0 0 L8 4 L0 8 z" fill="#3d5248"/>
@@ -11,148 +11,129 @@
     </marker>
     <style>
       .title { font: 700 22px Helvetica, Arial, sans-serif; fill: #1b4a38; }
-      .sub { font: 400 13px Helvetica, Arial, sans-serif; fill: #5c6b63; }
       .lane { font: 700 11px Helvetica, Arial, sans-serif; fill: #1b4a38; letter-spacing: 0.07em; }
       .h { font: 700 14px Helvetica, Arial, sans-serif; fill: #121a16; }
       .hw { font: 700 14px Helvetica, Arial, sans-serif; fill: #f4f7f5; }
       .s { font: 400 12px Helvetica, Arial, sans-serif; fill: #5c6b63; }
       .sw { font: 400 12px Helvetica, Arial, sans-serif; fill: #d0e0d7; }
       .l { font: 600 11px Helvetica, Arial, sans-serif; fill: #3d5248; }
-      .n { font: 400 11px Helvetica, Arial, sans-serif; fill: #5c6b63; }
     </style>
   </defs>
 
-  <rect width="800" height="1620" fill="#f3f6f4"/>
-  <text x="32" y="36" class="title">Elm &amp; Stone — claims intake</text>
-  <text x="32" y="58" class="sub">Target shape · email in · AI prepare · hosted adjuster UI · human decide</text>
+  <rect width="800" height="1520" fill="#f3f6f4"/>
+  <text x="32" y="42" class="title">Elm &amp; Stone — claims intake</text>
 
-  <!-- 1 INGEST: y=80..400 (h=320) -->
-  <rect x="32" y="80" width="736" height="320" rx="14" fill="#e8f0eb" stroke="#c5d5cb"/>
-  <text x="52" y="106" class="lane">1 · INGEST</text>
+  <rect x="32" y="68" width="736" height="300" rx="14" fill="#e8f0eb" stroke="#c5d5cb"/>
+  <text x="52" y="94" class="lane">1 · INGEST</text>
 
-  <rect x="70" y="128" width="280" height="56" rx="10" fill="#fff" stroke="#cfd9d3"/>
-  <text x="210" y="151" text-anchor="middle" class="h">Inbound email</text>
-  <text x="210" y="171" text-anchor="middle" class="s">claimant / broker + attachments</text>
+  <rect x="70" y="116" width="280" height="56" rx="10" fill="#fff" stroke="#cfd9d3"/>
+  <text x="210" y="139" text-anchor="middle" class="h">Inbound email</text>
+  <text x="210" y="159" text-anchor="middle" class="s">claimant / broker + attachments</text>
 
-  <rect x="450" y="128" width="280" height="56" rx="10" fill="#fff" stroke="#cfd9d3"/>
-  <text x="590" y="151" text-anchor="middle" class="h">Structured package</text>
-  <text x="590" y="171" text-anchor="middle" class="s">optional JSON / API upload</text>
+  <rect x="450" y="116" width="280" height="56" rx="10" fill="#fff" stroke="#cfd9d3"/>
+  <text x="590" y="139" text-anchor="middle" class="h">Structured package</text>
+  <text x="590" y="159" text-anchor="middle" class="s">optional JSON / API upload</text>
 
-  <line x1="210" y1="184" x2="210" y2="210" stroke="#3d5248" stroke-width="2"/>
-  <line x1="590" y1="184" x2="590" y2="210" stroke="#3d5248" stroke-width="2"/>
-  <line x1="210" y1="210" x2="590" y2="210" stroke="#3d5248" stroke-width="2"/>
-  <line x1="400" y1="210" x2="400" y2="232" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="210" y1="172" x2="210" y2="198" stroke="#3d5248" stroke-width="2"/>
+  <line x1="590" y1="172" x2="590" y2="198" stroke="#3d5248" stroke-width="2"/>
+  <line x1="210" y1="198" x2="590" y2="198" stroke="#3d5248" stroke-width="2"/>
+  <line x1="400" y1="198" x2="400" y2="220" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
 
-  <rect x="230" y="232" width="340" height="50" rx="10" fill="#fff" stroke="#cfd9d3"/>
-  <text x="400" y="253" text-anchor="middle" class="h">SES inbound / mail intake</text>
-  <text x="400" y="271" text-anchor="middle" class="s">parse email → claim package object</text>
+  <rect x="230" y="220" width="340" height="50" rx="10" fill="#fff" stroke="#cfd9d3"/>
+  <text x="400" y="241" text-anchor="middle" class="h">SES inbound / mail intake</text>
+  <text x="400" y="259" text-anchor="middle" class="s">parse email → claim package object</text>
 
-  <line x1="400" y1="282" x2="400" y2="304" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="400" y1="270" x2="400" y2="292" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
 
-  <rect x="230" y="304" width="340" height="50" rx="10" fill="#fff" stroke="#cfd9d3"/>
-  <text x="400" y="325" text-anchor="middle" class="h">S3 inbox</text>
-  <text x="400" y="343" text-anchor="middle" class="s">ObjectCreated → Starter Lambda</text>
+  <rect x="230" y="292" width="340" height="50" rx="10" fill="#fff" stroke="#cfd9d3"/>
+  <text x="400" y="313" text-anchor="middle" class="h">S3 inbox</text>
+  <text x="400" y="331" text-anchor="middle" class="s">ObjectCreated → Starter Lambda</text>
 
-  <line x1="400" y1="354" x2="400" y2="420" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="400" y1="368" x2="400" y2="392" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
 
-  <!-- 2 PIPELINE: y=420..980 (h=560) -->
-  <rect x="32" y="420" width="736" height="560" rx="14" fill="#ffffff" stroke="#cfd9d3"/>
-  <text x="52" y="446" class="lane">2 · STEP FUNCTIONS PIPELINE</text>
+  <rect x="32" y="392" width="736" height="540" rx="14" fill="#ffffff" stroke="#cfd9d3"/>
+  <text x="52" y="418" class="lane">2 · STEP FUNCTIONS PIPELINE</text>
 
-  <rect x="230" y="466" width="340" height="48" rx="10" fill="#1b4a38"/>
-  <text x="400" y="495" text-anchor="middle" class="hw">Ingest Lambda · case create</text>
+  <rect x="230" y="438" width="340" height="48" rx="10" fill="#1b4a38"/>
+  <text x="400" y="467" text-anchor="middle" class="hw">Ingest Lambda · case create</text>
 
-  <line x1="400" y1="514" x2="400" y2="538" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="400" y1="486" x2="400" y2="510" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
 
-  <rect x="52" y="538" width="150" height="56" rx="10" fill="#fff" stroke="#cfd9d3"/>
-  <text x="127" y="561" text-anchor="middle" class="h">Bedrock</text>
-  <text x="127" y="579" text-anchor="middle" class="s">classify · extract</text>
+  <rect x="52" y="510" width="150" height="56" rx="10" fill="#fff" stroke="#cfd9d3"/>
+  <text x="127" y="533" text-anchor="middle" class="h">Bedrock</text>
+  <text x="127" y="551" text-anchor="middle" class="s">classify · extract</text>
 
-  <rect x="230" y="538" width="340" height="56" rx="10" fill="#1b4a38"/>
-  <text x="400" y="561" text-anchor="middle" class="hw">ProcessClaim Lambda</text>
-  <text x="400" y="579" text-anchor="middle" class="sw">AI + rules + draft email</text>
+  <rect x="230" y="510" width="340" height="56" rx="10" fill="#1b4a38"/>
+  <text x="400" y="533" text-anchor="middle" class="hw">ProcessClaim Lambda</text>
+  <text x="400" y="551" text-anchor="middle" class="sw">AI + rules + draft email</text>
 
-  <rect x="598" y="538" width="150" height="56" rx="10" fill="#fff" stroke="#cfd9d3"/>
-  <text x="673" y="561" text-anchor="middle" class="h">Checks</text>
-  <text x="673" y="579" text-anchor="middle" class="s">conflicts · gates</text>
+  <rect x="598" y="510" width="150" height="56" rx="10" fill="#fff" stroke="#cfd9d3"/>
+  <text x="673" y="533" text-anchor="middle" class="h">Checks</text>
+  <text x="673" y="551" text-anchor="middle" class="s">conflicts · gates</text>
 
-  <line x1="202" y1="566" x2="230" y2="566" stroke="#7a8b82" stroke-width="1.75" stroke-dasharray="4 3" marker-end="url(#arrMuted)"/>
-  <line x1="570" y1="566" x2="598" y2="566" stroke="#7a8b82" stroke-width="1.75" stroke-dasharray="4 3" marker-end="url(#arrMuted)"/>
+  <line x1="202" y1="538" x2="230" y2="538" stroke="#7a8b82" stroke-width="1.75" stroke-dasharray="4 3" marker-end="url(#arrMuted)"/>
+  <line x1="570" y1="538" x2="598" y2="538" stroke="#7a8b82" stroke-width="1.75" stroke-dasharray="4 3" marker-end="url(#arrMuted)"/>
 
-  <line x1="400" y1="594" x2="400" y2="622" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="400" y1="566" x2="400" y2="594" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
 
-  <rect x="200" y="622" width="400" height="70" rx="12" fill="#9a6700"/>
-  <text x="400" y="648" text-anchor="middle" class="hw">WaitForHumanReview</text>
-  <text x="400" y="668" text-anchor="middle" class="sw">waitForTaskToken — paused for adjuster</text>
-  <text x="400" y="684" text-anchor="middle" class="sw">until approve / reject</text>
+  <rect x="200" y="594" width="400" height="70" rx="12" fill="#9a6700"/>
+  <text x="400" y="620" text-anchor="middle" class="hw">WaitForHumanReview</text>
+  <text x="400" y="640" text-anchor="middle" class="sw">waitForTaskToken — paused for adjuster</text>
+  <text x="400" y="656" text-anchor="middle" class="sw">until approve / reject</text>
 
-  <line x1="400" y1="692" x2="400" y2="720" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
-  <text x="412" y="712" class="l">on approve</text>
+  <line x1="400" y1="664" x2="400" y2="692" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="412" y="684" class="l">on approve</text>
 
-  <rect x="230" y="720" width="340" height="48" rx="10" fill="#1b4a38"/>
-  <text x="400" y="749" text-anchor="middle" class="hw">SendOutboundEmail · SES</text>
+  <rect x="230" y="692" width="340" height="48" rx="10" fill="#1b4a38"/>
+  <text x="400" y="721" text-anchor="middle" class="hw">SendOutboundEmail · SES</text>
 
-  <line x1="400" y1="768" x2="400" y2="792" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="400" y1="740" x2="400" y2="764" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
 
-  <rect x="230" y="792" width="340" height="48" rx="10" fill="#1b4a38"/>
-  <text x="400" y="821" text-anchor="middle" class="hw">Finalize · case ready</text>
+  <rect x="230" y="764" width="340" height="48" rx="10" fill="#1b4a38"/>
+  <text x="400" y="793" text-anchor="middle" class="hw">Finalize · case ready</text>
 
-  <line x1="400" y1="840" x2="400" y2="868" stroke="#7a8b82" stroke-width="1.75" stroke-dasharray="4 3" marker-end="url(#arrMuted)"/>
+  <line x1="400" y1="812" x2="400" y2="840" stroke="#7a8b82" stroke-width="1.75" stroke-dasharray="4 3" marker-end="url(#arrMuted)"/>
 
-  <rect x="230" y="868" width="340" height="48" rx="10" fill="#fff" stroke="#1b4a38" stroke-width="1.5"/>
-  <text x="400" y="889" text-anchor="middle" class="h">DynamoDB — cases + audit</text>
-  <text x="400" y="907" text-anchor="middle" class="s">shared by pipeline and review API</text>
+  <rect x="230" y="840" width="340" height="48" rx="10" fill="#fff" stroke="#1b4a38" stroke-width="1.5"/>
+  <text x="400" y="861" text-anchor="middle" class="h">DynamoDB — cases + audit</text>
+  <text x="400" y="879" text-anchor="middle" class="s">shared by pipeline and review API</text>
 
-  <!-- 420+560=980 -->
-  <line x1="400" y1="980" x2="400" y2="1004" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="400" y1="932" x2="400" y2="956" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
 
-  <!-- 3 HOSTED APP: y=1004..1524 (h=520) -->
-  <rect x="32" y="1004" width="736" height="520" rx="14" fill="#e8f0eb" stroke="#c5d5cb"/>
-  <text x="52" y="1030" class="lane">3 · HOSTED ADJUSTER APP</text>
+  <rect x="32" y="956" width="736" height="520" rx="14" fill="#e8f0eb" stroke="#c5d5cb"/>
+  <text x="52" y="982" class="lane">3 · HOSTED ADJUSTER APP</text>
 
-  <rect x="230" y="1052" width="340" height="50" rx="10" fill="#fff" stroke="#cfd9d3"/>
-  <text x="400" y="1073" text-anchor="middle" class="h">CloudFront + S3</text>
-  <text x="400" y="1091" text-anchor="middle" class="s">deployed React review SPA (HTTPS)</text>
+  <rect x="230" y="1004" width="340" height="50" rx="10" fill="#fff" stroke="#cfd9d3"/>
+  <text x="400" y="1025" text-anchor="middle" class="h">CloudFront + S3</text>
+  <text x="400" y="1043" text-anchor="middle" class="s">deployed React review SPA (HTTPS)</text>
 
-  <line x1="400" y1="1102" x2="400" y2="1128" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="400" y1="1054" x2="400" y2="1080" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
 
-  <rect x="230" y="1128" width="340" height="50" rx="10" fill="#fff" stroke="#cfd9d3"/>
-  <text x="400" y="1149" text-anchor="middle" class="h">Amazon Cognito</text>
-  <text x="400" y="1167" text-anchor="middle" class="s">adjuster login · tokens</text>
+  <rect x="230" y="1080" width="340" height="50" rx="10" fill="#fff" stroke="#cfd9d3"/>
+  <text x="400" y="1101" text-anchor="middle" class="h">Amazon Cognito</text>
+  <text x="400" y="1119" text-anchor="middle" class="s">adjuster login · tokens</text>
 
-  <line x1="400" y1="1178" x2="400" y2="1204" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="400" y1="1130" x2="400" y2="1156" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
 
-  <rect x="230" y="1204" width="340" height="50" rx="10" fill="#fff" stroke="#cfd9d3"/>
-  <text x="400" y="1225" text-anchor="middle" class="h">API Gateway</text>
-  <text x="400" y="1243" text-anchor="middle" class="s">JWT authorizer · review routes</text>
+  <rect x="230" y="1156" width="340" height="50" rx="10" fill="#fff" stroke="#cfd9d3"/>
+  <text x="400" y="1177" text-anchor="middle" class="h">API Gateway</text>
+  <text x="400" y="1195" text-anchor="middle" class="s">JWT authorizer · review routes</text>
 
-  <line x1="400" y1="1254" x2="400" y2="1280" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="400" y1="1206" x2="400" y2="1232" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
 
-  <rect x="200" y="1280" width="400" height="56" rx="10" fill="#1b4a38"/>
-  <text x="400" y="1303" text-anchor="middle" class="hw">Review API Lambda (FastAPI / Mangum)</text>
-  <text x="400" y="1323" text-anchor="middle" class="sw">queue · corrections · approve / reject</text>
+  <rect x="200" y="1232" width="400" height="56" rx="10" fill="#1b4a38"/>
+  <text x="400" y="1255" text-anchor="middle" class="hw">Review API Lambda (FastAPI / Mangum)</text>
+  <text x="400" y="1275" text-anchor="middle" class="sw">queue · corrections · approve / reject</text>
 
-  <line x1="400" y1="1336" x2="400" y2="1364" stroke="#9a6700" stroke-width="2" marker-end="url(#arrAccent)"/>
+  <line x1="400" y1="1288" x2="400" y2="1316" stroke="#9a6700" stroke-width="2" marker-end="url(#arrAccent)"/>
 
-  <rect x="200" y="1364" width="400" height="56" rx="10" fill="#fff8e8" stroke="#d4a017"/>
-  <text x="400" y="1387" text-anchor="middle" class="h">Resumes WaitForHumanReview</text>
-  <text x="400" y="1407" text-anchor="middle" class="s">SendTaskSuccess / Failure → continue or close</text>
+  <rect x="200" y="1316" width="400" height="56" rx="10" fill="#fff8e8" stroke="#d4a017"/>
+  <text x="400" y="1339" text-anchor="middle" class="h">Resumes WaitForHumanReview</text>
+  <text x="400" y="1359" text-anchor="middle" class="s">SendTaskSuccess / Failure → continue or close</text>
 
-  <line x1="400" y1="1420" x2="400" y2="1444" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="400" y1="1372" x2="400" y2="1396" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
 
-  <rect x="200" y="1444" width="400" height="48" rx="10" fill="#fff" stroke="#cfd9d3"/>
-  <text x="400" y="1465" text-anchor="middle" class="h">Outbound SES to claimant</text>
-  <text x="400" y="1483" text-anchor="middle" class="s">missing-docs request after human approval only</text>
-
-  <text x="32" y="1556" class="n">eu-north-1 · Terraform · least-privilege IAM · model never decides claim outcome</text>
-
-  <rect x="32" y="1572" width="736" height="32" rx="8" fill="#fff" stroke="#cfd9d3"/>
-  <rect x="48" y="1582" width="12" height="12" rx="2" fill="#1b4a38"/>
-  <text x="66" y="1592" class="n">Compute</text>
-  <rect x="140" y="1582" width="12" height="12" rx="2" fill="#9a6700"/>
-  <text x="158" y="1592" class="n">Human gate</text>
-  <line x1="260" y1="1588" x2="286" y2="1588" stroke="#3d5248" stroke-width="2" marker-end="url(#arr)"/>
-  <text x="294" y="1592" class="n">Control flow</text>
-  <line x1="400" y1="1588" x2="426" y2="1588" stroke="#7a8b82" stroke-width="1.75" stroke-dasharray="4 3" marker-end="url(#arrMuted)"/>
-  <text x="434" y="1592" class="n">State / side-effect</text>
+  <rect x="200" y="1396" width="400" height="48" rx="10" fill="#fff" stroke="#cfd9d3"/>
+  <text x="400" y="1417" text-anchor="middle" class="h">Outbound SES to claimant</text>
+  <text x="400" y="1435" text-anchor="middle" class="s">missing-docs request after human approval only</text>
 </svg>

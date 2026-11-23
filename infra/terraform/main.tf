@@ -109,9 +109,11 @@ resource "null_resource" "lambda_package" {
       filesha256("${path.module}/../../src/claims_intake/aws_handlers/wait_for_review.py"),
       filesha256("${path.module}/../../src/claims_intake/aws_handlers/send_email.py"),
       filesha256("${path.module}/../../src/claims_intake/aws_handlers/finalize.py"),
+      filesha256("${path.module}/../../src/claims_intake/aws_handlers/email_ingest.py"),
       filesha256("${path.module}/../../src/claims_intake/api/app.py"),
       filesha256("${path.module}/../../src/claims_intake/api/lambda_handler.py"),
       filesha256("${path.module}/../../src/claims_intake/pipeline/ingest.py"),
+      filesha256("${path.module}/../../src/claims_intake/pipeline/email_ingest.py"),
       filesha256("${path.module}/../../src/claims_intake/llm/client.py"),
       filesha256("${path.module}/../stepfunctions/claim_intake.asl.json"),
     ]))
@@ -300,13 +302,13 @@ resource "aws_lambda_function" "ingest" {
 }
 
 resource "aws_lambda_function" "process" {
-  function_name = "${local.name_prefix}-process"
-  role          = aws_iam_role.lambda.arn
-  handler       = "claims_intake.aws_handlers.process_claim.handler"
-  runtime       = "python3.12"
-  timeout       = 300
-  memory_size   = 1024
-  filename      = local.lambda_zip
+  function_name    = "${local.name_prefix}-process"
+  role             = aws_iam_role.lambda.arn
+  handler          = "claims_intake.aws_handlers.process_claim.handler"
+  runtime          = "python3.12"
+  timeout          = 300
+  memory_size      = 1024
+  filename         = local.lambda_zip
   source_code_hash = base64encode(null_resource.lambda_package.triggers.code_hash)
 
   environment {
@@ -523,13 +525,13 @@ resource "aws_iam_role_policy" "starter" {
 }
 
 resource "aws_lambda_function" "starter" {
-  function_name = "${local.name_prefix}-starter"
-  role          = aws_iam_role.starter.arn
-  handler       = "claims_intake.aws_handlers.starter.handler"
-  runtime       = "python3.12"
-  timeout       = 30
-  memory_size   = 256
-  filename      = local.lambda_zip
+  function_name    = "${local.name_prefix}-starter"
+  role             = aws_iam_role.starter.arn
+  handler          = "claims_intake.aws_handlers.starter.handler"
+  runtime          = "python3.12"
+  timeout          = 30
+  memory_size      = 256
+  filename         = local.lambda_zip
   source_code_hash = base64encode(null_resource.lambda_package.triggers.code_hash)
 
   environment {
@@ -549,11 +551,15 @@ resource "aws_lambda_permission" "allow_s3" {
   source_arn    = aws_s3_bucket.inbox.arn
 }
 
+# When enable_inbound_email=true, inbound_email.tf owns the notification
+# (email-raw/ → EmailIngest + inbox/*.json → Starter).
 resource "aws_s3_bucket_notification" "inbox" {
+  count  = var.enable_inbound_email ? 0 : 1
   bucket = aws_s3_bucket.inbox.id
   lambda_function {
     lambda_function_arn = aws_lambda_function.starter.arn
     events              = ["s3:ObjectCreated:*"]
+    filter_prefix       = "inbox/"
     filter_suffix       = ".json"
   }
   depends_on = [aws_lambda_permission.allow_s3]
@@ -649,7 +655,7 @@ resource "aws_cognito_user_pool_client" "spa" {
 }
 
 resource "aws_cognito_user" "adjuster" {
-  count      = var.enable_hosted_api ? 1 : 0
+  count        = var.enable_hosted_api ? 1 : 0
   user_pool_id = aws_cognito_user_pool.adjusters[0].id
   username     = var.adjuster_username
   password     = var.adjuster_password

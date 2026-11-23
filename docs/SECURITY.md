@@ -5,8 +5,10 @@ One-pager for IT / security review. Not a formal audit attestation.
 ## Data residency
 
 - Deploy target: customer AWS account, region `eu-north-1` (Stockholm).
-- Claim packages land in a private S3 inbox; case state and audit events in DynamoDB.
+- Claim packages land in a private S3 inbox (`inbox/`); optional raw inbound mail under `email-raw/`.
+- Case state and audit events in DynamoDB.
 - Model calls use Amazon Bedrock in-region (`CLAIMS_MODEL_ID`, default Nova Micro EU inference profile).
+- SES *receiving* (when `enable_inbound_email`) uses a receiving-capable region (default `eu-west-1`); objects are written into the Stockholm inbox bucket.
 
 ## Human oversight
 
@@ -18,6 +20,7 @@ One-pager for IT / security review. Not a formal audit attestation.
 
 - Terraform creates least-privilege IAM roles for Lambdas and Step Functions (no long-lived keys in compute).
 - Hosted adjuster API: Cognito user pool + API Gateway HTTP API JWT authorizer; SPA sends the Cognito **ID token** as `Authorization: Bearer`.
+- Hosted SPA (`enable_hosted_ui`): S3 origin is private; CloudFront Origin Access Control only. Add the CloudFront HTTPS origin to `cors_origins`.
 - Local FastAPI remains available for operators with an IAM user profile (SendTaskSuccess / DynamoDB) when Cognito env vars are unset.
 - Terraform apply refuses to proceed unless the caller account id matches the configured target account.
 
@@ -28,10 +31,10 @@ One-pager for IT / security review. Not a formal audit attestation.
 - CloudWatch logs retained 14 days for Lambda.
 - Pipeline steps emit audit events: component, action, optional model version, and structured output.
 
-## Outbound mail
+## Mail
 
-- SES sends only after adjuster approval resumes the Step Functions wait token.
-- Sandbox accounts must verify From and To identities before live delivery.
+- **Outbound:** SES sends only after adjuster approval resumes the Step Functions wait token. Sandbox accounts must verify From and To identities before live delivery.
+- **Inbound (optional):** SES receipt rule stores raw MIME under `email-raw/`; EmailIngest Lambda parses to a claim package and writes `inbox/*.json`. Domain ownership + MX are required before enabling.
 
 ## Teardown
 
