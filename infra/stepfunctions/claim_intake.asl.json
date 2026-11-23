@@ -1,5 +1,5 @@
 {
-  "Comment": "Elm & Stone claim intake — AI process, human review wait, then SES send",
+  "Comment": "AI claims intake — classify/extract, human review wait, then SES send",
   "StartAt": "Ingest",
   "States": {
     "Ingest": {
@@ -45,7 +45,7 @@
             "Lambda.ServiceException",
             "Lambda.TooManyRequestsException",
             "States.Timeout",
-            "Bedrock.ThrottlingException"
+            "BedrockThrottlingException"
           ],
           "IntervalSeconds": 5,
           "MaxAttempts": 3,

@@ -26,7 +26,7 @@ resource "aws_cloudwatch_log_group" "email_ingest" {
 resource "aws_lambda_function" "email_ingest" {
   count            = var.enable_inbound_email ? 1 : 0
   function_name    = "${local.name_prefix}-email-ingest"
-  role             = aws_iam_role.lambda.arn
+  role             = aws_iam_role.lambda_email_ingest[0].arn
   handler          = "claims_intake.aws_handlers.email_ingest.handler"
   runtime          = "python3.12"
   timeout          = 60
@@ -42,7 +42,7 @@ resource "aws_lambda_function" "email_ingest" {
 
   depends_on = [
     null_resource.lambda_package,
-    aws_iam_role_policy.lambda,
+    aws_iam_role_policy.lambda_email_ingest,
     aws_cloudwatch_log_group.email_ingest,
     null_resource.account_guard,
   ]

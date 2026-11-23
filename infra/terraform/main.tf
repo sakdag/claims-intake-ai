@@ -110,10 +110,13 @@ resource "null_resource" "lambda_package" {
       filesha256("${path.module}/../../src/claims_intake/aws_handlers/send_email.py"),
       filesha256("${path.module}/../../src/claims_intake/aws_handlers/finalize.py"),
       filesha256("${path.module}/../../src/claims_intake/aws_handlers/email_ingest.py"),
+      filesha256("${path.module}/../../src/claims_intake/aws_handlers/secrets.py"),
       filesha256("${path.module}/../../src/claims_intake/api/app.py"),
       filesha256("${path.module}/../../src/claims_intake/api/lambda_handler.py"),
       filesha256("${path.module}/../../src/claims_intake/pipeline/ingest.py"),
+      filesha256("${path.module}/../../src/claims_intake/pipeline/claim_view.py"),
       filesha256("${path.module}/../../src/claims_intake/pipeline/email_ingest.py"),
+      filesha256("${path.module}/../../src/claims_intake/pipeline/extract.py"),
       filesha256("${path.module}/../../src/claims_intake/llm/client.py"),
       filesha256("${path.module}/../stepfunctions/claim_intake.asl.json"),
     ]))
@@ -139,95 +142,7 @@ data "aws_iam_policy_document" "lambda_assume" {
   }
 }
 
-resource "aws_iam_role" "lambda" {
-  name               = "${local.name_prefix}-lambda"
-  assume_role_policy = data.aws_iam_policy_document.lambda_assume.json
-}
-
-data "aws_iam_policy_document" "lambda_policy" {
-  statement {
-    sid = "Logs"
-    actions = [
-      "logs:CreateLogGroup",
-      "logs:CreateLogStream",
-      "logs:PutLogEvents",
-    ]
-    resources = ["arn:aws:logs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:*"]
-  }
-
-  statement {
-    sid = "S3Inbox"
-    actions = [
-      "s3:GetObject",
-      "s3:ListBucket",
-    ]
-    resources = [
-      aws_s3_bucket.inbox.arn,
-      "${aws_s3_bucket.inbox.arn}/*",
-    ]
-  }
-
-  statement {
-    sid = "Dynamo"
-    actions = [
-      "dynamodb:GetItem",
-      "dynamodb:PutItem",
-      "dynamodb:UpdateItem",
-      "dynamodb:Query",
-      "dynamodb:Scan",
-    ]
-    resources = [
-      aws_dynamodb_table.cases.arn,
-      aws_dynamodb_table.audit.arn,
-    ]
-  }
-
-  statement {
-    sid = "Kms"
-    actions = [
-      "kms:Decrypt",
-      "kms:Encrypt",
-      "kms:GenerateDataKey",
-      "kms:DescribeKey",
-    ]
-    resources = [aws_kms_key.main.arn]
-  }
-
-  statement {
-    sid = "Bedrock"
-    actions = [
-      "bedrock:InvokeModel",
-      "bedrock:Converse",
-    ]
-    resources = ["*"]
-  }
-
-  statement {
-    sid = "SesSend"
-    actions = [
-      "ses:SendEmail",
-      "ses:SendRawEmail",
-    ]
-    resources = ["*"]
-  }
-
-  statement {
-    sid = "SfnTaskCallbacks"
-    actions = [
-      "states:SendTaskSuccess",
-      "states:SendTaskFailure",
-      "states:DescribeExecution",
-      "states:GetExecutionHistory",
-    ]
-    resources = ["*"]
-  }
-}
-
-resource "aws_iam_role_policy" "lambda" {
-  name   = "${local.name_prefix}-lambda"
-  role   = aws_iam_role.lambda.id
-  policy = data.aws_iam_policy_document.lambda_policy.json
-}
+# Per-function roles live in iam_lambdas.tf (least privilege).
 
 resource "aws_cloudwatch_log_group" "ingest" {
   name              = "/aws/lambda/${local.name_prefix}-ingest"
@@ -256,15 +171,15 @@ resource "aws_cloudwatch_log_group" "finalize" {
 
 locals {
   lambda_env = {
-    CLAIMS_AWS_REGION           = var.aws_region
-    CLAIMS_AWS_PROFILE          = ""
-    CLAIMS_MODEL_PROVIDER       = "bedrock"
-    CLAIMS_MODEL_ID             = var.model_id
-    CASES_TABLE                 = aws_dynamodb_table.cases.name
-    AUDIT_TABLE                 = aws_dynamodb_table.audit.name
-    CLAIMS_APPROVAL_HMAC_SECRET = var.approval_hmac_secret
-    SES_FROM_EMAIL              = var.ses_from_email
-    SES_TO_EMAIL                = var.ses_to_email
+    CLAIMS_AWS_REGION               = var.aws_region
+    CLAIMS_AWS_PROFILE              = ""
+    CLAIMS_MODEL_PROVIDER           = "bedrock"
+    CLAIMS_MODEL_ID                 = var.model_id
+    CASES_TABLE                     = aws_dynamodb_table.cases.name
+    AUDIT_TABLE                     = aws_dynamodb_table.audit.name
+    CLAIMS_APPROVAL_HMAC_SECRET_ARN = aws_secretsmanager_secret.approval_hmac.arn
+    SES_FROM_EMAIL                  = var.ses_from_email
+    SES_TO_EMAIL                    = var.ses_to_email
   }
 }
 
@@ -279,7 +194,7 @@ resource "aws_ses_email_identity" "to" {
 
 resource "aws_lambda_function" "ingest" {
   function_name = "${local.name_prefix}-ingest"
-  role          = aws_iam_role.lambda.arn
+  role          = aws_iam_role.lambda_ingest.arn
   handler       = "claims_intake.aws_handlers.ingest.handler"
   runtime       = "python3.12"
   timeout       = 60
@@ -295,7 +210,7 @@ resource "aws_lambda_function" "ingest" {
 
   depends_on = [
     null_resource.lambda_package,
-    aws_iam_role_policy.lambda,
+    aws_iam_role_policy.lambda_ingest,
     aws_cloudwatch_log_group.ingest,
     null_resource.account_guard,
   ]
@@ -303,7 +218,7 @@ resource "aws_lambda_function" "ingest" {
 
 resource "aws_lambda_function" "process" {
   function_name    = "${local.name_prefix}-process"
-  role             = aws_iam_role.lambda.arn
+  role             = aws_iam_role.lambda_process.arn
   handler          = "claims_intake.aws_handlers.process_claim.handler"
   runtime          = "python3.12"
   timeout          = 300
@@ -317,7 +232,7 @@ resource "aws_lambda_function" "process" {
 
   depends_on = [
     null_resource.lambda_package,
-    aws_iam_role_policy.lambda,
+    aws_iam_role_policy.lambda_process,
     aws_cloudwatch_log_group.process,
     null_resource.account_guard,
   ]
@@ -325,7 +240,7 @@ resource "aws_lambda_function" "process" {
 
 resource "aws_lambda_function" "wait_review" {
   function_name    = "${local.name_prefix}-wait-review"
-  role             = aws_iam_role.lambda.arn
+  role             = aws_iam_role.lambda_wait.arn
   handler          = "claims_intake.aws_handlers.wait_for_review.handler"
   runtime          = "python3.12"
   timeout          = 30
@@ -339,7 +254,7 @@ resource "aws_lambda_function" "wait_review" {
 
   depends_on = [
     null_resource.lambda_package,
-    aws_iam_role_policy.lambda,
+    aws_iam_role_policy.lambda_wait,
     aws_cloudwatch_log_group.wait_review,
     null_resource.account_guard,
   ]
@@ -347,7 +262,7 @@ resource "aws_lambda_function" "wait_review" {
 
 resource "aws_lambda_function" "send_email" {
   function_name    = "${local.name_prefix}-send-email"
-  role             = aws_iam_role.lambda.arn
+  role             = aws_iam_role.lambda_send.arn
   handler          = "claims_intake.aws_handlers.send_email.handler"
   runtime          = "python3.12"
   timeout          = 60
@@ -361,7 +276,7 @@ resource "aws_lambda_function" "send_email" {
 
   depends_on = [
     null_resource.lambda_package,
-    aws_iam_role_policy.lambda,
+    aws_iam_role_policy.lambda_send,
     aws_cloudwatch_log_group.send_email,
     aws_ses_email_identity.from,
     aws_ses_email_identity.to,
@@ -371,7 +286,7 @@ resource "aws_lambda_function" "send_email" {
 
 resource "aws_lambda_function" "finalize" {
   function_name    = "${local.name_prefix}-finalize"
-  role             = aws_iam_role.lambda.arn
+  role             = aws_iam_role.lambda_finalize.arn
   handler          = "claims_intake.aws_handlers.finalize.handler"
   runtime          = "python3.12"
   timeout          = 30
@@ -385,7 +300,7 @@ resource "aws_lambda_function" "finalize" {
 
   depends_on = [
     null_resource.lambda_package,
-    aws_iam_role_policy.lambda,
+    aws_iam_role_policy.lambda_finalize,
     aws_cloudwatch_log_group.finalize,
     null_resource.account_guard,
   ]
@@ -658,7 +573,7 @@ resource "aws_cognito_user" "adjuster" {
   count        = var.enable_hosted_api ? 1 : 0
   user_pool_id = aws_cognito_user_pool.adjusters[0].id
   username     = var.adjuster_username
-  password     = var.adjuster_password
+  password     = random_password.adjuster.result
 
   attributes = {
     email          = var.adjuster_email
@@ -681,7 +596,7 @@ resource "aws_cloudwatch_log_group" "api" {
 resource "aws_lambda_function" "api" {
   count            = var.enable_hosted_api ? 1 : 0
   function_name    = "${local.name_prefix}-api"
-  role             = aws_iam_role.lambda.arn
+  role             = aws_iam_role.lambda_api.arn
   handler          = "claims_intake.api.lambda_handler.handler"
   runtime          = "python3.12"
   timeout          = 30
@@ -697,7 +612,7 @@ resource "aws_lambda_function" "api" {
 
   depends_on = [
     null_resource.lambda_package,
-    aws_iam_role_policy.lambda,
+    aws_iam_role_policy.lambda_api,
     aws_cloudwatch_log_group.api,
     null_resource.account_guard,
   ]

@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from typing import Any
 
+from claims_intake.data.labels import required_doc_presence
 from claims_intake.llm.client import LlmClient
+from claims_intake.pipeline.claim_view import claim_view_from_extraction
 from claims_intake.pipeline.classify import classify_document
 from claims_intake.pipeline.conflicts import detect_amount_conflicts
 from claims_intake.pipeline.extract import extract_fields
@@ -63,14 +65,25 @@ def process_claim_package(
 
     extraction = extract_fields(client, claim_id=claim_id, documents=raw_docs) if extract else None
 
-    # Conflict detection uses gold or predicted types already stamped on docs
+    # Conflict detection uses predicted (or gold-if-skipped) types stamped on docs
     conflicts = detect_amount_conflicts(raw_docs)
 
+    # Policy gates: AI-extracted claim fields + policy record as the "policy DB"
+    extracted_claim = claim_view_from_extraction(extraction, fallback_claim_id=claim_id)
     policy_outcomes = [
-        check_coverage_period(claim, policy),
+        check_coverage_period(extracted_claim, policy),
         check_policy_status(policy),
-        check_perils_covered(claim, policy),
+        check_perils_covered(extracted_claim, policy),
     ]
+
+    predicted_types = [
+        {
+            "document_id": d["document_id"],
+            "document_type": d.get("document_type") or d.get("documentType"),
+        }
+        for d in raw_docs
+    ]
+    required = required_doc_presence(poly, document_types=predicted_types)
 
     return {
         "claim_id": claim_id,
@@ -78,5 +91,6 @@ def process_claim_package(
         "extraction": extraction,
         "conflicts": [c.model_dump() for c in conflicts],
         "policy_checks": [o.model_dump() for o in policy_outcomes],
+        "required_doc_rules": required,
         "model_id": client.model_id,
     }

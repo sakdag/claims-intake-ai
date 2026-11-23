@@ -87,6 +87,10 @@ def _repair_truncated_json(text: str) -> str:
     return s
 
 
+class BedrockThrottlingException(Exception):
+    """Raised so Step Functions can retry ProcessClaim on Bedrock throttle."""
+
+
 class BedrockConverseClient:
     def __init__(
         self,
@@ -105,12 +109,20 @@ class BedrockConverseClient:
         self._client = session.client("bedrock-runtime")
 
     def complete(self, *, system: str, user: str, max_tokens: int = 2048) -> LlmResponse:
-        resp = self._client.converse(
-            modelId=self.model_id,
-            system=[{"text": system}],
-            messages=[{"role": "user", "content": [{"text": user}]}],
-            inferenceConfig={"maxTokens": max_tokens, "temperature": 0.0},
-        )
+        from botocore.exceptions import ClientError
+
+        try:
+            resp = self._client.converse(
+                modelId=self.model_id,
+                system=[{"text": system}],
+                messages=[{"role": "user", "content": [{"text": user}]}],
+                inferenceConfig={"maxTokens": max_tokens, "temperature": 0.0},
+            )
+        except ClientError as exc:
+            code = exc.response.get("Error", {}).get("Code", "")
+            if code in {"ThrottlingException", "TooManyRequestsException", "ServiceQuotaExceededException"}:
+                raise BedrockThrottlingException(str(exc)) from exc
+            raise
         parts = resp.get("output", {}).get("message", {}).get("content", [])
         text = "".join(p.get("text", "") for p in parts if "text" in p)
         usage = resp.get("usage") or {}

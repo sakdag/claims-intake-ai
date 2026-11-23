@@ -64,7 +64,7 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 
 [tool.ruff]
-line-length = 100
+line-length = 120
 target-version = "py312"
 
 [tool.ruff.lint]
@@ -74,3 +74,16 @@ select = ["E", "F", "I", "UP", "B"]
 python_version = "3.12"
 strict = true
 packages = ["claims_intake"]
+
+[[tool.mypy.overrides]]
+module = [
+  "boto3",
+  "boto3.*",
+  "botocore",
+  "botocore.*",
+  "pandas",
+  "pandas.*",
+  "huggingface_hub",
+  "huggingface_hub.*",
+]
+ignore_missing_imports = true

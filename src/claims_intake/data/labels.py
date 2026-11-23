@@ -61,12 +61,22 @@ def report_vs_loss_plausible(claim: dict[str, Any], max_lag_days: int = 365) -> 
     return {"status": "PASSED", "reason": f"report lag {lag}d"}
 
 
-def required_doc_presence(poly: dict[str, Any]) -> list[dict[str, Any]]:
+def required_doc_presence(
+    poly: dict[str, Any],
+    *,
+    document_types: list[dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
     """
     Deterministic labels for rules that clearly require a named document type.
     Heuristic: rule text mentions a known document phrase → expect that type present.
+
+    Pass `document_types` (classifier output) for the live/eval path. When omitted,
+    gold `contextDocuments[].documentType` is used (label derivation only).
     """
-    present = {d.get("documentType") for d in (poly.get("contextDocuments") or [])}
+    if document_types is not None:
+        present = {d.get("document_type") or d.get("documentType") for d in document_types}
+    else:
+        present = {d.get("documentType") for d in (poly.get("contextDocuments") or [])}
     phrase_to_type = {
         "certificate of unit ownership": "certificate_of_ownership",
         "land registry extract": "certificate_of_ownership",

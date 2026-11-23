@@ -38,8 +38,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     try:
-        from huggingface_hub import hf_hub_download
         import pandas as pd
+        from huggingface_hub import hf_hub_download
     except ImportError:
         print(
             "Missing deps. Install with: pip install -e '.[data]'",

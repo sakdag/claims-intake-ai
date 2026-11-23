@@ -54,8 +54,9 @@ documents / draft on the right.
 *Claim `260001894` paused for adjuster review — corrections, policy checks, and amount conflicts before outbound release.*
 
 - **Save corrections** — overrides structured fields; audit keeps the AI originals
-- **Approve & send** — issues a single-use HMAC approval bound to the draft, then
-  `SendTaskSuccess` so the workflow continues to SES
+- **Approve & send** — issues a single-use HMAC approval bound to the draft,
+  resumes Step Functions, and the **SendEmail** Lambda verifies + atomically
+  consumes the token before SES. Audit records the Cognito adjuster.
 - **Reject** — `SendTaskFailure`; case closed
 
 Outbound is one-shot after approval; inbound reply threads are out of scope.
@@ -139,6 +140,8 @@ cp terraform.tfvars.example terraform.tfvars   # edit emails, account id
 export AWS_PROFILE=personal
 bash ../lambda/package.sh
 terraform apply
+terraform output -raw adjuster_password       # generated Cognito password
+terraform output -raw frontend_env_hint
 # …
 terraform destroy -auto-approve
 ```

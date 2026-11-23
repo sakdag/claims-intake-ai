@@ -29,6 +29,20 @@ def _claim_id_from_message(msg: Message) -> str:
     return f"email-{digest}"
 
 
+def _part_text(part: Message) -> str:
+    get_content = getattr(part, "get_content", None)
+    if callable(get_content):
+        try:
+            payload = get_content()
+            return payload if isinstance(payload, str) else str(payload)
+        except Exception:  # noqa: BLE001
+            pass
+    raw = part.get_payload(decode=True)
+    if isinstance(raw, bytes):
+        return raw.decode("utf-8", errors="replace")
+    return str(part.get_payload())
+
+
 def _walk_text_parts(msg: Message) -> list[tuple[str, str, str]]:
     """Return list of (filename, content_type, text)."""
     parts: list[tuple[str, str, str]] = []
@@ -39,21 +53,12 @@ def _walk_text_parts(msg: Message) -> list[tuple[str, str, str]]:
             ctype = part.get_content_type()
             filename = part.get_filename() or f"part-{i}"
             if ctype.startswith("text/") or filename.lower().endswith((".txt", ".md", ".csv", ".json")):
-                try:
-                    payload = part.get_content()
-                except Exception:  # noqa: BLE001
-                    payload = part.get_payload(decode=True)
-                    payload = payload.decode("utf-8", errors="replace") if isinstance(payload, bytes) else str(payload)
-                text = payload if isinstance(payload, str) else str(payload)
+                text = _part_text(part)
                 if text.strip():
                     parts.append((filename, ctype, text))
     else:
-        try:
-            text = msg.get_content()
-        except Exception:  # noqa: BLE001
-            raw = msg.get_payload(decode=True)
-            text = raw.decode("utf-8", errors="replace") if isinstance(raw, bytes) else str(msg.get_payload())
-        if isinstance(text, str) and text.strip():
+        text = _part_text(msg)
+        if text.strip():
             parts.append(("body.txt", msg.get_content_type(), text))
     return parts
 

@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import Any
 
 from claims_intake.aws_handlers.common import get_llm, get_store, poly_from_event
-from claims_intake.data.labels import required_doc_presence
 from claims_intake.models import CaseStatus
+from claims_intake.pipeline.claim_view import claim_view_from_extraction
 from claims_intake.pipeline.draft import draft_missing_document_request, short_case_summary
 from claims_intake.pipeline.ingest import process_claim_package
 
@@ -26,11 +26,14 @@ def handler(event: dict[str, Any], _context: Any = None) -> dict[str, Any]:
     client = get_llm()
 
     result = process_claim_package(client, poly, classify=True, extract=True)
-    claim = poly.get("claim") or {}
-    required = required_doc_presence(poly)
+    extracted_claim = claim_view_from_extraction(
+        result.get("extraction"),
+        fallback_claim_id=result["claim_id"],
+    )
+    required = result.get("required_doc_rules") or []
     draft = draft_missing_document_request(
         claim_id=result["claim_id"],
-        claimant=claim.get("claimant"),
+        claimant=extracted_claim.get("claimant"),
         required_doc_outcomes=required,
         conflicts=result.get("conflicts") or [],
     )

@@ -1,24 +1,27 @@
 from __future__ import annotations
 
+import base64
 import json
 import os
 from typing import Any
 
 import boto3
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from claims_intake.approvals import issue_approval_token, verify_approval_token
+from claims_intake.approvals import issue_approval_token
+from claims_intake.aws_handlers.secrets import approval_hmac_secret
 from claims_intake.models import CaseStatus
 from claims_intake.store.dynamo import CaseStore
+
 
 def _cors_origins() -> list[str]:
     raw = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173")
     return [o.strip() for o in raw.split(",") if o.strip()]
 
 
-app = FastAPI(title="Elm & Stone Claims Intake", version="0.3.0")
+app = FastAPI(title="Claims Intake API", version="0.4.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_cors_origins(),
@@ -42,19 +45,29 @@ def _store() -> CaseStore:
     return CaseStore()
 
 
-def _hmac_secret() -> str:
-    secret = os.getenv("CLAIMS_APPROVAL_HMAC_SECRET", "").strip()
-    if not secret:
-        raise RuntimeError("CLAIMS_APPROVAL_HMAC_SECRET is not set")
-    return secret
-
-
-def _sfn():
+def _sfn() -> Any:
     return boto3.client("stepfunctions", region_name=os.getenv("CLAIMS_AWS_REGION", "eu-north-1"))
 
 
-def _used_tokens(case: dict[str, Any]) -> set[str]:
-    return set(case.get("used_approval_tokens") or [])
+def _adjuster_from_request(request: Request) -> str:
+    """Read Cognito username from the already-authorized Bearer JWT (API GW verified)."""
+    auth = request.headers.get("authorization") or ""
+    if not auth.lower().startswith("bearer "):
+        return os.getenv("LOCAL_ADJUSTER", "local-operator")
+    token = auth.split(" ", 1)[1]
+    try:
+        payload_b64 = token.split(".")[1]
+        padded = payload_b64 + "=" * (-len(payload_b64) % 4)
+        claims = json.loads(base64.urlsafe_b64decode(padded))
+        return str(
+            claims.get("cognito:username")
+            or claims.get("username")
+            or claims.get("email")
+            or claims.get("sub")
+            or "unknown-adjuster"
+        )
+    except Exception:  # noqa: BLE001
+        return "unknown-adjuster"
 
 
 def _field_workspace(case: dict[str, Any]) -> list[dict[str, Any]]:
@@ -258,9 +271,14 @@ def _issue_payload(case: dict[str, Any], claim_id: str) -> dict[str, Any]:
 
 
 @app.post("/cases/{claim_id}/approve-and-send")
-def approve_and_send(claim_id: str, body: ApproveSendBody) -> dict[str, Any]:
+def approve_and_send(
+    claim_id: str,
+    body: ApproveSendBody,
+    request: Request,
+) -> dict[str, Any]:
     """
-    One-click adjuster action: signed approval + SendTaskSuccess so SFN continues to SES.
+    Issue a signed approval bound to the draft, resume SFN, and let SendEmail
+    verify + atomically consume the token before SES.
     """
     store = _store()
     case = store.get_case(claim_id)
@@ -273,54 +291,57 @@ def approve_and_send(claim_id: str, body: ApproveSendBody) -> dict[str, Any]:
             detail="Workflow is not waiting for adjuster review (no task token)",
         )
 
+    adjuster = _adjuster_from_request(request)
     payload = _issue_payload(case, claim_id)
     tok = issue_approval_token(
-        secret=_hmac_secret(),
+        secret=approval_hmac_secret(),
         claim_id=claim_id,
         action="send_missing_docs",
         payload=payload,
         ttl_seconds=3600,
     )
-    used = _used_tokens(case)
-    ok, reason = verify_approval_token(
-        secret=_hmac_secret(),
-        token=tok.token,
-        claim_id=claim_id,
-        action="send_missing_docs",
-        payload=payload,
-        used_token_ids=used,
-    )
-    if not ok:
-        raise HTTPException(status_code=400, detail=reason)
-
-    used.add(tok.token)
     callback = {
         "claim_id": claim_id,
         "approved": True,
+        "approved_by": adjuster,
+        "approval_token": tok.token,
         "body": payload.get("body"),
         "to": payload.get("to"),
         "from": payload.get("from"),
         "subject": payload.get("subject"),
         "skip_email": body.skip_email,
     }
+    store.update_case(
+        claim_id,
+        pending_approval={
+            "token": tok.token,
+            "action_hash": tok.action_hash,
+            "expires_at": tok.expires_at,
+            "approved_by": adjuster,
+        },
+        sfn_task_token=None,
+        status=CaseStatus.WAITING_APPROVAL.value,
+        approved_by=adjuster,
+    )
     try:
         _sfn().send_task_success(taskToken=task_token, output=json.dumps(callback))
     except Exception as exc:  # noqa: BLE001
+        # Restore wait token so the adjuster can retry
+        store.update_case(claim_id, sfn_task_token=task_token, status=CaseStatus.NEEDS_REVIEW.value)
         raise HTTPException(status_code=502, detail=f"SendTaskSuccess failed: {exc}") from exc
 
-    updated = store.update_case(
-        claim_id,
-        used_approval_tokens=sorted(used),
-        pending_approval=None,
-        sfn_task_token=None,
-        status=CaseStatus.WAITING_APPROVAL.value,
-    )
     store.append_audit(
         claim_id=claim_id,
         component="approvals",
         action="approve_and_send",
-        output={"reason": reason, "skip_email": body.skip_email, "to": payload.get("to")},
+        output={
+            "skip_email": body.skip_email,
+            "to": payload.get("to"),
+            "approved_by": adjuster,
+            "action_hash": tok.action_hash,
+        },
     )
+    updated = store.get_case(claim_id) or {}
     return {
         **_enrich(updated, store.list_audit(claim_id)),
         "workflow_continued": True,

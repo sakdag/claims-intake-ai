@@ -8,12 +8,18 @@ import sys
 from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 from claims_intake.data.io import load_polycontexts, write_jsonl
 from claims_intake.data.labels import derive_labels_for_polycontext
-from claims_intake.eval.metrics import accuracy, confusion_pairs, field_exact_match, macro_f1
+from claims_intake.eval.metrics import (
+    accuracy,
+    confusion_pairs,
+    field_exact_match,
+    macro_f1,
+    policy_check_status_accuracy,
+)
 from claims_intake.llm.client import create_llm_client
-from claims_intake.pipeline.conflicts import amount_conflict_gold, detect_amount_conflicts
 from claims_intake.pipeline.ingest import process_claim_package
 
 
@@ -24,7 +30,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--split", choices=["dev", "test"], default="dev")
     parser.add_argument("--limit", type=int, default=5, help="Max claims (cost control)")
     parser.add_argument("--out", type=Path, default=Path("eval/results"))
-    parser.add_argument("--skip-llm", action="store_true", help="Only deterministic metrics")
+    parser.add_argument("--skip-llm", action="store_true", help="Only deterministic label stats")
     parser.add_argument("--classify-only", action="store_true")
     parser.add_argument("--provider", default=None)
     parser.add_argument("--model-id", default=None)
@@ -48,9 +54,11 @@ def main(argv: list[str] | None = None) -> int:
     y_pred: list[str] = []
     field_scores: list[float] = []
     cite_scores: list[float] = []
-    conflict_tp = conflict_fp = conflict_fn = 0
+    per_field_hits: Counter[str] = Counter()
+    per_field_n: Counter[str] = Counter()
+    policy_acc_scores: list[float] = []
     policy_status_counts: Counter[str] = Counter()
-    records: list[dict] = []
+    records: list[dict[str, Any]] = []
     token_in = token_out = 0
 
     for cid in selected:
@@ -59,26 +67,7 @@ def main(argv: list[str] | None = None) -> int:
         labels = derive_labels_for_polycontext(row)
 
         for check_name, check in labels["policy_checks"].items():
-            policy_status_counts[f"{check_name}:{check['status']}"] += 1
-
-        docs_gold = [
-            {
-                "document_id": str(d.get("extractedDocumentId")),
-                "document_type": d.get("documentType"),
-                "content": d.get("extractedDocumentContent") or "",
-            }
-            for d in poly.get("contextDocuments") or []
-        ]
-        gold_conflict = amount_conflict_gold(docs_gold)
-        pred_conflict = detect_amount_conflicts(docs_gold)
-        gold_has = gold_conflict["has_conflict"]
-        pred_has = bool(pred_conflict)
-        if gold_has and pred_has:
-            conflict_tp += 1
-        elif pred_has and not gold_has:
-            conflict_fp += 1
-        elif gold_has and not pred_has:
-            conflict_fn += 1
+            policy_status_counts[f"gold:{check_name}:{check['status']}"] += 1
 
         if client is None:
             continue
@@ -106,12 +95,28 @@ def main(argv: list[str] | None = None) -> int:
             fem = field_exact_match(labels["extraction_gold"], result["extraction"]["fields"])
             field_scores.append(fem["field_accuracy"])
             cite_scores.append(fem["citation_rate"])
+            for name, ok in (fem.get("per_field") or {}).items():
+                per_field_n[name] += 1
+                per_field_hits[name] += int(ok)
             token_in += int(result["extraction"].get("input_tokens") or 0)
             token_out += int(result["extraction"].get("output_tokens") or 0)
 
+        pca = policy_check_status_accuracy(
+            labels["policy_checks"],
+            result.get("policy_checks") or [],
+        )
+        policy_acc_scores.append(pca["accuracy"])
+        for name, ok in (pca.get("per_check") or {}).items():
+            policy_status_counts[f"pred_match:{name}:{'hit' if ok else 'miss'}"] += 1
+
         records.append({"claim_id": cid, "result": result})
 
-    summary = {
+    per_field_accuracy = {
+        name: (per_field_hits[name] / per_field_n[name]) if per_field_n[name] else None
+        for name in sorted(per_field_n)
+    }
+
+    summary: dict[str, Any] = {
         "at": datetime.now(UTC).isoformat(),
         "split": args.split,
         "n_claims": len(selected),
@@ -127,22 +132,18 @@ def main(argv: list[str] | None = None) -> int:
         "extraction_field_accuracy_mean": (
             sum(field_scores) / len(field_scores) if field_scores else None
         ),
+        "extraction_per_field_accuracy": per_field_accuracy,
         "extraction_citation_rate_mean": (
             sum(cite_scores) / len(cite_scores) if cite_scores else None
         ),
-        "amount_conflict": {
-            "tp": conflict_tp,
-            "fp": conflict_fp,
-            "fn": conflict_fn,
-            "precision": conflict_tp / (conflict_tp + conflict_fp)
-            if (conflict_tp + conflict_fp)
-            else None,
-            "recall": conflict_tp / (conflict_tp + conflict_fn)
-            if (conflict_tp + conflict_fn)
-            else None,
-            "note": "Detector vs its own pseudo-label definition (sanity); tune threshold on dev.",
-        },
+        "policy_check_status_accuracy_mean": (
+            sum(policy_acc_scores) / len(policy_acc_scores) if policy_acc_scores else None
+        ),
         "policy_check_status_counts": dict(policy_status_counts),
+        "amount_conflict_note": (
+            "Amount-conflict detector is not scored against independent labels; "
+            "omitted from headline metrics."
+        ),
         "claim_ids": selected,
         "n_errors": sum(1 for r in records if r.get("error")),
         "n_scored": sum(1 for r in records if "result" in r),

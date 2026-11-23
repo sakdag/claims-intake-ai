@@ -15,16 +15,18 @@ AWS account.
 ## Human oversight
 
 - The system classifies, extracts, checks, summarises, and drafts. It does **not** approve or deny claims.
-- Outbound claimant messages require a **signed, single-use** HMAC token bound to the exact draft payload (claim id, action, body, recipients).
+- Outbound claimant messages require a **signed, single-use** HMAC token bound to the exact draft payload. The review API issues the token; **SendEmail verifies and atomically consumes** it before SES. Reuse fails a DynamoDB condition.
+- Audit events record which Cognito adjuster approved.
 - Adjuster field corrections are stored on the case and appended to the audit table; AI originals remain available for comparison.
 
 ## Access control
 
-- Terraform creates least-privilege IAM roles for Lambdas and Step Functions (no long-lived keys in compute).
+- Terraform creates **per-Lambda** IAM roles (ProcessClaim can call Bedrock but cannot send email or resume the workflow; SendEmail cannot call Bedrock).
 - Hosted adjuster API: Cognito user pool + API Gateway HTTP API JWT authorizer; SPA sends the Cognito **ID token** as `Authorization: Bearer`.
 - Hosted SPA (`enable_hosted_ui`): S3 origin is private; CloudFront Origin Access Control only. Add the CloudFront HTTPS origin to `cors_origins`.
 - Local FastAPI remains available for operators with an IAM user profile (SendTaskSuccess / DynamoDB) when Cognito env vars are unset.
 - Terraform apply refuses to proceed unless the caller account id matches the configured target account.
+- Approval HMAC lives in **Secrets Manager** (generated `random_password`); Cognito adjuster password is also generated (see `terraform output -raw adjuster_password`).
 
 ## Encryption & logging
 

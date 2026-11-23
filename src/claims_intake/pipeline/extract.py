@@ -13,9 +13,10 @@ _FIELD_NAMES = [
     "lossEvent",
     "claimant",
     "product",
+    "damagedItems",
 ]
 
-_SYSTEM = """You extract structured claim fields from insurance documents for Elm & Stone.
+_SYSTEM = """You extract structured claim fields from insurance documents.
 Return ONLY a JSON object. No markdown. No commentary.
 
 Exact schema:
@@ -38,6 +39,7 @@ Allowed name values (one field object per name, omit if unknown):
 - lossEvent
 - claimant
 - product
+- damagedItems (value is a JSON array of {insuredSubject, risk} objects)
 
 Rules:
 - Emit separate objects in "fields" — never join names with | characters.
@@ -45,6 +47,7 @@ Rules:
 - product must be PHI or PBI when stated or clearly implied by policy id (PZ-PHI-... / PZ-PBI-...).
 - quote must be a short verbatim snippet (≤20 words) copied from a provided document.
 - document_id must be one of the provided document_id values.
+- Do not invent claimId — only emit it when a document states it.
 """
 
 
@@ -64,10 +67,9 @@ def extract_fields(
             }
         )
     user = (
-        "Extract the fields now.\n"
-        f"claim_id_hint: {claim_id}\n"
+        "Extract the fields now from the documents only.\n"
         "Example of good output shape:\n"
-        '{"fields":[{"name":"claimId","value":"260000101","quote":"...","document_id":"1"}]}\n'
+        '{"fields":[{"name":"policyId","value":"PZ-PHI-000000001","quote":"...","document_id":"1"}]}\n'
         f"Documents:\n{packed}"
     )
     data, resp = complete_json(client, system=_SYSTEM, user=user, max_tokens=2048)
@@ -147,6 +149,18 @@ def _normalize_fields(raw_fields: list[Any], *, documents: list[dict[str, Any]])
 def _clean_value(name: str, value: Any) -> Any:
     if value is None:
         return None
+    if name == "damagedItems":
+        if isinstance(value, list):
+            cleaned: list[dict[str, str]] = []
+            for item in value:
+                if not isinstance(item, dict):
+                    continue
+                subject = str(item.get("insuredSubject") or item.get("subject") or "").strip()
+                risk = str(item.get("risk") or "").strip()
+                if subject and risk:
+                    cleaned.append({"insuredSubject": subject, "risk": risk})
+            return cleaned
+        return []
     s = str(value).strip()
     if name in {"dateOfLoss", "dateOfReported"}:
         m = re.search(r"(\d{4}-\d{2}-\d{2})", s)

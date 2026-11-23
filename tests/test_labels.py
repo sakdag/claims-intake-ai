@@ -6,7 +6,6 @@ from claims_intake.data.labels import (
     stratified_claim_split,
 )
 
-
 FIXTURE = Path(__file__).resolve().parents[1] / "data" / "fixtures" / "polycontexts_sample.json"
 
 

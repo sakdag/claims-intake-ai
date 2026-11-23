@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from claims_intake.llm.client import FakeLlmClient, _extract_json, complete_json
+from claims_intake.llm.client import _extract_json, complete_json
 
 
 def test_extract_json_balanced_object() -> None:

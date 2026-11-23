@@ -96,7 +96,35 @@ class CaseStore:
         existing["sk"] = "CASE"
         existing["entity_type"] = "case"
         self.cases.put_item(Item=_to_dynamo(existing))
-        return _from_dynamo(existing)
+        return dict(_from_dynamo(existing))
+
+    def consume_approval_token(self, claim_id: str, token: str) -> dict[str, Any]:
+        """
+        Atomically append `token` to used_approval_tokens if not already present.
+        Raises ConditionalCheckFailedException (botocore) on reuse.
+        """
+        resp = self.cases.update_item(
+            Key={"pk": f"CLAIM#{claim_id}", "sk": "CASE"},
+            UpdateExpression=(
+                "SET used_approval_tokens = list_append("
+                "if_not_exists(used_approval_tokens, :empty), :tok), "
+                "updated_at = :now "
+                "REMOVE pending_approval"
+            ),
+            ConditionExpression=(
+                "attribute_exists(pk) AND ("
+                "attribute_not_exists(used_approval_tokens) OR "
+                "NOT contains(used_approval_tokens, :t))"
+            ),
+            ExpressionAttributeValues={
+                ":empty": [],
+                ":tok": [token],
+                ":t": token,
+                ":now": _now(),
+            },
+            ReturnValues="ALL_NEW",
+        )
+        return dict(_from_dynamo(resp["Attributes"]))
 
     def append_audit(
         self,
@@ -124,7 +152,7 @@ class CaseStore:
             "at": ts,
         }
         self.audit.put_item(Item=_to_dynamo(item))
-        return _from_dynamo(item)
+        return dict(_from_dynamo(item))
 
     def list_audit(self, claim_id: str, *, limit: int = 100) -> list[dict[str, Any]]:
         resp = self.audit.query(

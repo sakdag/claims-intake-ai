@@ -31,11 +31,7 @@ variable "model_id" {
   default     = "eu.amazon.nova-micro-v1:0"
 }
 
-variable "approval_hmac_secret" {
-  type        = string
-  description = "HMAC secret for signed outbound approvals (set via tfvars, never commit real values)"
-  sensitive   = true
-}
+# approval HMAC is generated via random_password + Secrets Manager (see secrets.tf)
 
 variable "ses_from_email" {
   type        = string
@@ -73,11 +69,7 @@ variable "adjuster_username" {
   default     = "adjuster"
 }
 
-variable "adjuster_password" {
-  type        = string
-  description = "Initial Cognito password (set in tfvars; change after first login)"
-  sensitive   = true
-}
+# adjuster password is generated via random_password (terraform output -raw adjuster_password)
 
 variable "adjuster_email" {
   type        = string
