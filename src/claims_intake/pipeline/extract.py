@@ -43,7 +43,7 @@ Rules:
 - Emit separate objects in "fields" — never join names with | characters.
 - Dates as YYYY-MM-DD.
 - product must be PHI or PBI when stated or clearly implied by policy id (PZ-PHI-... / PZ-PBI-...).
-- quote must be copied from a provided document.
+- quote must be a short verbatim snippet (≤20 words) copied from a provided document.
 - document_id must be one of the provided document_id values.
 """
 
@@ -70,7 +70,7 @@ def extract_fields(
         '{"fields":[{"name":"claimId","value":"260000101","quote":"...","document_id":"1"}]}\n'
         f"Documents:\n{packed}"
     )
-    data, resp = complete_json(client, system=_SYSTEM, user=user, max_tokens=1200)
+    data, resp = complete_json(client, system=_SYSTEM, user=user, max_tokens=2048)
     fields = _normalize_fields(data.get("fields") or [], documents=packed)
     return {
         "claim_id": claim_id,

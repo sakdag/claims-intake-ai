@@ -1,0 +1,142 @@
+{
+  "Comment": "Elm & Stone claim intake — AI process, human review wait, then SES send",
+  "StartAt": "Ingest",
+  "States": {
+    "Ingest": {
+      "Type": "Task",
+      "Resource": "${ingest_lambda_arn}",
+      "TimeoutSeconds": 60,
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.TooManyRequestsException", "States.Timeout"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "Failed"
+        }
+      ],
+      "Next": "AlreadyProcessed?"
+    },
+    "AlreadyProcessed?": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.skip_pipeline",
+          "BooleanEquals": true,
+          "Next": "Skipped"
+        }
+      ],
+      "Default": "ProcessClaim"
+    },
+    "ProcessClaim": {
+      "Type": "Task",
+      "Resource": "${process_lambda_arn}",
+      "TimeoutSeconds": 300,
+      "ResultPath": "$.process",
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.TooManyRequestsException",
+            "States.Timeout",
+            "Bedrock.ThrottlingException"
+          ],
+          "IntervalSeconds": 5,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "Failed"
+        }
+      ],
+      "Next": "WaitForHumanReview"
+    },
+    "WaitForHumanReview": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke.waitForTaskToken",
+      "TimeoutSeconds": 604800,
+      "Parameters": {
+        "FunctionName": "${wait_review_lambda_arn}",
+        "Payload": {
+          "claim_id.$": "$.claim_id",
+          "content_hash.$": "$.content_hash",
+          "bucket.$": "$.bucket",
+          "key.$": "$.key",
+          "summary.$": "$.process.summary",
+          "taskToken.$": "$$.Task.Token",
+          "executionArn.$": "$$.Execution.Id"
+        }
+      },
+      "Catch": [
+        {
+          "ErrorEquals": ["States.Timeout"],
+          "ResultPath": "$.error",
+          "Next": "Failed"
+        },
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "Failed"
+        }
+      ],
+      "ResultPath": "$.review",
+      "Next": "SendOutboundEmail"
+    },
+    "SendOutboundEmail": {
+      "Type": "Task",
+      "Resource": "${send_email_lambda_arn}",
+      "TimeoutSeconds": 60,
+      "ResultPath": "$.email",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.TooManyRequestsException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "Failed"
+        }
+      ],
+      "Next": "Finalize"
+    },
+    "Finalize": {
+      "Type": "Task",
+      "Resource": "${finalize_lambda_arn}",
+      "TimeoutSeconds": 30,
+      "Next": "Succeeded",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "Failed"
+        }
+      ]
+    },
+    "Skipped": {
+      "Type": "Succeed"
+    },
+    "Succeeded": {
+      "Type": "Succeed"
+    },
+    "Failed": {
+      "Type": "Fail",
+      "Error": "ClaimIntakeFailed",
+      "Cause": "See $.error in execution history"
+    }
+  }
+}

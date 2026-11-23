@@ -1,0 +1,66 @@
+{
+  "at": "2026-11-23T14:01:03.021663+00:00",
+  "split": "test",
+  "n_claims": 20,
+  "model_id": "eu.amazon.nova-micro-v1:0",
+  "tokens": {
+    "input": 202964,
+    "output": 21042
+  },
+  "classification_accuracy": 0.9862385321100917,
+  "classification_macro_f1": 0.9813404985818779,
+  "classification_errors": [
+    {
+      "gold": "photo_evidence",
+      "pred": "site_inspection",
+      "n": 2
+    },
+    {
+      "gold": "photo_evidence",
+      "pred": "police_confirmation",
+      "n": 1
+    }
+  ],
+  "extraction_field_accuracy_mean": 0.8416666666666666,
+  "extraction_citation_rate_mean": 1.0,
+  "amount_conflict": {
+    "tp": 17,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "note": "Detector vs its own pseudo-label definition (sanity); tune threshold on dev."
+  },
+  "policy_check_status_counts": {
+    "coverage_period:PASSED": 18,
+    "policy_status:PASSED": 18,
+    "peril_covered:PASSED": 20,
+    "report_vs_loss:PASSED": 20,
+    "coverage_period:FAILED": 2,
+    "policy_status:FAILED": 2
+  },
+  "claim_ids": [
+    "260000034",
+    "260000059",
+    "260000073",
+    "260000124",
+    "260000132",
+    "260000148",
+    "260000153",
+    "260000169",
+    "260000180",
+    "260000185",
+    "260000198",
+    "260000213",
+    "260000244",
+    "260000295",
+    "260000319",
+    "260000370",
+    "260000400",
+    "260000441",
+    "260000481",
+    "260000493"
+  ],
+  "n_errors": 0,
+  "n_scored": 20
+}

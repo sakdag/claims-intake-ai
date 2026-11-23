@@ -83,12 +83,18 @@ def main(argv: list[str] | None = None) -> int:
         if client is None:
             continue
 
-        result = process_claim_package(
-            client,
-            poly,
-            classify=True,
-            extract=not args.classify_only,
-        )
+        try:
+            result = process_claim_package(
+                client,
+                poly,
+                classify=True,
+                extract=not args.classify_only,
+            )
+        except Exception as exc:  # noqa: BLE001 — per-claim isolation for offline eval
+            records.append({"claim_id": cid, "error": str(exc)})
+            print(f"claim {cid} failed: {exc}", file=sys.stderr)
+            continue
+
         gold_types = {str(d["document_id"]): d["document_type"] for d in labels["document_types"]}
         for c in result["classifications"]:
             y_true.append(gold_types[c["document_id"]])
@@ -138,6 +144,8 @@ def main(argv: list[str] | None = None) -> int:
         },
         "policy_check_status_counts": dict(policy_status_counts),
         "claim_ids": selected,
+        "n_errors": sum(1 for r in records if r.get("error")),
+        "n_scored": sum(1 for r in records if "result" in r),
     }
 
     args.out.mkdir(parents=True, exist_ok=True)
