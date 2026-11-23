@@ -17,44 +17,9 @@ The model never approves or denies a claim. It prepares work for the adjuster.
 
 ## Architecture
 
-```mermaid
-flowchart LR
-  subgraph Ingest
-    PKG[Claim package JSON] --> S3[(S3 inbox)]
-    S3 -->|ObjectCreated| ST[Starter Lambda]
-    ST --> SFN[Step Functions]
-  end
+![System architecture](docs/images/architecture.png)
 
-  subgraph Pipeline["Step Functions — claim intake"]
-    direction TB
-    SFN --> IN[Ingest]
-    IN --> PC[ProcessClaim]
-    PC --> BR[Amazon Bedrock<br/>classify · extract]
-    PC --> CHK[Conflicts + policy checks<br/>+ missing-doc draft]
-    CHK --> WAIT[WaitForHumanReview<br/>waitForTaskToken]
-    WAIT -->|SendTaskSuccess| MAIL[SendOutboundEmail]
-    MAIL --> SES[Amazon SES]
-    MAIL --> FIN[Finalize]
-  end
-
-  subgraph State
-    DDB[(DynamoDB<br/>cases + audit)]
-  end
-
-  IN -.-> DDB
-  PC -.-> DDB
-  WAIT -.-> DDB
-  MAIL -.-> DDB
-  FIN -.-> DDB
-
-  subgraph Review["Adjuster path"]
-    UI[React review console] -->|Cognito JWT| APIGW[API Gateway]
-    APIGW --> API[Review API Lambda<br/>FastAPI / Mangum]
-    API --> DDB
-    API -->|approve / reject| WAIT
-    COG[[Amazon Cognito]] -.-> UI
-  end
-```
+*End-to-end flow: claim package lands in S3, Step Functions runs AI intake and pauses for human review, then SES outbound + finalize. Adjusters sign in with Cognito and call the review API through API Gateway.*
 
 | Layer | Choice |
 | --- | --- |
