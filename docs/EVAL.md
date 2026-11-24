@@ -40,15 +40,8 @@ Default model: `eu.amazon.nova-micro-v1:0`.
 
 ## Locked test numbers (published)
 
-**Fresh Bedrock run** (not a re-score of saved outputs): `2026-11-23T23:32:05Z`,
-artifact `eval/results/20261123T233205Z_test_records.jsonl` · full **150** locked
-test claims · **0** claim-level errors · summary
-`eval/results/published_test_summary.json`.
-
-Classify/extract outputs differ from earlier 150-claim runs on the same split;
-
-
-
+Run: `2026-11-23T23:32:05Z` · full **150** locked test claims · **0** claim-level
+errors · artifact `eval/results/published_test_summary.json`.
 
 | Split | n claims | Model | Classify acc | Classify macro-F1 | Extract field acc | Citation rate | Policy-check mean |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: |
@@ -66,9 +59,8 @@ Policy-check status accuracy (per check):
 | ---: | ---: | ---: |
 | 1.000 | 1.000 | 0.727 |
 
-Tokens (this run): **1,542,244** in / **190,001** out
-(classify `838,150` / `87,242` + extract `704,094` / `102,759`).
-Cost ≈ **~$0.08** at Nova Micro list rates (excl. infra).
+Tokens: **1,542,244** in / **190,001** out. Cost ≈ **~$0.08** at Nova Micro list
+rates (excl. infra).
 
 ```bash
 claims-eval --split test --limit 20   # smoke
